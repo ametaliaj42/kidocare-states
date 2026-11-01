@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="sq">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=393">
+<title>Kartela mjekësore frames</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="kidocare.css">
+</head>
+<body>
+<div id="f"></div>
+<script src="kidocare.js"></script>
+<script>
+/* ---------- frames ---------- */
+const F={
+ 'screen-min':()=>kartela(NOA,0),
+ 'path-ilace':()=>kartela(NOA,1),
+ 'path-analiza':()=>kartela(NOA,2),
+ 'screen-full':()=>kartela(ANISA,0),
+ 'gj-min':()=>crop(gjSection(NOA)),
+ 'gj-exp':()=>crop(gjSection(ANISA)),
+ 'gj-col':()=>crop(compact(ANISA)),
+ 'gj-col-min':()=>crop(compact(NOA)),
+ 'vac-ok':()=>crop(gjCard(ANISA,{vaccOnly:1,vacc:'ok'})),
+ 'vac-no':()=>crop(gjCard(ANISA,{vaccOnly:1,vacc:'no'})),
+ 'meas-ok':()=>crop(gjCard(ANISA,{measOnly:1})),
+ 'meas-stale':()=>crop(gjCard(ANISA,{measOnly:1,stale:1})),
+ 'tabs-min':()=>crop(`<h2 class="sec">Historiku mjekësor</h2>${tabs(NOA,0)}`),
+ 'tabs-col':()=>crop(`<h2 class="sec">Historiku mjekësor</h2>${tabs(ANISA,0)}`),
+ 'dx-min':()=>crop(`<h2 class="sec">Historiku mjekësor</h2>${tabs(NOA,0)}${empty('steth','Ende pa diagnoza')}`),
+ 'dx-col':()=>crop(dxList(ANISA.dx)),
+ 'dx-one':()=>crop(dxList(ANISA.dx.filter(d=>['Përkeqësim i astmës','Bronkit akut'].includes(d.t)))),
+ 'med-min':()=>crop(`<h2 class="sec">Historiku mjekësor</h2>${tabs(NOA,1)}${empty('pill','Ende pa ilaçe')}`),
+ 'med-col':()=>crop(medList(ANISA.meds)),
+ 'med-one':()=>crop(medList(ANISA.meds.slice(0,2))),
+ 'test-min':()=>crop(`<h2 class="sec">Historiku mjekësor</h2>${tabs(NOA,2)}${empty('flask','Ende pa analiza')}`),
+ 'test-col':()=>crop(testList(ANISA.tests)),
+ 'long':()=>crop(testCard({t:'Antitrupa anti-transglutaminazë indore IgA',f:'Gastroenterit akut me dehidratim të moderuar',d:'2025',k:'PDF'})+medCard({t:'Amoksicilinë me acid klavulanik 400 mg/57 mg',d:'Që nga 22.10',f:'Otit akut me perforacion të membranës timpanike'})),
+ 'test-det':()=>fileOverlay(ANISA.tests[1],{pages:2}),
+ 'test-det-one':()=>fileOverlay(ANISA.tests[2]),
+ 'test-det-err':()=>fileOverlay(ANISA.tests[3],{err:1}),
+ 'dx-det-kidocare':()=>consultPage({title:'Përkeqësim i astmës',chips:chipAkute,who:'Valbona Xhaferraj, nëna',
+   note:'Kollë natën prej 4 ditësh, ka përdorur pompën 3 herë sot. Merr frymë me vështirësi pas vrapit.',
+   assess:'Përkeqësim i moderuar pas infeksioni viral. Fishkëllima bilaterale. Rritet Flutikazon për 4 javë.',
+   meds:[['Flutikazon 125 mcg','1 spërkatje, 2 herë në ditë, 4 javë'],['Salbutamol 100 mcg','2 spërkatje sipas nevojës']],
+   tests:[['IgE specifike','22.10'],['Spirometri','22.10',1]],ref:['Alergolog','Dr. Ilir Basha, 22.10'],
+   steps:STEPS_A,warn:WARN,date:'22.10.2026, 21:10',type:'Video, 20 min',doc:'Dr. Blerina Kola',nr:'1937'}),
+ 'dx-det-other':()=>consultPage({title:'Astmë bronkiale',chips:chipKron,who:'Valbona Xhaferraj, nëna',
+   note:'Kollitet natën prej disa javësh dhe i merret fryma kur vrapon. Babai ka astmë.',
+   assess:'Astmë bronkiale e lehtë persistente. Fishkëllima bilaterale, babai ka astmë.',
+   meds:[['Salbutamol 100 mcg','2 spërkatje sipas nevojës']],
+   steps:['Pompa vetëm kur kollitet ose merr frymë me vështirësi','Mbajeni larg tymit dhe pluhurit','Kontroll pas 4 javësh'],warn:WARN.slice(0,4),
+   date:'16.09.2021, 18:45',type:'Video, 15 min',doc:'Dr. Erion Dervishi',nr:'1408'}),
+ 'dx-det-kronike':()=>`<div class="bg">${detailTop('Sëmundje kronike','Astmë bronkiale',chipKron+chipW('Që nga 2021'))}<div class="sheet">
+   <div class="blk"><div class="lab">Ilaçet aktuale</div>${rows([row('pill','Salbutamol 100 mcg','Që nga 2021'),row('pill','Flutikazon 125 mcg','Që nga 22.10')])}</div>
+   <div class="lab">Historiku</div>${tl([['var(--blue)','22.10','Përkeqësim i astmës','Konsultë me ju'],['#E3A73A','22.10','Spirometri','Pa rezultat'],['#C3CBDA','2024','Montelukast u ndërpre','Konsultë në Kidocare'],['var(--amber-mid)','2021','Diagnostikuar','Konsultë në Kidocare, Dr. Erion Dervishi']])}
+   ${foot('<small>Diagnostikuar</small><b>2021</b>','<small>Nga</small><b>Dr. Erion Dervishi</b><span>Konsultë në Kidocare</span>')}</div></div></div>`,
+ 'dx-det-kronike-jashte':()=>`<div class="bg">${detailTop('Sëmundje kronike','Dermatit atopik',chipKron+chipW('Që nga 2019')+chipOut,quote('Valbona Xhaferraj, nëna','Lëkurë e thatë dhe kruarje në bërryla që kur ishte foshnjë. Përkeqësohet në dimër.'))}<div class="sheet">
+   <div class="blk"><div class="lab">Ilaçet aktuale</div>${rows([row('pill','Krem hidrokortizon','Që nga 2024')])}</div>
+   <div class="blk"><div class="lab">Dokumente</div>${docs(['Raporti mjekësor'])}</div>
+   <div class="lab">Historiku</div>${tl([['var(--blue)','12.07','Dermatit atopik','Konsultë me ju'],['#C3CBDA','2024','Krem hidrokortizon','Shtuar nga prindi'],['var(--amber-mid)','2019','Diagnostikuar','Shtuar nga prindi']])}
+   ${foot('<small>Diagnostikuar</small><b>2019</b>','<small>Shtuar nga</small><b>Valbona Xhaferraj</b><span>nëna</span>')}${unverified}</div></div></div>`,
+ 'dx-det-jashte':()=>`<div class="bg">${detailTop('Diagnozë jashtë Kidocare','Pneumoni',chipAkute+chipOut,quote('Valbona Xhaferraj, nëna','Shtruar 5 ditë në Spitalin Rajonal Vlorë. Mori antibiotik në venë, pastaj Amoksicilinë që u ndërpre pas skuqjes në lëkurë.'))}<div class="sheet">
+   <div class="blk"><div class="lab">Dokumente</div>${docs(['Fletëdalja','Grafia'])}</div>
+   <div class="blk"><div class="lab">Ilaçe të lidhura</div>${rows([row('pill','Amoksicilinë','Deri në 2023')])}</div>
+   <div class="blk"><div class="lab">Analiza të lidhura</div>${rows([row('flask','Grafi toraksi','2023','',true)])}</div>
+   ${foot('<small>Data</small><b>2023</b>','<small>Shtuar nga</small><b>Valbona Xhaferraj</b><span>nëna</span>')}${unverified}</div></div></div>`,
+ 'dx-det-jashte-min':()=>`<div class="ov bg"><div class="under">${kartela(ANISA,0)}</div><div class="glass"></div><div style="position:absolute;top:0;left:0;right:0">${statusBar()}</div><div class="bs"><div class="grab"></div><span class="xbtn">${I('x')}</span>
+   <div class="eyebrow">Diagnozë jashtë Kidocare</div><div class="dtitle">Pneumoni</div><div class="dchips" style="margin-bottom:20px">${chipAkute.replace('c-white','c-blue" style="background:var(--track);color:var(--muted)')}${chipOut}</div>
+   ${foot('<small>Data</small><b>2023</b>','<small>Shtuar nga</small><b>Valbona Xhaferraj</b><span>nëna</span>')}${unverified}</div></div>`
+};
+window.FRAME_IDS=Object.keys(F);
+function show(){
+  const id=location.hash.slice(1)||'screen-min';
+  document.getElementById('f').innerHTML=(F[id]||F['screen-min'])();
+  requestAnimationFrame(()=>{try{parent.postMessage({liveFrame:id,h:document.getElementById('f').scrollHeight},'*')}catch(e){}});
+}
+addEventListener('hashchange',show);show();
+document.fonts&&document.fonts.ready.then(show);
+</script>
+</body>
+</html>

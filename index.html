@@ -1,0 +1,264 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}.src{display:inline-flex;align-items:center;gap:8px;font:600 14px var(--font);color:var(--blue-ink);background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:7px 14px;cursor:pointer}
+.src:hover{background:var(--blue-fill)}
+.src[disabled]{opacity:.6;cursor:default}
+.src svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.src-note{font-size:13px;color:var(--muted);margin-left:4px}
+.cap .fdl{display:inline-flex;align-items:center;gap:6px;font:600 13px var(--font);color:var(--blue-ink);background:none;border:0;padding:2px 0;cursor:pointer}
+.cap .fdl svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.cap .fdl[disabled]{opacity:.6}
+</style></head><body>
+<title>Kidocare States</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* Layout: a hub. Home lists every functionality by side; picking one (list or dropdown) shows its minimal screen, then one horizontal strip of state frames per component */
+:root{
+  --bg:#EEF4FD; --surface:#FFFFFF; --ink:#0E1B3D; --muted:#5E6C8A; --line:#DCE5F3;
+  --blue:#5B96FF; --blue-ink:#2F6FE0; --blue-fill:#E9F2FF;
+  --s-min:#6E7790; --s-min-f:#F0F3FA; --s-col:#2F6FE0; --s-col-f:#E9F2FF;
+  --s-exp:#13774A; --s-exp-f:#E2F5EA; --s-det:#B23F7E; --s-det-f:#FFEAF4;
+  --shadow:0 14px 34px rgba(40,80,160,.14);
+  --font:"Outfit",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0D1422; --surface:#151F33; --ink:#E7EDF8; --muted:#97A5BF; --line:#25324A;
+  --blue:#6FA3FF; --blue-ink:#8DB6FF; --blue-fill:#1B2B4B;
+  --s-min:#A3ADC2; --s-min-f:#1F2A3F; --s-col:#8DB6FF; --s-col-f:#1B2B4B;
+  --s-exp:#3FC48A; --s-exp-f:#16352A; --s-det:#F07AB4; --s-det-f:#3A1D30;
+  --shadow:0 14px 34px rgba(0,0,0,.4); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0D1422; --surface:#151F33; --ink:#E7EDF8; --muted:#97A5BF; --line:#25324A;
+  --blue:#6FA3FF; --blue-ink:#8DB6FF; --blue-fill:#1B2B4B;
+  --s-min:#A3ADC2; --s-min-f:#1F2A3F; --s-col:#8DB6FF; --s-col-f:#1B2B4B;
+  --s-exp:#3FC48A; --s-exp-f:#16352A; --s-det:#F07AB4; --s-det-f:#3A1D30;
+  --shadow:0 14px 34px rgba(0,0,0,.4); color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font:16px/1.55 var(--font);-webkit-font-smoothing:antialiased}
+.wrap{max-width:1240px;margin:0 auto;padding-block:40px 80px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.col{max-width:720px}
+.eyebrow{font-size:12.5px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
+h1{font-size:clamp(34px,6vw,52px);font-weight:700;letter-spacing:-.02em;line-height:1.05;margin:10px 0 14px;text-wrap:balance}
+h2{font-size:24px;font-weight:700;letter-spacing:-.01em;margin:0;text-wrap:balance}
+p{margin:0}
+.lead{font-size:18px;color:var(--muted);max-width:640px}
+.meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.pill{font-size:13px;font-weight:600;border-radius:14px;padding:5px 11px;background:var(--surface);color:var(--muted)}
+section{margin-top:60px}
+.sh{margin-bottom:20px}
+.sh .n{display:block;font-size:13px;font-weight:600;color:var(--muted);letter-spacing:.14em;margin-bottom:2px}
+.sh p{color:var(--muted);font-size:15px;max-width:680px;margin-top:6px}
+.keys{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
+.st-tag{display:inline-flex;align-items:center;font-size:12.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;border-radius:8px;padding:3px 9px}
+.t-min{background:var(--s-min-f);color:var(--s-min)}
+.t-col{background:var(--s-col-f);color:var(--s-col)}
+.t-exp{background:var(--s-exp-f);color:var(--s-exp)}
+.t-det{background:var(--s-det-f);color:var(--s-det)}
+.t-sys{background:var(--s-min-f);color:var(--ink)}
+.keys .k{display:flex;align-items:center;gap:8px;background:var(--surface);border-radius:14px;padding:8px 12px;font-size:14px;color:var(--muted)}
+.strip{overflow-x:auto;padding:4px 4px 18px;margin:0 -4px}
+.states{display:flex;align-items:flex-start;width:max-content}
+.frame{width:260px;flex:none;display:flex;flex-direction:column;gap:10px}
+.frame.wide{width:300px}
+.frame img{display:block;width:100%;border-radius:22px;box-shadow:var(--shadow);background:var(--surface)}
+.frame .lv{position:relative;width:100%;border-radius:22px;box-shadow:var(--shadow);background:var(--surface);overflow:hidden;height:200px}
+.frame.page .lv{border-radius:28px}
+.frame .lv iframe{position:absolute;left:0;top:0;width:393px;height:3000px;border:0;transform-origin:0 0;pointer-events:none;background:transparent}
+.live-note{display:inline-flex;align-items:center;gap:6px}
+.frame.page img{border-radius:28px}
+.cap{display:flex;flex-direction:column;gap:6px;align-items:flex-start}
+.cap b{font-weight:600;font-size:15px}
+.cap span{font-size:14px;color:var(--muted);line-height:1.45}
+.arrow{width:92px;flex:none;display:flex;flex-direction:column;align-items:center;gap:4px;padding-top:70px}
+.arrow svg{width:64px;height:14px;overflow:visible}
+.arrow em{font-style:normal;font-size:12.5px;font-weight:600;color:var(--blue-ink);text-align:center;line-height:1.3}
+.gap{width:28px;flex:none}
+.pair{display:flex;flex-wrap:wrap;gap:28px;align-items:flex-start}
+.list{display:grid;gap:10px;margin:0;padding:0;list-style:none}
+.list li{background:var(--surface);border-radius:18px;padding:14px 16px}
+.list li b{display:block;font-weight:600;margin-bottom:2px}
+.list li span{color:var(--muted);font-size:15px}
+footer{margin-top:64px;color:var(--muted);font-size:14px}
+@media (max-width:520px){.frame{width:220px}.frame.wide{width:min(300px,100%)}.arrow{width:70px}}
+
+.bar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;margin-bottom:34px}
+.brand{font-weight:700;font-size:17px;color:var(--ink);text-decoration:none;display:flex;align-items:center;gap:10px}
+.brand i{width:30px;height:30px;border-radius:10px;background:var(--blue);display:grid;place-items:center;color:#fff;font-style:normal;font-size:15px}
+.pick{display:flex;align-items:center;gap:8px;font-size:14px;color:var(--muted)}
+select{font:600 15px var(--font);color:var(--blue-ink);background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:9px 34px 9px 16px;appearance:none;max-width:70vw;
+  background-image:linear-gradient(45deg,transparent 50%,var(--blue-ink) 50%),linear-gradient(135deg,var(--blue-ink) 50%,transparent 50%);background-position:calc(100% - 18px) 55%,calc(100% - 13px) 55%;background-size:5px 5px;background-repeat:no-repeat}
+select:focus-visible,a:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
+.side{margin-top:40px}
+.side h2{font-size:20px;margin-bottom:14px}
+.feats{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px}
+.feat{display:flex;flex-direction:column;gap:6px;background:var(--surface);border-radius:22px;padding:18px 20px;text-decoration:none;color:var(--ink);box-shadow:0 10px 30px rgba(40,80,160,.08);min-width:0}
+.feat b{font-size:19px;font-weight:600}
+.feat span{font-size:14.5px;color:var(--muted);line-height:1.45}
+.feat small{font-size:13px;color:var(--blue-ink);font-weight:600;margin-top:4px}
+.feat:hover{outline:2px solid var(--blue-fill)}
+.path{margin-top:40px;background:var(--surface);border-radius:28px;padding:26px 24px 8px;box-shadow:0 10px 30px rgba(40,80,160,.08)}
+.path .sh{margin-bottom:22px}
+.path .strip{margin:0 -24px;padding:4px 24px 22px}
+.path .eyebrow{margin-bottom:6px}
+.none{color:var(--muted);font-size:15px;background:var(--surface);border-radius:18px;padding:16px 18px;opacity:.8}
+</style>
+<div class="wrap">
+  <nav class="bar" aria-label="Functionalities">
+    <a class="brand" href="#"><i>K</i>Kidocare States</a>
+    <label class="pick" for="pick">Functionality <select id="pick"></select></label>
+  </nav>
+  <main id="view"></main>
+  <footer>Placeholder data. Both children are fictional.</footer>
+</div>
+<script src="features.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script>
+const F = window.FEATURES || [];
+const SIDES = [["doctor", "Doctor side"], ["parent", "Parent side"]];
+const TAG = { min: ["t-min", "Minimal"], col: ["t-col", "Collapsed"], exp: ["t-exp", "Expanded"], det: ["t-det", "Detailed"], full: ["t-col", "Full"], sys: ["t-sys", "System"] };
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const count = f => ({ c: f.components.length, n: f.components.reduce((a, c) => a + c.frames.length, 0) + f.screen.frames.length + (f.path ? f.path.frames.length : 0) });
+const arrow = t => `<div class="arrow"><svg viewBox="0 0 64 14"><path d="M2 7H58M52 2l6 5-6 5" fill="none" stroke="var(--blue)" stroke-width="2" stroke-linecap="round"/></svg><em>${esc(t)}</em></div>`;
+const LIVE = window.LIVE || {};
+const media = (f, fr) => { const src = fr.from || f.id;
+  if (LIVE[src]) return `<div class="lv"><iframe src="${LIVE[src]}#${fr.img.replace(/\.jpg$/, "")}" scrolling="no" loading="lazy" title="${esc(fr.title || fr.img)}"></iframe></div>`;
+  return `<img src="img/${src}/${fr.img}" alt="${esc(fr.title || TAG[fr.state][1])}" loading="lazy">`; };
+const frame = (f, fr, wide) => `<figure class="frame ${wide ? "wide page" : ""} ${fr.page ? "page" : ""}" style="margin:0">${media(f, fr)}<figcaption class="cap"><span class="st-tag ${TAG[fr.state][0]}">${TAG[fr.state][1]}</span>${fr.title ? `<b>${esc(fr.title)}</b>` : ""}<span>${esc(fr.spec)}</span>${LIVE[fr.from || f.id] ? fbtn(fr.from || f.id, fr.img.replace(/\.jpg$/, "")) : ""}</figcaption></figure>`;
+/* live frames: scale the 393px phone to the frame width and size it to its content */
+const fit = () => document.querySelectorAll(".lv").forEach(w => { const i = w.querySelector("iframe"), k = w.clientWidth / 393; i.style.transform = `scale(${k})`; if (i._h) w.style.height = Math.ceil(i._h * k) + "px"; });
+addEventListener("message", e => { if (!e.data || e.data.liveFrame === undefined) return;
+  document.querySelectorAll(".lv iframe").forEach(i => { if (i.contentWindow === e.source) { i._h = e.data.h; i.style.height = e.data.h + "px"; } }); fit(); });
+addEventListener("resize", fit);
+
+const pick = document.getElementById("pick"), view = document.getElementById("view");
+pick.innerHTML = `<option value="">All functionalities</option>` + SIDES.map(([k, l]) => {
+  const fs = F.filter(f => f.side === k);
+  return fs.length ? `<optgroup label="${l}">${fs.map(f => `<option value="${f.id}">${esc(f.name)}</option>`).join("")}</optgroup>` : "";
+}).join("");
+pick.addEventListener("change", () => { location.hash = pick.value; if (!pick.value) render(); });
+
+function home() {
+  return `<header class="col"><div class="eyebrow">Kidocare redesign</div><h1>Every functionality, every state</h1>
+    <p class="lead">Pick a functionality to see the full minimal path first (every screen reachable with sign-up data only), then each component collapsed, expanded and detailed.</p>
+    ${srcBtn("all") ? `<div class="meta" style="margin-top:16px">${srcBtn("all")}</div>` : ""}<div class="keys">${["min", "col", "exp", "det"].map(s => `<span class="k"><span class="st-tag ${TAG[s][0]}">${TAG[s][1]}</span>${{ min: "Sign-up data only", col: "As it sits on screen", exp: "Opened in place", det: "Its own page" }[s]}</span>`).join("")}</div></header>
+  ${SIDES.map(([k, l]) => { const fs = F.filter(f => f.side === k);
+    return `<section class="side"><h2>${l}</h2>${fs.length ? `<div class="feats">${fs.map(f => { const c = count(f);
+      return `<a class="feat" href="#${f.id}"><b>${esc(f.name)}</b><span>${esc(f.purpose)}</span><small>${c.c} components, ${c.n} frames · ${f.date}</small></a>`; }).join("")}</div>`
+      : `<p class="none">Nothing here yet.</p>`}</section>`; }).join("")}`;
+}
+
+function feature(f) {
+  const c = count(f);
+  return `<header class="col"><div class="eyebrow">Kidocare, ${SIDES.find(s => s[0] === f.side)[1].toLowerCase()}</div><h1>${esc(f.name)}</h1>
+    <p class="lead">${esc(f.purpose)}</p>
+    <div class="meta"><span class="pill">Arjola Metaliaj</span><span class="pill">${f.date}</span><span class="pill">${c.c} components, ${c.n} frames</span></div>${LIVE[f.id] ? `<div class="meta" style="margin-top:12px">${srcBtn(f.id)}</div>` : ""}</header>
+  ${f.path ? `<section class="path"><div class="sh"><div class="eyebrow">Start here</div><h2>Minimal path</h2><p>${esc(f.path.note)}</p></div>
+    <div class="strip"><div class="states">${f.path.frames.map((fr, j) => (j ? arrow(fr.via || "") : "") + frame(f, fr, true)).join("")}</div></div></section>` : ""}
+  <section><div class="sh"><h2>Whole screen</h2><p>${esc(f.screen.note)}</p></div>
+    <div class="pair">${f.screen.frames.map(fr => frame(f, fr, true)).join("")}</div></section>
+  ${f.components.map((cp, i) => `<section><div class="sh"><span class="n">${String(i + 1).padStart(2, "0")}</span><h2>${esc(cp.name)}</h2><p>${esc(cp.note)}</p></div>
+    <div class="strip"><div class="states">${cp.frames.map((fr, j) => (j ? (fr.via ? arrow(fr.via) : `<div class="gap"></div>`) : "") + frame(f, fr)).join("")}</div></div></section>`).join("")}
+  ${f.rules && f.rules.length ? `<section class="col"><h2 style="margin-bottom:16px">Rules</h2><ul class="list">${f.rules.map(([t, d]) => `<li><b>${esc(t)}</b><span>${esc(d)}</span></li>`).join("")}</ul></section>` : ""}`;
+}
+
+function render(keep) {
+  const f = F.find(x => x.id === location.hash.slice(1));
+  pick.value = f ? f.id : "";
+  view.innerHTML = f ? feature(f) : home();
+  document.title = f ? `${f.name} · Kidocare States` : "Kidocare States";
+  if (!keep) window.scrollTo(0, 0);
+  fit();
+}
+
+/* Downloads work in three places:
+   1. In Claude for the owner: Claude's downloads capability saves the file.
+   2. In Claude for anyone else: the page can't download, so each button links to the same hub on Vercel with ?get=..., which starts the download there.
+   3. Anywhere else (the Vercel copy, or the hub opened from a zip): a normal browser download. */
+const SITE = "https://kidocare-states-downloads.vercel.app/";
+const IN_CLAUDE = /claudeusercontent\.com$|claude\.ai$/.test(location.hostname);
+const browserSave = { save: async ({ filename, data }) => {
+  const blob = data instanceof Blob ? data : new Blob([data], { type: "text/html" });
+  const url = URL.createObjectURL(blob), a = document.createElement("a");
+  a.href = url; a.download = filename; document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 30000); } };
+let DL = IN_CLAUDE ? null : browserSave, DL_DONE = !IN_CLAUDE;
+/* window.claude can arrive after this script runs: keep checking for ~10 s instead of checking once */
+if (IN_CLAUDE) (function waitClaude(n) {
+  try {
+    if (window.claude && typeof claude.use === "function") {
+      Promise.resolve(claude.use("downloads")).then(d => { DL = d; }).catch(() => {}).finally(() => { DL_DONE = true; render(true); });
+      return;
+    }
+  } catch (e) {}
+  if (n < 40) setTimeout(() => waitClaude(n + 1), 250); else { DL_DONE = true; render(true); }
+})(0);
+const DLI = '<svg viewBox="0 0 24 24"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg>';
+const viaSite = () => IN_CLAUDE && DL_DONE && !DL;
+const siteLink = (get, cls, label) => `<a class="${cls}" href="${SITE}?get=${encodeURIComponent(get)}" target="_blank" rel="noopener" style="text-decoration:none">${DLI}${label}</a>`;
+const srcBtn = id => {
+  const label = id === "all" ? "Download the whole hub (.zip)" : "Download source files";
+  if (viaSite()) return siteLink(id, "src", label);
+  return window.JSZip ? `<button class="src" data-src="${id}">${DLI}${label}</button><span class="src-note" id="srcnote"></span>` : "";
+};
+const fbtn = (fid, frame) => viaSite() ? siteLink(fid + "/" + frame, "fdl", "Download this frame")
+  : `<button class="fdl" data-frame="${fid}|${frame}">${DLI}Download this frame</button>`;
+const SHARED = ["live/kidocare.css", "live/kidocare.js"];
+const IMGS = ["live/img/monkey.png", "live/img/bunny.png", "live/img/panda.png", "live/img/monkey2.png"];
+function frameIds(f) { return [...new Set([...(f.path ? f.path.frames : []), ...f.screen.frames, ...f.components.flatMap(c => c.frames)].filter(x => !x.from || x.from === f.id).map(x => x.img.replace(/\.jpg$/, "")))]; }
+const fetchOk = p => fetch(p).then(r => { if (!r.ok) throw new Error(p); return r; });
+async function buildZip(ids, whole) {
+  const zip = new JSZip(), feats = F.filter(f => ids.includes(f.id) && LIVE[f.id]);
+  const files = [...(whole ? ["index.html", "features.js"] : []), ...SHARED, ...IMGS, ...feats.map(f => LIVE[f.id])];
+  for (const p of files) { const r = await fetchOk(p); zip.file(whole ? p : p.replace(/^live\//, ""), p.endsWith(".png") ? await r.arrayBuffer() : await r.text()); }
+  let md = whole
+    ? "# Kidocare States, the whole hub\n\nOpen index.html in a browser to see every functionality and every state, exactly as in the hub.\nSome browsers block local pages from loading other local files. If the frames stay blank, run a small local server in this folder (for example `python3 -m http.server`) and open http://localhost:8000.\n\n- index.html: the hub\n- features.js: every functionality, component and frame (add new states here)\n- live/: one HTML file per functionality; add #frame-name to the address to show one frame\n- live/kidocare.css and live/kidocare.js: shared tokens, components, icons and the two sample children (Noa, Anisa)\n- live/img/: child avatars\n\n"
+    : "# Kidocare States, source files\n\nOpen any feature file in a browser. Add #frame-name to the address to show one frame, for example kartela-mjekesore.html#gj-col.\nThe page is 393px wide (the phone width). Outfit loads from Google Fonts; weights 400, 500 and 600 only.\n\n- kidocare.css: shared tokens and component styles\n- kidocare.js: icons, the two sample children (Noa, Anisa) and shared components\n- img/: child avatars\n\n";
+  for (const f of feats) md += `## ${f.name} (${LIVE[f.id]})\n\n${f.purpose}\n\nFrames: ${frameIds(f).map(x => "#" + x).join(", ")}\n\n`;
+  zip.file("README.md", md);
+  return zip.generateAsync({ type: "blob" });
+}
+/* One frame as one self-contained HTML file: shared CSS/JS and avatars inlined, opens on that frame */
+const b64 = buf => { let s = "", u = new Uint8Array(buf); for (let i = 0; i < u.length; i += 8192) s += String.fromCharCode.apply(null, u.subarray(i, i + 8192)); return btoa(s); };
+async function buildFrame(fid, frame) {
+  let html = await (await fetchOk(LIVE[fid])).text();
+  const css = await (await fetchOk("live/kidocare.css")).text(), js = await (await fetchOk("live/kidocare.js")).text();
+  html = html.replace('<link rel="stylesheet" href="kidocare.css">', () => `<style>\n${css}\n</style>`)
+             .replace('<script src="kidocare.js"><\/script>', () => `<script>\n${js}\n<\/script>`)
+             .replace("<body>", `<body>\n<script>if(!location.hash)history.replaceState(null,"","#${frame}")<\/script>`);
+  for (const p of IMGS) { const name = p.replace("live/", ""); if (html.includes(name)) html = html.split(name).join("data:image/png;base64," + b64(await (await fetchOk(p)).arrayBuffer())); }
+  return html;
+}
+/* get: "all", "<feature>" or "<feature>/<frame>" */
+async function download(get) {
+  if (!DL) throw Object.assign(new Error("unavailable"), { code: "unavailable" });
+  const [id, frame] = get.split("/");
+  if (frame) return DL.save({ filename: `kidocare-${id}-${frame}.html`, data: await buildFrame(id, frame) });
+  if (get === "all") return DL.save({ filename: "kidocare-states.zip", data: await buildZip(F.map(f => f.id), true) });
+  return DL.save({ filename: `kidocare-${id}-source.zip`, data: await buildZip([id]) });
+}
+const busy = (b, t) => { const label = b.innerHTML; b.disabled = true; b.textContent = t; return msg => { b.textContent = msg || ""; if (msg) setTimeout(() => { b.innerHTML = label; }, 3000); else b.innerHTML = label; b.disabled = false; }; };
+document.addEventListener("click", async e => {
+  const b = e.target.closest("button[data-src], button[data-frame]"); if (!b) return;
+  const get = b.dataset.src || b.dataset.frame.replace("|", "/");
+  if (!DL) { const done = busy(b, "Getting ready…"); setTimeout(() => done(), 1500); return; }
+  const done = busy(b, "Preparing…");
+  try { await download(get); done(); }
+  catch (err) { done(err && err.code === "declined" ? "" : "Could not prepare it. Try again."); }
+});
+/* Links from the Claude hub arrive as ?get=...: start that download here */
+const WANT = new URLSearchParams(location.search).get("get");
+if (WANT && !IN_CLAUDE) addEventListener("load", () => {
+  const bar = document.createElement("p");
+  bar.style.cssText = "position:fixed;left:50%;bottom:20px;transform:translateX(-50%);margin:0;padding:12px 18px;border-radius:999px;background:var(--ink);color:var(--bg);font-weight:600;font-size:14px;z-index:9;box-shadow:var(--shadow)";
+  bar.textContent = "Preparing your download…"; document.body.appendChild(bar);
+  download(WANT).then(() => { bar.textContent = "Download started. Check your downloads folder."; })
+    .catch(() => { bar.textContent = "Could not prepare it. Use the download buttons on the page."; })
+    .finally(() => setTimeout(() => bar.remove(), 5000));
+});
+
+addEventListener("hashchange", () => render());
+render();
+</script>
+
+</body></html>

@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="sq">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=393">
+<title>Turni: Live frames</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="kidocare.css">
+<style>
+/* Turni: Live (doctor landing while online) */
+.scr{min-height:852px;position:relative;padding:0 16px 130px}
+.th{display:flex;align-items:center;justify-content:space-between;height:44px;margin:8px 4px 20px}
+.th h1{font-size:30px;font-weight:600;letter-spacing:-.02em;line-height:1}
+.bell{width:44px;height:44px;border-radius:22px;background:#fff;display:grid;place-items:center;box-shadow:0 10px 24px rgba(40,80,160,.10);color:var(--ink)}
+.bell svg{width:20px;height:20px}
+
+/* shift card */
+.shift{padding:16px 16px 0}
+.shift .top{display:flex;align-items:center;gap:14px;padding-bottom:14px;border-bottom:1px solid var(--line)}
+.shift .ci{width:52px;height:52px;border-radius:26px;background:var(--blue-fill);color:var(--blue-ink);display:grid;place-items:center;flex:none}
+.shift .ci svg{width:22px;height:22px}
+.shift .tx{flex:1}
+.shift .tx small{display:block;font-size:15px;color:var(--muted);line-height:1.2}
+.shift .tx b{display:flex;align-items:center;gap:8px;font-size:24px;font-weight:600;letter-spacing:-.01em;line-height:1.25}
+.shift .pen{width:26px;height:26px;border-radius:13px;background:var(--blue-fill);color:var(--blue-ink);display:grid;place-items:center}
+.shift .pen svg{width:13px;height:13px}
+.tog{width:62px;height:36px;border-radius:18px;background:var(--blue);position:relative;flex:none}
+.tog::after{content:"";position:absolute;right:3px;top:3px;width:30px;height:30px;border-radius:15px;background:#fff;box-shadow:0 2px 6px rgba(20,50,120,.2)}
+.shift .auto{display:flex;align-items:center;gap:8px;font-size:15px;color:var(--muted);height:44px}
+.shift .auto svg{width:15px;height:15px}
+
+/* segmented tabs */
+.seg{display:grid;grid-template-columns:1fr 1fr;background:rgba(255,255,255,.65);border-radius:24px;padding:4px;height:50px;margin:16px 0}
+.seg .tab{font-size:17px;gap:7px}
+.seg .tab:not(.on){color:var(--muted)}
+.seg .tab b{font-weight:600;color:var(--ink)}
+.seg .tab.on b{color:#fff}
+.seg .tab.on.zero b{color:rgba(255,255,255,.75)}
+.live-dot{width:6px;height:6px;border-radius:3px;background:#fff;box-shadow:0 0 0 3px rgba(255,255,255,.3)}
+
+/* queue card */
+.q{background:#fff;border-radius:24px;box-shadow:0 10px 30px rgba(40,80,160,.08);margin-bottom:10px;overflow:hidden}
+.qh{display:flex;align-items:center;gap:12px;padding:14px}
+.wt{width:68px;height:52px;border-radius:16px;display:flex;flex-direction:column;justify-content:center;align-items:center;flex:none}
+.wt small{font-size:12px;line-height:1.1;font-weight:500}
+.wt b{font-size:19px;font-weight:600;line-height:1.15;letter-spacing:-.01em}
+.wt.ok{background:#E3F6EB;color:#13774A}
+.wt.late{background:var(--amber-fill);color:var(--amber)}
+.qh .tx{flex:1;min-width:0}
+.qh .tx b{font-size:17px;font-weight:600;line-height:1.25;display:block;overflow-wrap:anywhere}
+.qh .tx b .pd{display:inline-block;width:9px;height:9px;border-radius:5px;background:#22C17A;margin-left:7px;vertical-align:1px}
+.qh .tx b .pd.away{background:#C3CBDA}
+.qh .tx>span{display:block;font-size:15px;color:var(--muted);margin-top:1px}
+.ind{width:18px;height:18px;color:var(--soft);flex:none;margin-right:4px}
+.act{width:50px;height:50px;border-radius:25px;background:var(--blue-fill);color:var(--blue-ink);display:grid;place-items:center;flex:none}
+.act svg{width:21px;height:21px}
+
+/* hero */
+.q.hero{background:linear-gradient(90deg,#6AA0FF,#518BF7);box-shadow:0 12px 28px rgba(80,140,250,.35);overflow:visible}
+.q.hero .qh{padding-top:8px}
+.q.hero .tx b,.q.hero .tx>span{color:#fff}
+.q.hero .tx>span{opacity:.85}
+.q.hero .ind{color:rgba(255,255,255,.8)}
+.q.hero .act{background:#fff;box-shadow:0 0 0 7px rgba(255,255,255,.22),0 0 0 14px rgba(255,255,255,.10)}
+.q.hero .act{margin-right:6px}
+.q.hero .wt.ok{background:#E3F6EB}
+.lbl{display:inline-flex;align-items:center;gap:5px;height:24px;padding:0 10px;border-radius:12px;background:rgba(255,255,255,.2);color:#fff;font-size:13px;font-weight:600;margin:14px 0 0 14px}
+.lbl svg{width:12px;height:12px;fill:#fff;stroke:#fff}
+.q.hero .hb{display:flex;flex-direction:column;align-items:flex-start}
+.q.hero .hb .qh{align-self:stretch}
+
+/* expanded body: Gjeneralitetet style */
+.qb{padding:2px 14px 16px}
+.q:not(.hero) .qb{border-top:1px solid var(--line);padding-top:14px}
+.q.hero .qb{background:#fff;border-radius:20px;margin:2px 6px 6px;padding:14px 12px 14px}
+.note{background:var(--blue-fill);border-radius:18px;padding:12px 14px 14px;margin-bottom:12px}
+.note small{display:flex;align-items:center;gap:6px;font-size:14px;font-weight:600;color:var(--blue-ink);margin-bottom:4px}
+.note small svg{width:15px;height:15px}
+.note p{font-size:16px;line-height:1.4}
+.ph{display:flex;gap:8px;margin-top:10px}
+.ph i{width:64px;height:64px;border-radius:6px;border:1.2px solid #AFC0D8;background:#F6F9FE;position:relative;overflow:hidden}
+.ph i svg{position:absolute;inset:0;width:100%;height:100%;stroke:#AFC0D8;stroke-width:1.5}
+.tiles2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.tiles2 .tile{height:auto;padding:12px 14px 10px}
+.tiles2 .tile b{font-size:26px}
+.tiles2+.fl{margin-top:14px}
+.qb .fl{margin-top:14px}
+.kbtn{display:flex;align-items:center;gap:12px;height:58px;border-radius:18px;background:var(--track);padding:0 14px 0 9px;margin-top:16px}
+.kbtn i{width:40px;height:40px;border-radius:20px;background:#fff;color:var(--blue-ink);display:grid;place-items:center;flex:none}
+.kbtn i svg{width:19px;height:19px}
+.kbtn b{flex:1;font-size:17px;font-weight:600}
+.kbtn .chev{width:19px;height:19px}
+
+/* bottom bar */
+.nav{position:absolute;left:16px;right:16px;bottom:26px;height:74px;border-radius:34px;background:#fff;box-shadow:0 12px 34px rgba(40,80,160,.14);display:grid;grid-template-columns:repeat(5,1fr);align-items:center;padding:0 6px}
+.nv{display:flex;flex-direction:column;align-items:center;gap:3px;font-size:12px;font-weight:500;color:var(--ink);position:relative}
+.nv i{width:38px;height:38px;border-radius:19px;display:grid;place-items:center}
+.nv i svg{width:21px;height:21px}
+.nv.on{color:var(--blue-ink)}
+.nv.on i{background:var(--blue);color:#fff}
+.nv em{position:absolute;top:-3px;left:calc(50% + 6px);min-width:19px;height:19px;border-radius:10px;background:var(--pink);color:#fff;font-style:normal;font-size:12px;font-weight:600;display:grid;place-items:center;border:2px solid #fff}
+.fade{position:absolute;left:0;right:0;bottom:0;height:140px;background:linear-gradient(180deg,rgba(216,228,250,0),#D8E4FA 70%)}
+.empty2{background:rgba(255,255,255,.5);border-radius:24px;height:170px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;color:var(--muted);text-align:center}
+.empty2 i{width:46px;height:46px;border-radius:23px;background:var(--grey-fill);display:grid;place-items:center;color:var(--soft)}
+.empty2 b{font-size:17px;font-weight:600;color:var(--ink)}
+.empty2 span{font-size:15px}
+
+/* ===== waiting cards (agreed 31.10) ===== */
+.oC .q{border-radius:20px;box-shadow:0 1px 2px rgba(20,40,90,.04),0 8px 22px rgba(40,80,160,.07)}
+.oC .wt{width:58px;height:46px;border-radius:12px;align-items:center;padding:0}
+.oC .wt b{font-size:17px;white-space:nowrap}
+.oC .act{width:46px;height:46px;border-radius:14px}
+.oC .q.hero{background:linear-gradient(180deg,#F5F9FF,#fff 60%);box-shadow:0 0 0 1.5px #8DB5FF,0 10px 26px rgba(80,140,250,.18)}
+.oC .q.hero .tx b{color:var(--ink)}.oC .q.hero .tx>span{color:var(--muted);opacity:1}
+.oC .q.hero .ind{color:var(--soft)}
+.oC .q.hero .act{background:var(--blue);color:#fff;box-shadow:0 6px 14px rgba(80,140,250,.35);width:auto;padding:0 16px;display:flex;gap:7px;align-items:center;font-size:16px;font-weight:600;margin-right:0}
+.oC .q.hero .act::after{content:"Prano"}
+.oC .q.hero .act svg{width:18px;height:18px}
+.oC .lbl{background:var(--blue-fill);color:var(--blue-ink);border-radius:8px;margin:12px 0 0 14px}
+.oC .lbl svg{fill:var(--blue);stroke:var(--blue)}
+.oC .q.hero .qb{background:none;margin:0;border-radius:0;border-top:1px solid var(--line);padding:14px}
+.oC .q .chip{border-radius:8px}
+.oC .tile,.oC .note{border-radius:14px}
+.oC .kbtn{border-radius:14px;background:var(--blue-fill);height:54px}
+.oC .kbtn b{color:var(--blue-ink)}
+.oC .kbtn i{border-radius:10px;width:36px;height:36px}
+.oC .kbtn .chev{color:var(--blue-ink)}
+.oC .ph i{border-radius:6px}
+
+/* ===== real app chrome (measured from the current build, 393pt wide) ===== */
+.th .mjek{display:flex;align-items:center;gap:6px;height:23px;padding:0 11px 0 9px;border-radius:12px;background:#0E1B3D;color:#fff;font-size:11.5px;font-weight:600;letter-spacing:.08em}
+.th .mjek svg{width:13px;height:13px}
+.shift2{padding:15px 14px 14px 15px}
+.shift2 .r{display:flex;align-items:center;gap:12px}
+.shift2 .tx{flex:1}
+.shift2 .tx small{display:flex;align-items:center;gap:7px;font-size:13.5px;color:var(--muted)}
+.shift2 .gd{width:8px;height:8px;border-radius:4px;background:#3E9A61;box-shadow:0 0 0 3px #DDEFE3}
+.shift2 .tx b{display:block;font-size:20px;font-weight:600;margin-top:3px;letter-spacing:-.01em}
+.shift2 .note2{display:block;font-size:13px;color:var(--muted);margin-top:10px}
+.shift2 .pen2{width:36px;height:36px;border-radius:18px;background:var(--track);display:grid;place-items:center;color:var(--ink)}
+.shift2 .pen2 svg{width:16px;height:16px}
+.shift2 .tog2{width:48px;height:28px;border-radius:14px;background:var(--blue);position:relative}
+.shift2 .tog2::after{content:"";position:absolute;right:2px;top:2px;width:24px;height:24px;border-radius:12px;background:#fff}
+.th{margin:8px 2px 18px}
+
+/* ===== card scale matched to the app ===== */
+.oC .qh{padding:12px;gap:11px}
+.oC .wt{width:54px;height:42px;border-radius:11px}
+.oC .wt b{font-size:15px}
+.oC .qh .tx b{font-size:15.5px}
+.oC .qh .tx>span{font-size:13.5px}
+.oC .qh .tx b .pd{width:8px;height:8px;margin-left:6px}
+.oC .act{width:42px;height:42px;border-radius:13px}
+.oC .act svg{width:19px;height:19px}
+.oC .q.hero .act{padding:0 14px;font-size:15px;height:42px}
+.oC .q.hero .act svg{width:17px;height:17px}
+.oC .ind{width:16px;height:16px}
+.oC .lbl{background:none;padding:0;height:auto;margin:14px 0 0 14px;font-size:12.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--blue-ink)}
+.oC .lbl svg{width:13px;height:13px}
+.oC .q.hero .qh{padding-top:8px}
+.oC .qb{padding:12px 12px 12px}
+.oC .note{padding:11px 13px 12px;border-radius:13px}
+.oC .note small{font-size:13px}
+.oC .note p{font-size:14.5px}
+.oC .tiles2 .tile{padding:10px 12px 9px;border-radius:13px}
+.oC .tiles2 .tile small{font-size:13px}
+.oC .tiles2 .tile b{font-size:22px}
+.oC .tiles2 .tile b span{font-size:13.5px}
+.oC .qb .fl small{font-size:13px}
+.oC .q .chip{height:24px;font-size:13.5px;padding:0 9px}
+.oC .kbtn{height:48px;border-radius:13px;margin-top:12px;padding:0 12px 0 7px}
+.oC .kbtn b{font-size:15.5px}
+.oC .kbtn i{width:34px;height:34px}
+.oC .kbtn i svg{width:17px;height:17px}
+.oC .q{margin-bottom:10px}
+
+/* accept is active on every card */
+.oC .q .act{background:#6694F5;color:#fff;box-shadow:0 6px 14px rgba(90,140,240,.3);width:auto;height:42px;padding:0 14px;border-radius:13px;display:flex;gap:7px;align-items:center;font-size:15px;font-weight:600;margin-right:0}
+.oC .q .act::after{content:"Prano"}
+.oC .q .act svg{width:17px;height:17px}
+</style>
+</head>
+<body class="oC">
+<div id="f"></div>
+<script src="kidocare.js"></script>
+<script>
+/* local icons */
+Object.assign(P,{
+ bell:'<path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/>',
+ star:'<path d="M11.5 2.3a.53.53 0 0 1 .95 0l2.31 4.68a2.1 2.1 0 0 0 1.6 1.16l5.16.76a.53.53 0 0 1 .3.9l-3.74 3.64a2.1 2.1 0 0 0-.61 1.88l.88 5.14a.53.53 0 0 1-.77.56l-4.62-2.43a2.1 2.1 0 0 0-1.97 0L6.4 21.01a.53.53 0 0 1-.77-.56l.88-5.14a2.1 2.1 0 0 0-.61-1.88L2.16 9.8a.53.53 0 0 1 .3-.9l5.16-.76a2.1 2.1 0 0 0 1.6-1.16z"/>',
+ forum:'<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M8 9h8M8 13h5"/>',
+ office:'<rect x="4" y="2" width="16" height="20" rx="2"/><path d="M9 22v-4h6v4M8 6h.01M12 6h.01M16 6h.01M8 10h.01M12 10h.01M16 10h.01M8 14h.01M12 14h.01M16 14h.01"/>',
+ cal:'<rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/>',
+ pen:'<path d="M21.17 6.81a1 1 0 0 0-3.99-3.99L3.84 16.17a2 2 0 0 0-.5.83l-1.32 4.35a.5.5 0 0 0 .62.62l4.35-1.32a2 2 0 0 0 .83-.5z"/>',
+ down:'<path d="m6 9 6 6 6-6"/>', up:'<path d="m18 15-6-6-6 6"/>',
+ note:'<path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4M8 13h8M8 17h5"/>'
+});
+
+/* queue entries (children from the shared data; Ela and Ben are Valbona's other children) */
+const NOTE_NOA='Ka temperaturë 38.2°C që nga mëngjesi. Ha pak, por pi ujë normalisht.';
+const NOTE_ANISA='Kollitet fort që nga mbrëmja dhe merr frymë me vështirësi. Ka përdorur pompën 3 herë sot, por nuk po i bën efekt si zakonisht.';
+
+/* ---------- components ---------- */
+const head=()=>`<div class="th"><h1>Turni</h1><span class="bell">${I('bell')}</span></div>`;
+const shiftOld=()=>`<div class="card shift"><div class="top"><span class="ci">${I('steth')}</span><div class="tx"><small>Turni mbaron</small><b>Sot, 24:00<span class="pen">${I('pen')}</span></b></div><span class="tog"></span></div><div class="auto">${I('refresh')}Do të dilni automatikisht nga linja</div></div>`;
+const segOld=(live,ag)=>`<div class="seg"><div class="tab on ${live?'':'zero'}">${I('zap')}Live <b>${live}</b>${live?'<span class="live-dot"></span>':''}</div><div class="tab">${I('cal')}Agjenda <b>${ag}</b></div></div>`;
+const shift=()=>`<div class="card shift2"><div class="r"><div class="tx"><small><span class="gd"></span>Turni mbaron</small><b>Sot, 24:00</b></div><span class="pen2">${I('pen')}</span><span class="tog2"></span></div><span class="note2">Do të dilni automatikisht nga linja</span></div>`;
+const seg=(live,ag)=>`<div class="seg2"><div class="t on">${I('zap')}Live <b>${live}</b></div><div class="t">${I('cal')}Agjenda <b>${ag}</b></div></div>`;
+const nav=(n=0)=>gnav(0,{0:n,1:3});
+const wait=m=>`<div class="wt ${m>5?'late':'ok'}"><b>${m} min</b></div>`;
+
+/* body: the Gjeneralitetet layout, trimmed to what helps before accepting */
+function qBody(c,o){
+  const note=o.note===false?'':`<div class="note"><small>${I('note')}Shënim nga prindi</small><p>${o.note}</p>${o.photos?`<div class="ph">${('<i>'+X('')+'</i>').repeat(2)}</div>`:''}</div>`;
+  const tiles=`<div class="tiles2"><div class="tile"><small>Pesha</small><b>${c.w}<span>kg</span></b></div><div class="tile"><small>Mosha</small><b>${c.age[0]}<span>vjeç</span><span>&amp; ${c.age[1]} muaj</span></b></div></div>`;
+  const al=c.allergies&&c.allergies.length?`<div class="fl"><small>Alergjitë</small><div class="chips">${c.allergies.map(a=>`<span class="chip c-pink">${I('tri')}${a}</span>`).join('')}</div></div>`:'';
+  const ch=c.chronic&&c.chronic.length?`<div class="fl"><small>Sëmundje kronike</small><div class="chips">${c.chronic.map(x=>`<span class="chip c-amber">${I('refresh')}${x}</span>`).join('')}</div></div>`:'';
+  return `<div class="qb">${note}${tiles}${al}${ch}<div class="kbtn"><i>${I('steth')}</i><b>Kartela mjekësore</b>${I('chev','chev')}</div></div>`;
+}
+/* one queue card: o = {type:'video'|'chat', min, hero, open, away, note, photos} */
+function qCard(c,o){
+  const hd=`<div class="qh">${wait(o.min)}<div class="tx"><b>${c.name}&#8288;<span class="pd ${o.away?'away':''}"></span></b>${o.open?'':`<span>${ageLabel(c)}</span>`}</div>${I(o.open?'up':'down','ind')}<span class="act">${I(o.type)}</span></div>`;
+  const body=o.open?qBody(c,o):'';
+  if(o.hero) return `<div class="q hero"><div class="hb"><span class="lbl">${I('star')}Ju zgjodhi juve</span>${hd}</div>${body}</div>`;
+  return `<div class="q">${hd}${body}</div>`;
+}
+const navOld=()=>`<div class="fade"></div><div class="nav">${[['steth','Turni',0,1],['chat','Konsultat',3],['info','Infopoint'],['forum','Forumi'],['office','Zyra']].map(([i,l,n,on])=>`<div class="nv ${on?'on':''}"><i>${I(i)}</i>${l}${n?`<em>${n}</em>`:''}</div>`).join('')}</div>`;
+const screen=(list,live,ag=2)=>`<div class="scr bg">${statusBar()}${head()}${shift()}${seg(live,ag)}${list}${nav(live)}</div>`;
+const emptyLive=()=>`<div class="empty2"><i>${I('zap')}</i><b>Askush nuk po pret</b><span>Kërkesat e reja shfaqen këtu.</span></div>`;
+
+const noa=(x={})=>qCard(NOA,Object.assign({type:'chat',min:3,note:NOTE_NOA},x));
+const anisa=(x={})=>qCard(ANISA,Object.assign({type:'video',min:2,hero:1,note:NOTE_ANISA},x));
+const FULL=()=>anisa()+noa({min:14})+qCard(ELA,{type:'video',min:11,away:1})+qCard(BEN,{type:'video',min:6});
+
+/* ---------- frames ---------- */
+const F={
+ 'path-1':()=>screen(noa(),1),
+ 'path-2':()=>screen(noa({open:1}),1),
+ 'screen-min':()=>screen(noa(),1),
+ 'screen-full':()=>screen(FULL(),4),
+ 'screen-open':()=>screen(anisa({open:1})+noa({min:14}),4),
+ 'screen-empty':()=>screen(emptyLive(),0),
+ 'seg-live':()=>crop(seg(4,2)),
+ 'seg-zero':()=>crop(seg(0,2)),
+ 'q-col':()=>crop(noa({min:14})),
+ 'q-video':()=>crop(qCard(BEN,{type:'video',min:6})),
+ 'q-ok':()=>crop(noa()),
+ 'q-away':()=>crop(qCard(ELA,{type:'video',min:11,away:1})),
+ 'q-long':()=>crop(qCard(ANISA,{type:'video',min:9})),
+ 'q-exp-min':()=>crop(noa({open:1})),
+ 'q-photos':()=>crop(noa({open:1,photos:1,note:'Ka skuqje në krahë dhe në bark që nga dje. Ju dërgoj dy foto.'})),
+ 'q-nonote':()=>crop(noa({open:1,note:false})),
+ 'q-al':()=>crop(qCard(Object.assign({},ANISA,{chronic:[],allergies:['Penicilinë']}),{type:'video',min:4,open:1,note:'Ka dhimbje veshi që nga mbrëmja dhe temperaturë 38°C.'})),
+ 'q-chr':()=>crop(qCard(Object.assign({},ANISA,{allergies:[],chronic:['Astmë bronkiale']}),{type:'chat',min:8,open:1,note:'Kollitet natën prej dy ditësh. A duhet ta rrisim pompën?'})),
+ 'h-col':()=>crop(anisa()),
+ 'h-exp':()=>crop(anisa({open:1}))
+};
+window.FRAME_IDS=Object.keys(F);
+function show(){
+  const id=location.hash.slice(1)||'path-1';
+  document.getElementById('f').innerHTML=(F[id]||F['path-1'])();
+  const post=()=>{try{parent.postMessage({liveFrame:id,h:document.getElementById('f').scrollHeight},'*')}catch(e){}};
+  requestAnimationFrame(post);document.querySelectorAll('#f img').forEach(i=>i.complete||i.addEventListener('load',post));
+}
+addEventListener('hashchange',show);show();
+document.fonts&&document.fonts.ready.then(show);
+</script>
+</body>
+</html>

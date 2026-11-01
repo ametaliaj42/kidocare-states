@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="sq">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=393">
+<title>Profili i mjekut frames</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="kidocare.css">
+<style>
+:root{--err:#D94862;--star:#F2B233;--ph:#9AA6BC;--field-line:#DCE5F3}
+.zh{display:flex;align-items:center;justify-content:space-between;margin:12px 0 18px}
+.zh h1{font-size:30px;font-weight:600;letter-spacing:-.02em}
+.bell{width:44px;height:44px;border-radius:22px;background:#fff;display:grid;place-items:center;box-shadow:0 10px 24px rgba(40,80,160,.10)}
+.bell svg{width:20px;height:20px}
+.zc{display:flex;align-items:center;gap:14px;padding:16px;border-radius:24px;background:#fff;box-shadow:0 10px 30px rgba(40,80,160,.08)}
+.dav{width:62px;height:62px;border-radius:31px;background:var(--blue-fill);color:var(--blue-ink);display:grid;place-items:center;flex:none;position:relative;overflow:hidden}
+.dav svg.i{width:28px;height:28px}
+.dav.ph{background:#F4F7FC;border:1.5px solid #B9C8DD}
+.dav.ph svg.x{width:100%;height:100%;stroke:#B9C8DD;stroke-width:3}
+.zc .tx{flex:1;min-width:0}
+.zc .tx b{display:flex;align-items:center;gap:8px;font-size:18px;font-weight:600}
+.badge-v{width:20px;height:20px;flex:none}
+.zc .st{display:flex;align-items:center;gap:8px;font-size:16px;color:var(--muted);margin-top:4px}
+.dot{width:9px;height:9px;border-radius:5px;background:#22C17A}
+.dot.off{background:#C3CBDA}
+.rate{display:inline-flex;align-items:center;gap:5px;margin-left:16px;color:var(--ink)}
+.rate svg{width:15px;height:15px;fill:var(--star);stroke:var(--star)}
+.cb{width:40px;height:40px;border-radius:20px;background:var(--track);display:grid;place-items:center;color:var(--muted)}
+.cb svg{width:18px;height:18px}
+.pend{display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 11px;border-radius:14px;background:var(--grey-fill);color:var(--muted);font-weight:600;font-size:15px}
+.pend svg{width:16px;height:16px}
+.zs{font-size:20px;font-weight:600;margin:26px 4px 12px}
+.menu{background:#fff;border-radius:24px;box-shadow:0 10px 30px rgba(40,80,160,.08);padding:0 16px}
+.mi{display:flex;align-items:center;gap:14px;height:64px;border-top:1px solid var(--line);font-size:17px;font-weight:600}
+.mi:first-child{border-top:0}
+.mi i{width:38px;height:38px;border-radius:19px;background:var(--blue-fill);color:var(--blue-ink);display:grid;place-items:center;flex:none}
+.mi i svg{width:18px;height:18px}
+.mi b{flex:1;font-weight:600}
+.mi .cb{width:34px;height:34px}
+.lang{display:flex;background:var(--track);border-radius:16px;padding:3px}
+.lang span{width:36px;height:26px;border-radius:13px;display:grid;place-items:center;font-size:13px;font-weight:600;color:var(--muted)}
+.lang span.on{background:var(--blue);color:#fff}
+.znote{font-size:13px;color:var(--muted);text-align:center;margin:16px 10px 0;line-height:1.4}
+.nav{position:absolute;left:16px;right:16px;bottom:24px;height:76px;border-radius:34px;background:#fff;box-shadow:0 10px 30px rgba(40,80,160,.12);display:grid;grid-template-columns:repeat(5,1fr);align-items:center}
+.nav span{display:flex;flex-direction:column;align-items:center;gap:4px;font-size:11px;color:var(--muted);position:relative}
+.nav span i{width:36px;height:36px;border-radius:18px;display:grid;place-items:center}
+.nav span i svg{width:19px;height:19px}
+.nav span.on{color:var(--blue-ink);font-weight:600}
+.nav span.on i{background:var(--blue);color:#fff}
+.nav .nb{position:absolute;top:-4px;left:50%;margin-left:4px;width:16px;height:16px;border-radius:8px;background:var(--pink);color:#fff;font-size:10px;font-weight:600;display:grid;place-items:center}
+/* profile */
+.ph-top{display:flex;align-items:center;justify-content:space-between;margin:8px 0 12px}
+.ph-top .l{display:flex;align-items:center;gap:16px;font-size:18px;font-weight:600}
+.edit{display:flex;align-items:center;gap:6px;color:var(--blue-ink);font-weight:600;font-size:17px}
+.edit svg{width:17px;height:17px}
+.hero{display:flex;flex-direction:column;align-items:center;text-align:center;padding-bottom:4px}
+.big{width:120px;height:120px;border-radius:60px;background:#fff;border:6px solid #fff;box-shadow:0 10px 30px rgba(40,80,160,.10);display:grid;place-items:center;position:relative}
+.big .in{width:100%;height:100%;border-radius:54px;background:var(--blue-fill);color:var(--blue-ink);display:grid;place-items:center;overflow:hidden}
+.big .in svg.i{width:40px;height:40px}
+.big .in.ph{background:#F4F7FC}
+.big .in.ph svg.x{width:100%;height:100%;stroke:#B9C8DD;stroke-width:2}
+.big .cam{position:absolute;right:2px;bottom:6px;width:30px;height:30px;border-radius:15px;background:var(--blue);color:#fff;display:grid;place-items:center;border:3px solid #fff}
+.big .cam svg{width:14px;height:14px}
+.big .ring{position:absolute;inset:-6px;border-radius:66px}
+.hero h2{display:block;font-size:25px;font-weight:600;letter-spacing:-.01em;margin-top:16px;line-height:1.25;padding:0 14px}
+.hero h2 .badge-v{width:22px;height:22px;display:inline-block;vertical-align:-3px;margin-left:6px}
+.hero .rl{display:flex;align-items:center;gap:6px;font-size:15px;color:var(--muted);margin-top:6px}
+.hero .rl svg{width:15px;height:15px;fill:var(--star);stroke:var(--star)}
+.hero .pend{margin-top:8px}
+.ptabs{display:grid;grid-template-columns:1fr 1fr;background:rgba(255,255,255,.65);border-radius:24px;padding:4px;height:50px;margin:18px 0 14px}
+.ptabs span{display:flex;align-items:center;justify-content:center;gap:8px;border-radius:20px;font-size:17px;font-weight:600;color:var(--muted)}
+.ptabs span b{font-weight:600;color:var(--ink)}
+.ptabs span.zero b{color:var(--muted)}
+.ptabs span svg{width:18px;height:18px}
+.ptabs span.on{background:var(--blue);color:#fff;box-shadow:0 8px 20px rgba(80,140,250,.25)}
+.ptabs span.on b{color:#fff}
+.about{background:#fff;border-radius:24px;box-shadow:0 10px 30px rgba(40,80,160,.08);padding:0 16px}
+.ar{display:flex;gap:14px;padding:14px 0;border-top:1px solid var(--line)}
+.ar:first-child{border-top:0}
+.ar i{width:38px;height:38px;border-radius:19px;background:var(--blue-fill);color:var(--blue-ink);display:grid;place-items:center;flex:none}
+.ar i svg{width:18px;height:18px}
+.ar small{display:block;font-size:13px;color:var(--muted)}
+.ar b{display:block;font-size:16px;font-weight:600;line-height:1.35}
+.ar span{display:block;font-size:13px;color:var(--muted)}
+.ar .chips{margin-top:6px;gap:6px}
+.ar .chip{display:inline-flex;height:24px;font-size:13px;padding:0 9px}
+.ar .chip.c-blue{color:var(--blue-ink)}
+.ar .chip.c-amber{color:var(--amber)}
+.ar .chip.c-pink{color:var(--pink)}
+.ar .chip svg{width:13px;height:13px}
+.ar .chip.c-amber,.ar .chip.c-pink{margin-top:6px}
+.bioh{font-size:20px;font-weight:600;margin:22px 4px 12px}
+.bio{background:#fff;border-radius:24px;box-shadow:0 10px 30px rgba(40,80,160,.08);padding:16px;font-size:16px;line-height:1.5}
+.bioadd{display:flex;align-items:center;gap:14px;border:1.5px dashed #C7D4E8;border-radius:24px;padding:16px;background:rgba(255,255,255,.4)}
+.bioadd i{width:40px;height:40px;border-radius:20px;background:var(--blue-fill);color:var(--blue-ink);display:grid;place-items:center}
+.bioadd i svg{width:18px;height:18px}
+.bioadd b{display:block;font-weight:600;font-size:16px}
+.bioadd span{font-size:14px;color:var(--muted)}
+.more{color:var(--blue-ink);font-weight:600;font-size:15px;margin-top:6px}
+/* reviews */
+.sum{display:flex;gap:22px;align-items:center;background:#fff;border-radius:24px;box-shadow:0 10px 30px rgba(40,80,160,.08);padding:18px}
+.sum .avg b{display:block;font-size:44px;font-weight:600;letter-spacing:-.02em;line-height:1}
+.stars{display:flex;gap:4px;margin-top:8px}
+.stars svg{width:14px;height:14px;fill:var(--star);stroke:var(--star)}
+.stars svg.e{fill:#E4EAF3;stroke:#E4EAF3}
+.sum .avg span{display:block;font-size:13px;color:var(--muted);margin-top:6px}
+.dist{flex:1;display:grid;gap:5px}
+.dist div{display:flex;align-items:center;gap:10px;font-size:12px;color:var(--muted)}
+.dist i{flex:1;height:5px;border-radius:3px;background:#EEF2F8;position:relative;overflow:hidden}
+.dist i::after{content:"";position:absolute;left:0;top:0;bottom:0;width:var(--w);background:var(--blue);border-radius:3px}
+.cnt-card{display:flex;align-items:center;gap:16px;background:#fff;border-radius:24px;box-shadow:0 10px 30px rgba(40,80,160,.08);padding:18px}
+.cnt-card i{width:52px;height:52px;border-radius:26px;background:var(--amber-fill);color:var(--star);display:grid;place-items:center}
+.cnt-card i svg{width:22px;height:22px}
+.cnt-card b{display:block;font-size:18px;font-weight:600}
+.cnt-card span{font-size:15px;color:var(--muted)}
+.rv{background:#fff;border-radius:24px;box-shadow:0 10px 30px rgba(40,80,160,.08);padding:16px 18px;margin-top:10px}
+.rv .h{display:flex;justify-content:space-between;align-items:center}
+.rv .h .stars{margin:0}
+.rv .h span{font-size:15px;color:var(--muted)}
+.rv p{font-size:16px;line-height:1.5;margin-top:10px}
+.rv p.cut{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.rv p.only{color:var(--muted);font-size:15px}
+.rv small{display:block;font-size:14px;color:var(--muted);margin-top:8px}
+.morebtn{height:48px;border-radius:24px;background:rgba(255,255,255,.6);display:grid;place-items:center;color:var(--blue-ink);font-weight:600;font-size:16px;margin-top:12px}
+.emptyr{border:1.5px dashed #C7D4E8;border-radius:24px;background:rgba(255,255,255,.45);display:flex;flex-direction:column;align-items:center;text-align:center;padding:24px 20px}
+.emptyr i{width:46px;height:46px;border-radius:23px;background:var(--amber-fill);color:var(--star);display:grid;place-items:center;margin-bottom:12px}
+.emptyr i svg{width:20px;height:20px}
+.emptyr b{font-size:16px;font-weight:600}
+.emptyr span{font-size:14px;color:var(--muted);margin-top:6px;line-height:1.45}
+.rfail{display:flex;align-items:center;gap:12px;background:#fff;border-radius:22px;padding:14px 16px;box-shadow:0 10px 30px rgba(40,80,160,.08)}
+.rfail i{width:40px;height:40px;border-radius:20px;background:var(--amber-fill);color:var(--amber);display:grid;place-items:center;flex:none}
+.rfail i svg{width:18px;height:18px}
+.rfail b{flex:1;font-size:15px;font-weight:600}
+.rfail span{display:flex;align-items:center;gap:5px;color:var(--blue-ink);font-weight:600;font-size:15px}
+.rfail span svg{width:15px;height:15px}
+/* edit */
+.ep .hd{margin:8px 0 18px}
+.ecard{background:#fff;border-radius:24px;box-shadow:0 10px 30px rgba(40,80,160,.08);padding:16px}
+.prow{display:flex;align-items:center;gap:16px}
+.prow .dav{width:72px;height:72px;border-radius:36px}
+.prow b{display:block;font-size:16px;font-weight:600}
+.prow span{display:block;font-size:14px;color:var(--blue-ink);font-weight:600;margin-top:2px}
+.prow span.m{color:var(--muted);font-weight:400}
+.prow .warnl{color:var(--amber);font-weight:500;display:flex;align-items:center;gap:6px}
+.prow .warnl svg{width:14px;height:14px}
+.fl2{margin-top:16px}
+.fl2:first-child{margin-top:0}
+.fl2 label{display:flex;justify-content:space-between;font-size:14px;color:var(--muted);margin-bottom:6px}
+.fl2 label em{font-style:normal;color:var(--soft)}
+.fl2 label em.over{color:var(--err);font-weight:600}
+.inp2{border:1.5px solid var(--field-line);border-radius:18px;background:#F7FAFE;padding:12px 14px;font-size:16px;line-height:1.45;min-height:48px}
+.inp2.ph{color:var(--ph)}
+.inp2.tall{min-height:110px}
+.inp2.focus{border-color:var(--blue);background:#fff}
+.inp2.err{border-color:var(--err);background:#fff}
+.inp2.lock{background:var(--grey-fill);color:var(--muted);display:flex;justify-content:space-between;align-items:center}
+.inp2.lock svg{width:16px;height:16px;color:var(--soft)}
+.ferr{display:flex;align-items:center;gap:6px;color:var(--err);font-size:14px;margin-top:6px}
+.ferr svg{width:15px;height:15px}
+.lchips{display:flex;flex-wrap:wrap;gap:8px}
+.lchips span{display:inline-flex;align-items:center;gap:6px;height:32px;padding:0 12px;border-radius:16px;background:var(--blue-fill);color:var(--blue-ink);font-weight:600;font-size:15px}
+.lchips span svg{width:14px;height:14px}
+.lchips span.add{background:#fff;border:1.5px solid var(--field-line)}
+.locked{margin-top:22px}
+.locked h4{font-size:14px;font-weight:600;color:var(--muted);margin:0 4px 8px}
+.edock{position:absolute;left:0;right:0;bottom:0;padding:14px 20px 30px;background:linear-gradient(180deg,rgba(220,231,250,0),rgba(220,231,250,.96) 30%)}
+.edock .b{height:55px;border-radius:28px;display:flex;align-items:center;justify-content:center;gap:10px;font-size:17px;font-weight:600}
+.edock .b.off{background:#EEF2F9;color:#9AA4BA}
+.edock .b.on{background:var(--blue);color:#fff;box-shadow:0 12px 26px rgba(80,140,250,.30)}
+.edock .b.go{background:#76A6FF;color:#fff}
+.edock .fail{display:flex;align-items:center;gap:10px;height:44px;border-radius:22px;background:var(--amber-fill);color:var(--amber);padding:0 16px;font-size:15px;margin-bottom:10px}
+.edock .fail svg{width:18px;height:18px}
+.edock .fail b{margin-left:auto;font-weight:600}
+.spin{width:20px;height:20px;border-radius:10px;border:2.5px solid rgba(255,255,255,.45);border-top-color:#fff}
+.toast{position:absolute;left:16px;right:16px;bottom:30px;height:54px;border-radius:20px;background:#0E1B3D;color:#fff;display:flex;align-items:center;gap:12px;padding:0 16px;font-size:16px;font-weight:500}
+.toast i{width:26px;height:26px;border-radius:13px;background:#22C17A;display:grid;place-items:center}
+.toast i svg{width:15px;height:15px;stroke-width:2.4}
+/* sheets */
+.bs h3{font-size:21px;font-weight:600;margin:16px 0 4px}
+.bs p.sub2{font-size:15px;color:var(--muted);margin-bottom:18px}
+.opt{display:flex;align-items:center;gap:14px;height:56px;font-size:17px;font-weight:600}
+.opt i{width:42px;height:42px;border-radius:21px;background:var(--blue-fill);color:var(--blue-ink);display:grid;place-items:center}
+.opt i svg{width:19px;height:19px}
+.opt.del{color:var(--pink)}
+.opt.del i{background:var(--pink-fill);color:var(--pink)}
+.shnote{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted);margin-top:14px}
+.shnote svg{width:15px;height:15px}
+.pb{height:52px;border-radius:26px;display:grid;place-items:center;font-size:17px;font-weight:600;margin-top:12px}
+.pb.light{background:var(--blue-fill);color:var(--blue-ink)}
+.pb.pinko{border:1.5px solid #EDA8C9;color:var(--pink);background:#fff}
+.peer{text-align:center}
+.peer .dav{width:76px;height:76px;border-radius:38px;margin:4px auto 12px}
+.peer h3{display:flex;justify-content:center;align-items:center;gap:8px;font-size:23px;margin:0;line-height:1.3;flex-wrap:wrap;padding:0 30px}
+.peer p.bio2{font-size:15px;color:#3C4A68;line-height:1.5;margin:10px 0 16px}
+.peer p.bio2.cut{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;margin-bottom:4px}
+.peer .about{box-shadow:none;background:var(--tile);text-align:left}
+.peer .ar{border-color:#E2E9F4}
+</style>
+</head>
+<body>
+<div id="f"></div>
+<script src="kidocare.js"></script>
+<script>
+Object.assign(P,{
+ bell:'<path d="M10.268 21a2 2 0 0 0 3.464 0"/><path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326"/>',
+ star:'<path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/>',
+ cal:'<rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/>',
+ coin:'<circle cx="12" cy="12" r="9"/><path d="M15 9.5a3 3 0 1 0 0 5M8 11h5M8 13.5h5"/>',
+ award:'<circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/>',
+ shield:'<path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/>',
+ globe:'<circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20M2 12h20"/>',
+ heart:'<path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>',
+ logout:'<path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5M21 12H9"/>',
+ building:'<rect x="4" y="2" width="16" height="20" rx="2"/><path d="M9 22v-4h6v4M8 6h.01M16 6h.01M12 6h.01M12 10h.01M12 14h.01M16 10h.01M16 14h.01M8 10h.01M8 14h.01"/>',
+ brief:'<path d="M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/><rect x="2" y="6" width="20" height="14" rx="2"/>',
+ pen:'<path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"/>',
+ cam:'<path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/>',
+ img:'<rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/>',
+ trash:'<path d="M3 6h18M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/>',
+ lock:'<rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>',
+ check:'<path d="M20 6 9 17l-5-5"/>',
+ msg:'<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>'
+});
+const BADGE='<svg class="badge-v" viewBox="0 0 24 24"><path d="M12 1.5l2.6 2 3.2-.4 1.2 3 3 1.2-.4 3.2 2 2.6-2 2.6.4 3.2-3 1.2-1.2 3-3.2-.4-2.6 2-2.6-2-3.2.4-1.2-3-3-1.2.4-3.2-2-2.6 2-2.6-.4-3.2 3-1.2 1.2-3 3.2.4z" fill="#5B96FF"/><path d="m8 12.3 2.7 2.7L16.2 9.5" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+const STAR=(e)=>`<svg class="${e?'e':''}" viewBox="0 0 24 24">${P.star}</svg>`;
+const stars=n=>`<div class="stars">${[1,2,3,4,5].map(i=>STAR(i>n)).join('')}</div>`;
+
+/* ---------- data: the two doctors ---------- */
+const ARBEN={name:'Dr. Arben Shehu',spec:'Mjek i përgjithshëm',work:'Qendra Shëndetësore Nr. 2',city:'Shkodër',lic:'2410',photo:0,reviews:0};
+const BLERINA={name:'Dr. Blerina Kola',spec:'Pediatre e përgjithshme',work:'Poliklinika Pediatrike Tirana',city:'Tiranë',lic:'1937',photo:1,reviews:32,avg:'4.8',years:'12 vite',langs:['Shqip','Anglisht','Italisht'],
+  bio:"Pediatre me 12 vite përvojë, me fokus te astma dhe alergjitë tek fëmijët. Më pëlqen t'u shpjegoj prindërve çdo hap të trajtimit me fjalë të thjeshta.",licSoon:1};
+const REVIEWS=[[5,'22.10','Shumë e kujdesshme me Anisën. Na shpjegoi qartë si ta përdorim inhalatorin dhe pas dy ditësh na shkroi vetë për të pyetur si ishte. Ndihesh i qetë kur e di që dikush e ndjek fëmijën nga afër, edhe pas konsultës. E rekomandoj pa mëdyshje.','Valbona X.'],
+ [5,'18.10','','Elira M.'],[4,'09.10','U lidhëm shpejt dhe mori kohë të dëgjonte. Thirrja u ndërpre një herë.','Dritan P.'],[1,'2025','Prita gjatë për përgjigje.','Artan B.']];
+
+/* ---------- Zyra ---------- */
+function zcard(d,o={}){
+  const av=d.photo?`<span class="dav ph">${X('x')}</span>`:`<span class="dav">${I('user')}</span>`;
+  const st=o.pend?`<span class="pend">${I('clock')}Në verifikim</span>`:`<span class="st"><span class="dot ${o.off?'off':''}"></span>${o.off?'Jo aktive':'Aktive'}${d.reviews>=3?`<span class="rate"><svg viewBox="0 0 24 24">${P.star}</svg>${d.avg}</span>`:''}</span>`;
+  return `<div class="zc">${av}<div class="tx"><b>${d.name}${o.pend?'':BADGE}</b>${st}</div><span class="cb">${I('chev')}</span></div>`;
+}
+const mi=(ic,t,right)=>`<div class="mi"><i>${I(ic)}</i><b>${t}</b>${right||`<span class="cb">${I('chev')}</span>`}</div>`;
+const licChip=s=>s==='soon'?`<span class="chip c-amber">Skadon</span>`:s==='gone'?`<span class="chip c-pink">Ka skaduar</span>`:'';
+const navbar=()=>`<div class="nav">${[['steth','Turni'],['msg','Konsultat',3],['info','Infopoint'],['chat','Forumi'],['file','Zyra',0,1]].map(([i,l,b,on])=>`<span class="${on?'on':''}"><i>${I(i)}</i>${l}${b?`<em class="nb">${b}</em>`:''}</span>`).join('')}</div>`;
+function zyra(d,o={}){
+  return `<div class="page bg" style="padding-bottom:120px">${statusBar()}<div class="zh"><h1>Zyra</h1><span class="bell">${I('bell')}</span></div>${zcard(d)}
+   <div class="zs">Puna</div><div class="menu">${mi('cal','Orari')}${mi('coin','Fitimet')}${mi('award','Licenca',(o.lic?licChip(o.lic)+' ':'')+`<span class="cb">${I('chev')}</span>`)}</div>
+   <div class="zs">Llogaria</div><div class="menu">${mi('shield','Siguria')}${mi('globe','Gjuha','<span class="lang"><span class="on">AL</span><span>EN</span></span>')}</div>
+   <div class="menu" style="margin-top:16px">${mi('heart','Kalo te prindi')}${mi('logout','Dil','')}</div>
+   <p class="znote">Miratimi, auditimi dhe protokollet menaxhohen nga Drejtuesi Klinik jashtë aplikacionit.</p>${navbar()}</div>`;
+}
+
+/* ---------- profile ---------- */
+function hero(d,o={}){
+  const ph=d.photo&&!o.fail;
+  const ring=o.up?`<svg class="ring" viewBox="0 0 132 132"><circle cx="66" cy="66" r="62" fill="none" stroke="#E3EBF8" stroke-width="5"/><circle cx="66" cy="66" r="62" fill="none" stroke="#5B96FF" stroke-width="5" stroke-linecap="round" stroke-dasharray="234 390" transform="rotate(-90 66 66)"/></svg>`:'';
+  const name=o.long?'Dr. Anastasia Kristofori-Papadhimitri':d.name;
+  const rl=o.pend?`<span class="pend">${I('clock')}Në verifikim</span>`:d.reviews>=3?`<div class="rl"><svg viewBox="0 0 24 24">${P.star}</svg>${d.avg} · ${d.reviews} vlerësime</div>`:d.reviews?`<div class="rl">${d.reviews} vlerësim${d.reviews>1?'e':''}</div>`:'';
+  return `<div class="hero"><div class="big"><div class="in ${ph?'ph':''}">${ph?X('x'):I('user')}</div>${o.self===false||o.up?'':`<span class="cam">${I('cam')}</span>`}${ring}</div><h2>${name}${o.pend?'':BADGE}</h2>${rl}</div>`;
+}
+const ptabs=(d,on)=>`<div class="ptabs"><span class="${on===0?'on':''}">${I('user')}Profili</span><span class="${on===1?'on':''} ${d.reviews?'':'zero'}">${I('star')}Vlerësimet <b>${d.reviews}</b></span></div>`;
+const ar=(ic,lab,val,sub,extra)=>`<div class="ar"><i>${I(ic)}</i><div><small>${lab}</small><b>${val}</b>${sub?`<span>${sub}</span>`:''}${extra||''}</div></div>`;
+function licRow(d,s){
+  return ar('award','Licenca','Nr. '+d.lic,'',s==='soon'?`<span class="chip c-amber">${I('tri')}Skadon më 15.12</span>`:s==='gone'?`<span class="chip c-pink">${I('tri')}Ka skaduar</span>`:'');
+}
+function about(d,o={}){
+  const rows=[ar('steth','Specialiteti',d.spec,o.peer?'':'Ndryshohet nga drejtuesi klinik'),ar('building','Vendi i punës',d.work,d.city)];
+  if(d.years) rows.push(ar('brief','Përvoja',d.years));
+  if(d.langs) rows.push(ar('globe','Gjuhët','','',`<div class="chips">${d.langs.map(l=>`<span class="chip c-blue">${l}</span>`).join('')}</div>`).replace('<b></b>',''));
+  rows.push(o.peer?ar('award','Licenca','Nr. '+d.lic):licRow(d,o.lic));
+  return `<div class="about">${rows.join('')}</div>`;
+}
+const bioBlock=d=>`<div class="bioh">Bio</div>${d.bio?`<div class="bio">${d.bio}</div>`:`<div class="bioadd"><i>${I('plus')}</i><div><b>Shtoni disa fjalë për veten</b><span>Prindërit e lexojnë para se t'ju zgjedhin.</span></div></div>`}`;
+const profTop=()=>`<div class="ph-top"><span class="l"><span class="back">${I('back')}</span>Zyra</span><span class="edit">${I('pen')}Ndrysho</span></div>`;
+function prof(d,o={}){
+  const body=o.tab===1?reviewsTab(d):about(d,{lic:d.licSoon?'soon':''})+bioBlock(d);
+  return `<div class="page bg ${o.toast?'':''}" style="${o.toast?'height:852px;overflow:hidden':''}">${statusBar()}${profTop()}${hero(d)}${ptabs(d,o.tab||0)}${body}${o.toast?`<div class="toast"><i>${I('check')}</i>Ndryshimet u ruajtën</div>`:''}</div>`;
+}
+function rv(r,o={}){
+  return `<div class="rv"><div class="h">${stars(r[0])}<span>${r[1]}</span></div>${r[2]?`<p class="${o.cut?'cut':''}">${r[2]}</p>${o.cut?'<div class="more">Më shumë</div>':o.open?'<div class="more">Më pak</div>':''}`:'<p class="only">Vetëm vlerësim, pa koment</p>'}<small>${r[3]}</small></div>`;
+}
+const summary=()=>`<div class="sum"><div class="avg"><b>4.8</b>${stars(5)}<span>32 vlerësime</span></div><div class="dist">${[[5,'88%'],[4,'12%'],[3,'0%'],[2,'0%'],[1,'3%']].map(([n,w])=>`<div>${n}<i style="--w:${w}"></i></div>`).join('')}</div></div>`;
+const countCard=n=>`<div class="cnt-card"><i>${I('star')}</i><div><b>${n} vlerësim${n>1?'e':''}</b><span>Mesatarja shfaqet pas 3 vlerësimeve.</span></div></div>`;
+const emptyRev=()=>`<div class="emptyr"><i>${I('star')}</i><b>Ende pa vlerësime</b><span>Pas çdo konsulte, prindi mund t'ju vlerësojë.<br>Vlerësimet shfaqen këtu.</span></div>`;
+function reviewsTab(d){
+  if(!d.reviews) return emptyRev();
+  return `${summary()}<div class="bioh">Komentet</div>${rv(REVIEWS[0],{cut:1})}${REVIEWS.slice(1).map(r=>rv(r)).join('')}<div class="morebtn">Shfaq 28 të tjera</div>`;
+}
+
+/* ---------- edit ---------- */
+function editPage(d,o={}){
+  const bio=o.bioOver?BLERINA.bio+' Punoj edhe me fëmijë me dermatit atopik dhe alergji ushqimore, dhe ndjek nga afër rritjen dhe ushqyerjen e fëmijëve nga lindja deri në 5 vjeç, bashkë me prindërit.':d.bio;
+  const photoTx=o.up?`<b>Fotoja e profilit</b><span class="m">Duke ngarkuar, 60%</span>`:o.photoFail?`<b>Fotoja e profilit</b><span class="warnl">${I('tri')}Fotoja nuk u ngarkua</span><span>Provoni përsëri</span>`:`<b>Fotoja e profilit</b><span>${d.photo?'Ndryshoni foton':'Shtoni foto'}</span>`;
+  const av=o.up?`<span class="dav ph" style="position:relative">${X('x')}<svg viewBox="0 0 80 80" style="position:absolute;inset:0;width:100%;height:100%"><circle cx="40" cy="40" r="36" fill="none" stroke="#5B96FF" stroke-width="4" stroke-linecap="round" stroke-dasharray="140 240" transform="rotate(-90 40 40)"/></svg></span>`
+    :d.photo?`<span class="dav ph" style="position:relative">${X('x')}</span>`:`<span class="dav">${I('user')}</span>`;
+  const btn=o.saving?`<div class="b go"><span class="spin"></span>Duke ruajtur</div>`:`<div class="b ${o.dirty?'on':'off'}">Ruaj ndryshimet</div>`;
+  return `<div class="page bg ep" style="height:852px;overflow:hidden">${statusBar()}<div class="hd"><span class="back">${I('back')}</span><h1>Ndrysho profilin</h1></div>
+   <div class="ecard"><div class="prow">${av}<div>${photoTx}</div></div></div>
+   <div class="ecard" style="margin-top:12px">
+    <div class="fl2"><label>Bio<em class="${o.bioOver?'over':''}">${bio?(o.bioOver?313:149):0}/300</em></label><div class="inp2 tall ${bio?'':'ph'} ${o.bioOver?'err':''}">${bio||'P.sh. fusha ku keni më shumë përvojë'}</div>${o.bioOver?`<div class="ferr">${I('tri')}Shkurtojeni bion në 300 shenja.</div>`:''}</div>
+    <div class="fl2"><label>Gjuhët</label><div class="lchips">${(d.langs||[]).map(l=>`<span>${l}${I('x')}</span>`).join('')}<span class="add">${I('plus')}Shtoni gjuhë</span></div></div>
+    <div class="fl2"><label>Vendi i punës</label><div class="inp2 ${o.workErr?'err':''}">${o.workErr?'':d.work}</div>${o.workErr?`<div class="ferr">${I('tri')}Shkruani vendin ku punoni.</div>`:''}</div>
+    <div class="fl2"><label>Qyteti</label><div class="inp2 ${o.dirty&&!o.workErr?'focus':''}">${d.city}</div></div>
+    <div class="fl2"><label>Vite përvojë</label><div class="inp2 ${d.years?'':'ph'}">${d.years?d.years.replace(' vite',''):'P.sh. 5'}</div></div>
+   </div>
+   <div class="edock">${o.fail?`<div class="fail">${I('tri')}Ndryshimet nuk u ruajtën<b>Provoni përsëri</b></div>`:''}${btn}</div></div>`;
+}
+const valCrop=(lab,val,err,count)=>crop(`<div class="ecard"><div class="fl2"><label>${lab}${count?`<em class="over">${count}</em>`:''}</label><div class="inp2 err ${count?'tall':''}">${val}</div><div class="ferr">${I('tri')}${err}</div></div></div>`);
+
+/* ---------- sheets ---------- */
+function sheetOn(under,inner){return `<div class="ov bg"><div class="under">${under}</div><div class="glass"></div><div style="position:absolute;top:0;left:0;right:0">${statusBar()}</div><div class="bs"><div class="grab"></div><span class="xbtn">${I('x')}</span>${inner}</div></div>`}
+const photoSheet=(d,has)=>sheetOn(prof(d),`<h3>Fotoja e profilit</h3><div style="height:12px"></div><div class="opt"><i>${I('cam')}</i>Bëni një foto</div><div class="opt"><i>${I('img')}</i>Zgjidhni nga galeria</div>${has?`<div class="opt del"><i>${I('trash')}</i>Hiqni foton</div>`:''}<div class="shnote">${I('info')}Prindërit e shohin këtë foto para konsultës.</div>`);
+const PEERS={
+ erion:{name:'Dr. Erion Dervishi',spec:'Pediatër',work:'Spitali Rajonal Vlorë',city:'Vlorë',years:'18 vite',langs:['Shqip','Anglisht'],lic:'1288',bio:'Pediatër në Vlorë që nga 2008. Ndjek fëmijë me sëmundje kronike të frymëmarrjes.'},
+ long:{name:'Dr. Anastasia Kristofori-Papadhimitri',spec:'Gastroenterologe pediatrike',work:'Qendra Spitalore Universitare "Nënë Tereza"',city:'Tiranë',years:'21 vite',langs:['Shqip','Anglisht','Greqisht','Italisht'],lic:'0874'}
+};
+function peer(p,o={}){
+  if(o.gone) return sheetOn(consultPage({...RES_OTHER}),`<div class="peer"><span class="dav" style="background:var(--grey-fill);color:var(--soft)">${I('user')}</span><h3 style="font-size:20px">Ky profil nuk është më i disponueshëm</h3><p class="bio2" style="color:var(--muted)">Mjeku nuk është më në Kidocare. Konsultat që ka bërë mbeten në kartelë.</p></div>`);
+  const bio=p.bio?`<p class="bio2 ${o.cut?'cut':''}">${o.cut?p.bio+" Më parë kam punuar në Athinë. Më intereson veçanërisht edukimi i prindërve për përdorimin e inhalatorëve dhe parandalimin e krizave.":p.bio}</p>${o.cut?'<div class="more" style="margin-bottom:16px">Më shumë</div>':''}`:'<div style="height:14px"></div>';
+  return sheetOn(consultPage({...RES_OTHER}),`<div class="peer"><span class="dav">${I('user')}</span><h3>${p.name}${BADGE}</h3>${bio}${about(p,{peer:1})}</div>`);
+}
+const RES_OTHER={title:'Astmë bronkiale',chips:chipKron,who:'Valbona Xhaferraj, nëna',note:'Kollitet natën prej disa javësh dhe i merret fryma kur vrapon. Babai ka astmë.',assess:'Astmë bronkiale e lehtë persistente.',steps:['Pompa vetëm kur kollitet'],warn:['Buzët marrin ngjyrë blu'],date:'16.09.2021, 18:45',type:'Video, 15 min',doc:'Dr. Erion Dervishi',nr:'1408'};
+
+/* ---------- frames ---------- */
+const F={
+ 'path-1':()=>zyra(ARBEN),
+ 'path-2':()=>prof(ARBEN),
+ 'path-3':()=>editPage(ARBEN),
+ 'path-4':()=>photoSheet(ARBEN,0),
+ 'path-5':()=>prof(ARBEN,{tab:1}),
+ 'zyra-full':()=>zyra(BLERINA,{lic:'soon'}),
+ 'screen-full':()=>prof(BLERINA),
+ 'screen-full-v':()=>prof(BLERINA,{tab:1}),
+ 'z-card-min':()=>crop(zcard(ARBEN)),
+ 'z-card-full':()=>crop(zcard(BLERINA)),
+ 'z-card-off':()=>crop(zcard(BLERINA,{off:1})),
+ 'z-card-pend':()=>crop(zcard(ARBEN,{pend:1})),
+ 'z-lic':()=>crop(['','soon','gone'].map(s=>`<div class="menu" style="margin-bottom:10px">${mi('award','Licenca',licChip(s)+`<span class="cb">${I('chev')}</span>`)}</div>`).join('')),
+ 'id-min':()=>crop(hero(ARBEN)),
+ 'id-full':()=>crop(hero(BLERINA)),
+ 'id-long':()=>crop(hero(BLERINA,{long:1})),
+ 'id-fail':()=>crop(hero(BLERINA,{fail:1})),
+ 'photo-up-head':()=>crop(hero(BLERINA,{up:1})),
+ 'id-few':()=>crop(hero({...ARBEN,reviews:2})),
+ 'id-pend':()=>crop(hero(ARBEN,{pend:1})),
+ 'tabs-min':()=>crop(ptabs(ARBEN,0)),
+ 'tabs-col':()=>crop(ptabs(BLERINA,0)),
+ 'tabs-v':()=>crop(ptabs(BLERINA,1)),
+ 'about-min':()=>crop(about(ARBEN)+bioBlock(ARBEN)),
+ 'about-part':()=>crop(about({...ARBEN,langs:['Shqip','Anglisht']})+bioBlock(ARBEN)),
+ 'about-full':()=>crop(about(BLERINA)+bioBlock(BLERINA)),
+ 'lic-ok':()=>crop(`<div class="about">${licRow(BLERINA,'')}</div>`),
+ 'lic-soon':()=>crop(`<div class="about">${licRow(BLERINA,'soon')}</div>`),
+ 'lic-gone':()=>crop(`<div class="about">${licRow(BLERINA,'gone')}</div>`),
+ 'rev-min':()=>crop(emptyRev()),
+ 'rev-one':()=>crop(countCard(1)+rv(REVIEWS[2])),
+ 'rev-few':()=>crop(countCard(2)),
+ 'rev-sum':()=>crop(summary()),
+ 'rev-col':()=>crop(rv(REVIEWS[0],{cut:1})),
+ 'rev-exp':()=>crop(rv(REVIEWS[0],{open:1})),
+ 'rev-stars':()=>crop(rv(REVIEWS[1])),
+ 'rev-low':()=>crop(rv(REVIEWS[3])),
+ 'rev-more':()=>crop(rv(REVIEWS[3])+'<div class="morebtn">Shfaq 28 të tjera</div>'),
+ 'rev-fail':()=>crop(ptabs(BLERINA,1)+`<div class="rfail"><i>${I('tri')}</i><b>Vlerësimet nuk u ngarkuan</b><span>${I('refresh')}Provoni përsëri</span></div>`),
+ 'edit-full':()=>editPage(BLERINA),
+ 'edit-dirty':()=>editPage(BLERINA,{dirty:1}),
+ 'edit-saving':()=>editPage(BLERINA,{dirty:1,saving:1}),
+ 'saved':()=>prof(BLERINA,{toast:1}),
+ 'edit-err':()=>editPage(BLERINA,{dirty:1,fail:1}),
+ 'edit-discard':()=>sheetOn(editPage(BLERINA,{dirty:1}),`<h3>Të anulohen ndryshimet?</h3><p class="sub2">Ndryshimet që bëtë nuk janë ruajtur ende.</p><div class="pb light">Vazhdoni redaktimin</div><div class="pb pinko">Anuloni ndryshimet</div>`),
+ 'val-page':()=>editPage(BLERINA,{workErr:1}),
+ 'val-bio':()=>valCrop('Bio',BLERINA.bio+' Punoj edhe me fëmijë me dermatit atopik dhe alergji ushqimore, dhe ndjek nga afër rritjen dhe ushqyerjen e fëmijëve nga lindja deri në 5 vjeç, bashkë me prindërit.','Shkurtojeni bion në 300 shenja.','313/300'),
+ 'val-years':()=>valCrop('Vite përvojë','dymbëdhjetë','Shkruani vetëm numra, p.sh. 12.'),
+ 'val-work':()=>valCrop('Vendi i punës','','Shkruani vendin ku punoni.'),
+ 'photo-has':()=>photoSheet(BLERINA,1),
+ 'photo-remove':()=>sheetOn(prof(BLERINA),`<h3>Të hiqet fotoja?</h3><p class="sub2">Në vend të saj do të shfaqet ikona e profilit.</p><div class="pb pinko">Hiqni foton</div><div class="pb light">Anuloni</div>`),
+ 'photo-up':()=>editPage(BLERINA,{up:1}),
+ 'photo-fail':()=>crop(`<div class="ecard"><div class="prow"><span class="dav ph" style="position:relative">${X('x')}</span><div><b>Fotoja e profilit</b><span class="warnl">${I('tri')}Fotoja nuk u ngarkua</span><span>Provoni përsëri</span></div></div></div>`),
+ 'peer-other':()=>peer(PEERS.erion),
+ 'peer-min':()=>peer({name:'Dr. Arben Shehu',spec:'Mjek i përgjithshëm',work:'Qendra Shëndetësore Nr. 2',city:'Shkodër',lic:'2410'}),
+ 'peer-long':()=>peer(PEERS.long),
+ 'peer-bio':()=>peer(PEERS.erion,{cut:1}),
+ 'peer-gone':()=>peer(null,{gone:1})
+};
+window.FRAME_IDS=Object.keys(F);
+function show(){
+  const id=location.hash.slice(1)||'path-1';
+  document.getElementById('f').innerHTML=(F[id]||F['path-1'])();
+  requestAnimationFrame(()=>{try{parent.postMessage({liveFrame:id,h:document.getElementById('f').scrollHeight},'*')}catch(e){}});
+}
+addEventListener('hashchange',show);show();
+document.fonts&&document.fonts.ready.then(show);
+</script>
+</body>
+</html>

@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="sq">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=393">
+<title>Thirrja me video frames</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="kidocare.css">
+<style>
+/* Video call. The video feeds are content (wireframe placeholders); everything on top is glass. Red is the Rezultati cool red. */
+:root{--red:#D94862;--glass:rgba(14,27,61,.42);--glass-hi:rgba(255,255,255,.16)}
+.vc{position:relative;height:852px;overflow:hidden;background:linear-gradient(180deg,#46577A 0%,#2A3754 55%,#1B2540 100%);color:#fff}
+.vc .feed{position:absolute;inset:0;stroke:rgba(255,255,255,.10);stroke-width:.25}
+.vc .feed.frozen{filter:blur(2px)}
+.scrim-t{position:absolute;left:0;right:0;top:0;height:230px;background:linear-gradient(180deg,rgba(10,18,40,.55),rgba(10,18,40,0))}
+.scrim-b{position:absolute;left:0;right:0;bottom:0;height:260px;background:linear-gradient(0deg,rgba(10,18,40,.6),rgba(10,18,40,0))}
+.vc .sb{color:#fff;position:relative}
+.vc .sb .sig i{background:#fff}.vc .sb svg path{fill:#fff}
+.vc .sb .bat{border-color:#fff}.vc .sb .bat::after{background:#fff}.vc .sb .bat::before{background:#fff}
+.vc .sb .bat.low::after{background:var(--red);right:auto;width:4px}
+/* header */
+.ch2{position:absolute;left:16px;right:124px;top:62px;display:flex;align-items:flex-start;gap:12px}
+.who{flex:1;min-width:0}
+.who b{display:block;font-size:22px;font-weight:600;letter-spacing:-.01em;line-height:1.2}
+.who b svg{width:20px;height:20px;opacity:.8;vertical-align:-3px;margin-left:2px}
+.who b span{min-width:0}
+.who>span{display:block;font-size:15px;color:rgba(255,255,255,.78);margin-top:2px}
+.who .chips{margin-top:10px;gap:6px}
+.who .chip{height:26px;font-size:14px;border-radius:13px;padding:0 10px}
+.who .chip em{font-style:normal;opacity:.75;font-weight:500}
+.rt{display:flex;flex-direction:column;align-items:flex-end;gap:6px;flex:none}
+.gp{display:inline-flex;align-items:center;gap:7px;height:32px;padding:0 13px;border-radius:16px;background:var(--glass);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);font-size:15px;font-weight:600;white-space:nowrap}
+.gp .dot{width:8px;height:8px;border-radius:4px;background:#22C17A}
+.gp svg{width:15px;height:15px}
+.gp.sm{height:26px;padding:0 10px;font-size:13px;font-weight:500;color:rgba(255,255,255,.85)}
+.gp.sm svg{width:13px;height:13px}
+/* self view */
+.self{position:absolute;right:12px;top:58px;width:100px;height:136px;border-radius:18px;overflow:hidden;background:linear-gradient(180deg,#8E9FC0,#6C7EA2);box-shadow:0 10px 26px rgba(0,0,0,.28)}
+.self svg.x{position:absolute;inset:0;width:100%;height:100%;stroke:rgba(255,255,255,.35);stroke-width:1}
+.self.off{background:rgba(14,27,61,.7);backdrop-filter:blur(16px);display:grid;place-items:center}
+.self.off svg{width:26px;height:26px;stroke:rgba(255,255,255,.8);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+/* notices: left column, under the header */
+.toasts{position:absolute;left:16px;right:136px;display:flex;flex-direction:column;align-items:flex-start;gap:8px}
+.toast{display:flex;align-items:center;gap:9px;padding:9px 13px 9px 10px;border-radius:16px;background:var(--glass);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);font-size:14.5px;font-weight:500;line-height:1.25}
+.toast i{width:26px;height:26px;border-radius:13px;display:grid;place-items:center;flex:none;background:rgba(255,255,255,.14)}
+.toast i svg{width:15px;height:15px}
+.toast.amb i{background:#FFF3D1;color:#94600E}
+.toast.ok i{background:#E2F5EA;color:#1A9E63}
+/* centre message on the feed */
+.mid{position:absolute;left:40px;right:40px;top:350px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:8px}
+.mid i{width:76px;height:76px;border-radius:38px;background:var(--glass);backdrop-filter:blur(14px);display:grid;place-items:center;margin-bottom:8px}
+.mid i svg{width:30px;height:30px}
+.mid b{font-size:20px;font-weight:600}
+.mid span{font-size:15px;color:rgba(255,255,255,.8);line-height:1.4}
+.dots3{display:flex;gap:6px;margin-top:6px}.dots3 em{width:7px;height:7px;border-radius:4px;background:rgba(255,255,255,.9)}.dots3 em+em{opacity:.55}.dots3 em+em+em{opacity:.3}
+/* controls */
+.bar{position:absolute;left:16px;right:16px;bottom:30px;height:78px;border-radius:39px;background:rgba(14,27,61,.55);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);display:flex;align-items:center;justify-content:space-between;padding:0 12px}
+.cb{width:54px;height:54px;border-radius:27px;background:var(--glass-hi);display:grid;place-items:center;color:#fff;position:relative}
+.cb svg{width:23px;height:23px}
+.cb.off{background:#fff;color:var(--ink)}
+.cb.end{background:var(--red);width:62px;height:54px}
+.cb.end svg{width:26px;height:26px}
+.cb .nd{position:absolute;top:9px;right:10px;width:9px;height:9px;border-radius:5px;background:var(--blue);box-shadow:0 0 0 2px rgba(40,55,90,.9)}
+.urg{position:absolute;left:16px;bottom:124px;display:inline-flex;align-items:center;gap:7px;height:38px;padding:0 15px 0 12px;border-radius:19px;background:var(--glass);backdrop-filter:blur(14px);box-shadow:inset 0 0 0 1.5px #FF8A9C;font-size:15px;font-weight:600;color:#fff}
+.urg svg{width:17px;height:17px;color:#FF8A9C}
+.urg.sent{box-shadow:none;color:rgba(255,255,255,.8)}
+.urg.sent svg{color:#7FE0AE}
+/* sheets over the call */
+.dim{position:absolute;inset:0;background:rgba(10,18,40,.35)}
+.vc .bs{color:var(--ink)}
+.bs .stitle{font-size:22px;font-weight:600;letter-spacing:-.01em;line-height:1.2;margin:10px 52px 4px 0}
+.bs.nx .stitle{margin-right:0}
+.bs .ssub{font-size:15px;color:var(--muted);margin-bottom:16px;line-height:1.4}
+.bs .note{background:var(--blue-fill);border-radius:14px;padding:11px 13px 12px;margin-bottom:10px}
+.bs .note small{display:flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:var(--blue-ink);margin-bottom:3px}
+.bs .note small svg{width:14px;height:14px}
+.bs .note p{font-size:15px;line-height:1.4}
+.tiles2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.tiles2 .tile{height:auto;padding:11px 13px 9px;border-radius:14px}
+.tiles2 .tile b{font-size:24px}
+.bs .fl{margin-top:12px}
+.bs .fl small{font-size:14px}
+.bs .chip{border-radius:8px;font-size:14px;height:25px}
+.sbtns{display:flex;flex-direction:column;gap:8px;margin-top:16px}
+.lb{display:flex;align-items:center;gap:12px;height:54px;border-radius:14px;padding:0 14px 0 9px;font-size:17px;font-weight:600}
+.lb i{width:36px;height:36px;border-radius:10px;display:grid;place-items:center;flex:none}
+.lb i svg{width:19px;height:19px}
+.lb b{flex:1;font-weight:600}
+.lb .chev{width:19px;height:19px}
+.lb.pri{background:var(--blue);color:#fff;box-shadow:0 10px 22px rgba(80,140,250,.30)}
+.lb.pri i{background:rgba(255,255,255,.2)}.lb.pri .chev{color:#fff}
+.lb.sec{background:var(--blue-fill);color:var(--blue-ink)}
+.lb.sec i{background:#fff}.lb.sec .chev{color:var(--blue-ink)}
+.ta{background:var(--tile);border-radius:18px;min-height:150px;padding:14px 16px 34px;position:relative;font-size:16px;line-height:1.45}
+.ta .ph{color:#8E9AB3}
+.ta .caret{display:inline-block;width:2px;height:19px;background:var(--blue);vertical-align:-4px;margin-left:1px}
+.ta small{position:absolute;right:14px;bottom:10px;font-size:13px;color:var(--muted)}
+.ta small.limit{color:#B07A14;font-weight:600}
+.hint{display:flex;align-items:center;gap:7px;font-size:14px;color:var(--muted);margin-top:10px}
+.hint svg{width:15px;height:15px}
+.msg{display:flex;gap:10px;background:#FFE9F3;border-radius:16px;padding:13px 14px;font-size:16px;line-height:1.4;margin-bottom:10px}
+.msg svg{width:20px;height:20px;color:var(--pink);margin-top:1px}
+.btnb{height:54px;border-radius:27px;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:600;margin-top:10px}
+.btnb.red{background:var(--red);color:#fff;margin-top:18px}
+.btnb.blue{background:var(--blue);color:#fff;box-shadow:0 12px 26px rgba(80,140,250,.30);margin-top:18px}
+.btnb.redo svg{width:18px;height:18px}
+.btnb.redo{background:#fff;color:var(--red);box-shadow:inset 0 0 0 1.5px var(--red)}
+.btnb.ghost{background:var(--track);color:var(--ink)}
+/* floating call over other screens */
+.pipwrap{position:relative;height:852px;overflow:hidden}
+.pip{position:absolute;right:16px;bottom:34px;width:112px;height:150px;border-radius:18px;overflow:hidden;background:linear-gradient(180deg,#46577A,#1B2540);box-shadow:0 16px 34px rgba(14,27,61,.35)}
+.pip svg.x{position:absolute;inset:0;width:100%;height:100%;stroke:rgba(255,255,255,.14);stroke-width:1}
+.pip .t{position:absolute;left:8px;bottom:8px;display:flex;align-items:center;gap:5px;height:22px;padding:0 8px;border-radius:11px;background:rgba(14,27,61,.55);color:#fff;font-size:12px;font-weight:600}
+.pip .t i{width:6px;height:6px;border-radius:3px;background:#22C17A}
+.pip .s{position:absolute;right:7px;top:7px;width:30px;height:40px;border-radius:7px;background:#7F91B4;border:1.5px solid rgba(255,255,255,.5)}
+/* full-screen end state */
+.endp{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:0 32px 60px;height:796px}
+.endp i{width:64px;height:64px;border-radius:32px;background:var(--grey-fill);color:var(--muted);display:grid;place-items:center;margin-bottom:18px}
+.endp i svg{width:26px;height:26px}
+.endp b{font-size:22px;font-weight:600;margin-bottom:6px}
+.endp>span{font-size:16px;color:var(--muted);line-height:1.4;margin-bottom:22px}
+.endp .btnb{width:100%}
+.c-row{padding:22px 16px}
+</style>
+</head>
+<body>
+<div id="f"></div>
+<script src="kidocare.js"></script>
+<script>
+Object.assign(P,{
+ mic:'<path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><path d="M12 19v3"/>',
+ micoff:'<path d="M2 2l20 20"/><path d="M18.89 13.23A7.12 7.12 0 0 0 19 12v-2"/><path d="M5 10v2a7 7 0 0 0 12 5"/><path d="M15 9.34V5a3 3 0 0 0-5.68-1.33"/><path d="M9 9v3a3 3 0 0 0 5.12 2.12"/><path d="M12 19v3"/>',
+ camoff:'<path d="M2 2l20 20"/><path d="M10.66 6H14a2 2 0 0 1 2 2v2.5l5.25-3.06A.5.5 0 0 1 22 7.87v8.26"/><path d="M16 16a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h2"/>',
+ hang:'<path d="M3.6 14.9 2.3 13.6a1.4 1.4 0 0 1 0-2C7.7 6.8 16.3 6.8 21.7 11.6a1.4 1.4 0 0 1 0 2l-1.3 1.3a1.4 1.4 0 0 1-1.8.2l-2.2-1.5a1.4 1.4 0 0 1-.6-1.2v-1.6a12 12 0 0 0-7.6 0v1.6a1.4 1.4 0 0 1-.6 1.2l-2.2 1.5a1.4 1.4 0 0 1-1.8-.2Z"/>',
+ note:'<path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4M8 13h8M8 17h5"/>',
+ wifi:'<path d="M12 20h.01"/><path d="M8.5 16.43a5 5 0 0 1 7 0"/><path d="M5 12.86a10 10 0 0 1 5.17-2.69" opacity=".35"/><path d="M19 12.86a10 10 0 0 0-3.55-2.36" opacity=".35"/><path d="M2 8.82a15 15 0 0 1 20 0" opacity=".35"/>',
+ batt:'<rect x="2" y="7" width="16" height="10" rx="2"/><path d="M22 11v2"/><path d="M6 11v2"/>',
+ check:'<path d="M20 6 9 17l-5-5"/>',
+ down:'<path d="m6 9 6 6 6-6"/>',
+ cloud:'<path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/>'
+});
+const NOTES_TXT='Temperaturë 38.2°C prej një dite, fyt i skuqur, pa pllaka. Pi ujë normalisht, pa shenja dehidratimi. Ka gjasa infeksion viral i rrugëve të sipërme. Paracetamol sipas peshës dhe kontroll pas 48 orësh nëse vazhdon temperatura.';
+const NOTES_FULL='Temperaturë 38.2°C prej një dite, fyt i skuqur, pa pllaka. Pi ujë normalisht, pa shenja dehidratimi. Ka gjasa infeksion viral i rrugëve të sipërme. Paracetamol sipas peshës, lëngje të shumta dhe pushim. Kontroll pas 48 orësh nëse vazhdon temperatura mbi 38';
+const ageTxt=c=>`${c.age[0]} vjeç &amp; ${c.age[1]} muaj`;
+const sbar=(low)=>statusBar().replace('class="bat"',`class="bat${low?' low':''}"`).replace('9:41','23:39');
+
+/* ---------- call pieces ---------- */
+/* header: name (tap opens the child sheet), age, allergies then chronic illnesses, only if any. Long lists show the first item and +n. */
+function callHead(c,o={}){
+  const al=c.allergies||[],ch=c.chronic||[];
+  const chip=(l,cls,ic)=>l.length?`<span class="chip ${cls}">${I(ic)}${l[0]}${l.length>1?` <em>+${l.length-1}</em>`:''}</span>`:'';
+  const chips=(al.length||ch.length)?`<div class="chips">${chip(al,'c-pink','tri')}${chip(ch,'c-amber','refresh')}</div>`:'';
+  const right='';
+  return `<div class="ch2"><div class="who"><b>${o.long?'Anisa Marjeta Xhaferraj-Gjonbalaj':c.name.split(' ').length>2?c.name.split(' ')[0]+' '+c.name.split(' ').slice(-1)[0]:c.name}&#8288;${I('chev')}</b><span>${o.sub||(o.time||'00:14')}</span>${chips}</div>${right}</div>`;
+}
+const selfTile=(off)=>off?`<div class="self off">${I('camoff')}</div>`:`<div class="self">${X()}</div>`;
+function bar(o={}){
+  return `<div class="bar">
+   <span class="cb">${I('note')}${o.noted?'<span class="nd"></span>':''}</span>
+   <span class="cb ${o.camOff?'off':''}">${I(o.camOff?'camoff':'video')}</span>
+   <span class="cb ${o.muted?'off':''}">${I(o.muted?'micoff':'mic')}</span>
+   <span class="cb end">${I('hang')}</span></div>`;
+}
+const urg=(sent)=>sent?`<span class="urg sent">${I('check')}Urgjenca u dërgua</span>`:`<span class="urg">${I('tri')}Urgjencë</span>`;
+const toast=(ic,t,cls='')=>`<div class="toast ${cls}"><i>${I(ic)}</i>${t}</div>`;
+const toasts=(c,list)=>`<div class="toasts" style="top:${(c.allergies.length||(c.chronic||[]).length)?168:124}px">${list.join('')}</div>`;
+const feed=(frozen)=>`<svg class="feed ${frozen?'frozen':''}" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M0 0L100 100M100 0L0 100"/></svg>`;
+/* the whole call screen: o = {hide, muted, camOff, noted, sent, toasts:[], mid, frozen, self:false, time, queue, low} */
+function call(c,o={}){
+  const ui=o.hide?'':bar(o);
+  return `<div class="vc">${o.noFeed?'':feed(o.frozen)}<div class="scrim-t"></div><div class="scrim-b"></div>${sbar(o.low)}
+   ${callHead(c,o)}${o.self===false?'':selfTile(o.camOff)}${o.toasts?toasts(c,o.toasts):''}${o.mid||''}${ui}${o.over||''}</div>`;
+}
+const mid=(ic,t,s,dots)=>`<div class="mid"><i>${I(ic)}</i><b>${t}</b>${s?`<span>${s}</span>`:''}${dots?'<div class="dots3"><em></em><em></em><em></em></div>':''}</div>`;
+
+/* sheets */
+const sheet=(inner,x=true)=>`<div class="dim"></div><div class="bs"><div class="grab"></div>${x?`<span class="xbtn">${I('x')}</span>`:''}${inner}</div>`;
+function notesSheet(txt,n){
+  const lim=n>=250;
+  const body=txt?`${txt}<span class="caret"></span>`:`<span class="caret"></span><span class="ph">Shkruani vlerësimin tuaj</span>`;
+  return sheet(`<div class="stitle">Shënime</div><div class="ssub">Ruhen dhe shfaqen te Vlerësimi.</div>
+   <div class="ta">${body}<small class="${lim?'limit':''}">${n}/250</small></div>`);
+}
+const urgSheet=()=>sheet(`<div class="stitle">Të këshilloni kujdes urgjent?</div><div class="ssub">Prindi e sheh menjëherë këtë mesazh në bisedë:</div>
+   <div class="msg">${I('tri')}<span>Kjo mund të jetë urgjencë. Telefononi 112 tani ose shkoni te urgjenca më e afërt.</span></div>
+   <div class="ssub" style="margin:0">Nuk mund të zhbëhet. Thirrja vazhdon.</div>
+   <div class="btnb red">Po, dërgoje</div><div class="btnb ghost">Anulo</div>`,false);
+const endSheet=()=>sheet(`<div class="stitle">Të mbyllni konsultën?</div><div class="ssub" style="margin-bottom:0">Pas mbylljes hapet Rezultati. Nëse dilni pa e dërguar, ruhet si draft te Konsultat.</div>
+   <div class="btnb blue">Mbyll dhe shkruaj rezultatin</div><div class="btnb redo">${I('tri')}&nbsp;Këshilloni kujdes urgjent</div><div class="btnb ghost">Vazhdo thirrjen</div>`,false);
+/* the call keeps running in a floating tile while the doctor reads another screen; tap returns to the call, drag moves it */
+const pip=(screen,time='00:52')=>`<div class="pipwrap">${screen}<div class="pip">${X()}<span class="s"></span><span class="t"><i></i>${time}</span></div></div>`;
+
+const N=(o={})=>call(NOA,o), A=(o={})=>call(ANISA,o);
+const cropTop=(h,ht)=>`<div style="height:${ht}px;overflow:hidden;position:relative">${h}</div>`;
+const cropBot=(h,ht)=>`<div style="height:${ht}px;overflow:hidden;position:relative"><div style="position:absolute;left:0;right:0;bottom:0">${h}</div></div>`;
+
+/* ---------- frames ---------- */
+const F={
+ /* minimal path (Noa) */
+ 'path-call':()=>N(),
+ 'path-profile':()=>pip(profile(NOA),'00:31'),
+ 'path-kartela':()=>pip(kartela(NOA,0),'00:52'),
+ 'path-notes':()=>N({hide:1,over:notesSheet(NOTES_TXT,231)}),
+ 'path-end':()=>N({hide:1,noted:1,over:endSheet()}),
+ 'path-urg':()=>N({hide:1,noted:1,over:urgSheet()}),
+ /* whole screen */
+ 'screen-min':()=>N(),
+ 'screen-full':()=>A({time:'03:47'}),
+ /* header */
+ 'head-min':()=>cropTop(N({self:false}).replace(/<div class="bar">[\s\S]*?<\/div>/,''),130),
+ 'head-al':()=>cropTop(call(Object.assign({},ANISA,{chronic:[],allergies:['Penicilinë']}),{self:false}),205),
+ 'head-chr':()=>cropTop(call(Object.assign({},ANISA,{allergies:[]}),{self:false}),205),
+ 'head-full':()=>cropTop(A({self:false,time:'03:47'}),205),
+ 'head-long':()=>cropTop(A({self:false,long:1,time:'03:47'}),205),
+ /* controls */
+ 'bar-on':()=>cropBot(N({self:false}),200),
+ 'bar-muted':()=>cropBot(N({self:false,muted:1}),200),
+ 'bar-cam':()=>cropBot(N({self:false,camOff:1}),200),
+ 'bar-noted':()=>cropBot(N({self:false,noted:1}),200),
+ 'hidden':()=>N({hide:1}),
+ /* self view */
+ 'self-on':()=>N(),
+ 'self-off':()=>N({camOff:1}),
+ /* floating call */
+ 'pip-kartela':()=>pip(kartela(ANISA,0),'04:10'),
+ 'pip-profile':()=>pip(profile(ANISA),'04:35'),
+ /* notes */
+ 'notes-empty':()=>N({hide:1,over:notesSheet('',0)}),
+ 'notes-typed':()=>N({hide:1,over:notesSheet(NOTES_TXT,231)}),
+ 'notes-limit':()=>N({hide:1,over:notesSheet(NOTES_FULL,250)}),
+ /* emergency */
+ 'urg-sheet':()=>N({hide:1,over:urgSheet()}),
+ 'urg-sent':()=>N({noted:1,toasts:[toast('check','Mesazhi i urgjencës u dërgua','ok')]}),
+ /* closing */
+ 'end-sheet':()=>N({hide:1,noted:1,over:endSheet()}),
+ /* call states */
+ 'st-connecting':()=>N({noUrg:1,self:false,noFeed:1,sub:'Duke u lidhur',mid:mid('video','Duke u lidhur me Klea Leka','',1)}),
+ 'st-weak-me':()=>N({toasts:[toast('wifi','Lidhja juaj është e dobët','amb')]}),
+ 'st-weak-parent':()=>N({toasts:[toast('wifi','Lidhja e prindit është e dobët','amb')]}),
+ 'st-battery':()=>N({low:1,toasts:[toast('batt','Bateria 12%. Lidhni karikuesin.','amb')]}),
+ 'st-parent-muted':()=>N({toasts:[toast('micoff','Prindi e ka fikur zërin')]}),
+ 'st-parent-cam':()=>N({noFeed:1,mid:mid('camoff','Kamera e prindit është e fikur','Thirrja vazhdon me zë.')}),
+ 'st-reconnect':()=>N({frozen:1,mid:mid('wifi','Duke u rilidhur','Thirrja vazhdon sapo të kthehet lidhja.',1)}),
+ 'st-parent-left':()=>N({noFeed:1,mid:mid('user','Prindi doli nga thirrja','Po presim që të kthehet. Mund ta mbyllni konsultën kur të doni.')}),
+ 'st-stack':()=>N({low:1,toasts:[toast('wifi','Lidhja juaj është e dobët','amb'),toast('batt','Bateria 12%. Lidhni karikuesin.','amb')]}),
+ 'st-dropped':()=>`<div class="bg">${statusBar().replace('9:41','23:41')}<div class="endp"><i>${I('hang')}</i><b>Thirrja u ndërpre</b><span>Lidhja humbi për më shumë se një minutë. Shënimet tuaja janë ruajtur.</span><div class="btnb blue" style="margin-top:0">Shkruani rezultatin</div><div class="btnb ghost" style="background:#fff">Kthehu te Turni</div></div></div>`
+};
+
+function show(){
+  const id=location.hash.slice(1)||'path-call';
+  document.getElementById('f').innerHTML=(F[id]||F['path-call'])();
+  const post=()=>{try{parent.postMessage({liveFrame:id,h:document.getElementById('f').scrollHeight},'*')}catch(e){}};
+  requestAnimationFrame(post);document.querySelectorAll('#f img').forEach(i=>i.complete||i.addEventListener('load',post));
+}
+
+addEventListener('hashchange',show);show();
+document.fonts&&document.fonts.ready.then(show);
+</script>
+</body>
+</html>

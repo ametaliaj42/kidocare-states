@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="sq">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=393">
+<title>Rezultati frames</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="kidocare.css">
+<style>
+/* Rezultati form. Errors use a cool red, never pink. */
+:root{--err:#D94862;--err-mark:#C8364F;--ph:#8E9AB3;--field-line:#DCE5F3}
+.fp{padding:0 20px 28px;position:relative}
+.fp .hd{margin:3px 0 9px}
+.fp .hd h1{font-size:28px}
+.who b{display:block;font-size:18px;font-weight:600;line-height:1.3}
+.who span{display:block;font-size:14px;color:var(--muted)}
+.draft{display:inline-flex;align-items:center;gap:6px;margin-top:10px;height:28px;padding:0 12px;border-radius:14px;background:rgba(255,255,255,.75);font-size:14px;font-weight:500;color:var(--muted)}
+.draft svg{width:15px;height:15px}
+.flab{font-size:13px;font-weight:600;letter-spacing:.2em;color:var(--muted);text-transform:uppercase;line-height:16px;margin:22px 0 8px}
+.who+.flab,.draft+.flab{margin-top:19px}
+.fld{height:51px;border-radius:26px;background:#fff;box-shadow:0 10px 30px rgba(40,80,160,.08);display:flex;align-items:center;gap:12px;padding:0 18px;font-size:16px;position:relative}
+.fld .ph{color:var(--ph)}
+.fld>svg:first-child{color:var(--ph);width:20px;height:20px}
+.fld.focus{box-shadow:0 0 0 2px var(--blue),0 10px 30px rgba(40,80,160,.08)}
+.fld.err{box-shadow:0 0 0 2px var(--err)}
+.fld .mark{margin-left:auto;color:var(--err-mark);width:21px;height:21px}
+.fld .clear{margin-left:auto;color:#C3CBDA;width:20px;height:20px}
+.caret{display:inline-block;width:2px;height:20px;background:var(--blue);vertical-align:-4px;margin-left:1px}
+.fld.sel{height:auto;min-height:51px;padding:12px 16px 12px 18px}
+.fld.sel b{flex:1;font-size:17px;font-weight:600;line-height:1.3}
+.fld.sel .chip{height:30px;border-radius:15px;font-size:15px}
+.fld.sel .xs{color:var(--soft);width:20px;height:20px}
+.dd{margin-top:10px;background:#fff;border-radius:24px;box-shadow:0 10px 30px rgba(40,80,160,.08);overflow:hidden;position:relative}
+.dd .gl{font-size:13px;font-weight:600;letter-spacing:.14em;color:var(--muted);text-transform:uppercase;padding:14px 14px 4px}
+.dd .r{display:flex;align-items:center;justify-content:space-between;height:44px;padding:0 10px 0 14px;border-bottom:1px solid var(--line);font-size:16px}
+.dd .r .chip{height:28px;border-radius:14px;font-size:14px}
+.dd .r.add{color:var(--muted);justify-content:flex-start;gap:8px;border-bottom:0}
+.dd .r.add svg{width:16px;height:16px}
+.dd .bar{position:absolute;right:5px;top:44px;width:3px;height:70px;border-radius:2px;background:#C9D3E3}
+.hl{font-weight:600;background:var(--blue-fill);border-radius:4px;padding:1px 2px}
+.bold{font-weight:600}
+.notebox{background:#fff;border-radius:24px;padding:14px 16px;font-size:15px;line-height:1.35;color:#8E98AE;box-shadow:0 10px 30px rgba(40,80,160,.06)}
+.vl{background:#fff;border-radius:24px;padding:14px 18px 12px;min-height:83px;box-shadow:0 10px 30px rgba(40,80,160,.08);position:relative}
+.vl p{font-size:16px;line-height:1.4;padding-bottom:22px}
+.vl small{position:absolute;right:18px;bottom:12px;font-size:13px;color:var(--soft)}
+.vl small.limit{color:#B07A14}
+.items{background:#fff;border-radius:24px;box-shadow:0 10px 30px rgba(40,80,160,.08);overflow:hidden}
+.it{display:flex;align-items:center;gap:12px;padding:10px 14px;border-bottom:1px solid var(--line);min-height:56px}
+.it.new{background:#F2F7FF}
+.it i{width:38px;height:38px;border-radius:19px;background:var(--blue-fill);display:grid;place-items:center;color:var(--blue-ink);flex:none}
+.it i svg{width:18px;height:18px}
+.it .tx b{display:block;font-size:16px;font-weight:600;line-height:1.3}
+.it .tx span{display:block;font-size:14px;color:var(--muted);line-height:1.3}
+.addrow{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:10px 12px}
+.addrow span{height:37px;border-radius:19px;background:var(--blue-fill);color:var(--blue-ink);font-weight:600;font-size:15px;display:flex;align-items:center;justify-content:center;gap:6px}
+.addrow svg{width:16px;height:16px}
+.guide{background:#fff;border-radius:24px;box-shadow:0 10px 30px rgba(40,80,160,.08);overflow:hidden}
+.gs{padding:11px 0 9px}
+.gs+.gs{border-top:1px solid var(--line);padding-top:16px}
+.gs:last-child{padding-bottom:2px}
+.gs h4{font-size:14px;font-weight:600;color:#4A5876;padding:0 14px 8px;line-height:18px}
+.gr{display:flex;align-items:flex-start;gap:12px;padding:9px 14px;border-top:1px solid var(--line);font-size:15px;line-height:1.35;position:relative}
+.gs h4+.gr{border-top:0}
+.gr .n{width:22px;height:22px;border-radius:11px;background:var(--blue-fill);color:var(--blue-ink);font-size:12px;font-weight:600;display:grid;place-items:center;flex:none;margin-top:-1px}
+.gr .n.ph{background:#F2F5FA;color:var(--soft)}
+.gr .warnic{color:var(--pink);width:20px;height:20px;margin-top:-1px}
+.gr .plus{width:22px;height:22px;border-radius:11px;background:#F2F5FA;display:grid;place-items:center;color:var(--soft);flex:none}
+.gr .plus svg{width:14px;height:14px}
+.gr p{flex:1}
+.gr .ph{color:#9AA6BC}
+.gr .rx{color:var(--soft);width:16px;height:16px;margin-top:2px}
+.gr.typing{background:#F2F7FF;box-shadow:inset 3px 0 0 var(--blue)}
+.gr.err{margin:2px 10px 6px;border:2px solid var(--err);border-radius:18px;padding:9px 12px;align-items:center}
+.gr.err .mk{color:var(--err-mark);width:20px;height:20px;margin-left:auto}
+.win{display:grid;grid-template-columns:repeat(4,1fr);background:rgba(255,255,255,.65);border-radius:22px;padding:3px;height:39px}
+.win span{display:grid;place-items:center;border-radius:18px;font-size:15px;font-weight:600;color:#5E6C8A}
+.win span.on{background:var(--blue);color:#fff}
+.dock{position:relative;background:rgba(229,237,251,.98);border-top:1px solid #DCE5F3;padding:13px 20px 30px;display:grid;grid-template-columns:103px 1fr;gap:12px;margin:22px -20px 0}
+.dock .b{height:55px;border-radius:28px;display:flex;align-items:center;justify-content:center;gap:10px;font-size:17px;font-weight:600}
+.dock .b svg{width:21px;height:21px}
+.dock .shiko{background:#fff;color:var(--blue-ink);box-shadow:0 10px 24px rgba(40,80,160,.10)}
+.dock .send{background:var(--blue);color:#fff;box-shadow:0 12px 26px rgba(80,140,250,.30)}
+.dock .send.dis{background:#EEF2F9;color:#9AA4BA;box-shadow:none}
+.dock .send.going{background:#76A6FF}
+.spin{width:20px;height:20px;border-radius:10px;border:2.5px solid rgba(255,255,255,.45);border-top-color:#fff}
+.failrow{position:absolute;left:20px;right:20px;top:-58px;height:44px;border-radius:22px;background:var(--amber-fill);display:flex;align-items:center;gap:10px;padding:0 16px;color:var(--amber);font-size:15px}
+.failrow svg{width:19px;height:19px}
+.failrow b{margin-left:auto;font-weight:600}
+.vp{height:852px;overflow:hidden;position:relative}
+.vp .dock{position:absolute;left:0;right:0;bottom:0;margin:0}
+.dcrop{padding-top:8px}
+.dcrop .dock{margin:0}
+/* add sheets */
+.sh{position:absolute;left:0;right:0;bottom:0;background:#fff;border-radius:32px 32px 0 0;padding:14px 20px 34px;box-shadow:0 -10px 30px rgba(40,80,160,.08)}
+.sh h3{font-size:22px;font-weight:600;letter-spacing:-.01em;margin:16px 0 0;line-height:1.2}
+.sh .xbtn{position:absolute;right:20px;top:26px;background:var(--track);box-shadow:none}
+.sl{font-size:14px;color:var(--muted);margin:22px 0 8px}
+.sl+.sl{margin-top:16px}
+.inp{height:48px;border-radius:24px;border:1.5px solid var(--field-line);display:flex;align-items:center;gap:12px;padding:0 16px;font-size:16px}
+.inp.focus{border-color:var(--blue)}
+.inp>svg:first-child{width:20px;height:20px;color:var(--ph)}
+.inp .ph{color:var(--ph)}
+.inp .clear{margin-left:auto;color:#C3CBDA;width:20px;height:20px}
+.res{margin-top:8px;border:1.5px solid var(--field-line);border-radius:22px;overflow:hidden}
+.rr{display:flex;align-items:center;gap:12px;padding:0 14px;height:62px;border-top:1px solid var(--field-line)}
+.rr:first-child{border-top:0}
+.rr i{width:38px;height:38px;border-radius:19px;background:var(--blue-fill);display:grid;place-items:center;color:var(--blue-ink);flex:none}
+.rr i svg{width:18px;height:18px}
+.rr i.g{background:#F2F5FA;color:var(--muted)}
+.rr .tx{flex:1}
+.rr .tx b{display:block;font-size:16px;font-weight:500}
+.rr .tx span{display:block;font-size:13px;color:var(--muted)}
+.rr .tx b span{display:inline;font-size:inherit;color:inherit}
+.rr.add .tx b{color:var(--muted)}
+.rr .xs{color:var(--soft);width:20px;height:20px}
+.chosen{border:1.5px solid var(--field-line);border-radius:22px}
+.chosen .tx b{font-weight:600}
+.pbtn{height:55px;border-radius:28px;display:grid;place-items:center;font-size:18px;font-weight:600;margin-top:22px}
+.pbtn.on{background:var(--blue);color:#fff;box-shadow:0 12px 26px rgba(80,140,250,.30)}
+.pbtn.off{background:#EEF2F9;color:#9AA4BA}
+.pbtn.del{background:#fff;border:1.5px solid #EDA8C9;color:var(--pink);margin-top:12px}
+</style>
+</head>
+<body>
+<div id="f"></div>
+<script src="kidocare.js"></script>
+<script>
+/* ---------- Rezultati data ---------- */
+const N={c:NOA,meta:'2 vjeç &amp; 7 muaj, video',note:'Ka temperaturë që mbrëmë dhe qan kur i prek veshin e djathtë.'};
+const A={c:ANISA,meta:'8 vjeç &amp; 3 muaj, video',note:'Kollë natën prej 4 ditësh, ka përdorur pompën 3 herë sot. Merr frymë me vështirësi pas vrapit.'};
+const VL_A='Përkeqësim i moderuar pas infeksioni viral. Fishkëllima bilaterale. Rritet Flutikazon për 4 javë.';
+const VL_N='Otit akut i veshit të djathtë. Daullja e skuqur dhe e fryrë, pa sekrecion.';
+const ITEMS_A=[['pill','Flutikazon 125 mcg','1 spërkatje, 2 herë në ditë, 4 javë'],['pill','Salbutamol 100 mcg','2 spërkatje sipas nevojës'],['flask','IgE specifike'],['flask','Spirometri'],['arrow','Dr. Ilir Basha','Alergolog']];
+const OTHER=[['Infeksion viral i rrugëve të sipërme','a'],['Otit akut','a'],['Faringjit viral','a'],['Bronkit akut','a'],['Gastroenterit akut','a']];
+const KRON=[['Astmë bronkiale','k'],['Dermatit atopik','k'],['Celiaki','k']];
+
+/* ---------- form pieces ---------- */
+const kchip=k=>k==='k'?`<span class="chip c-amber">${I('refresh')}Kronike</span>`:`<span class="chip c-blue">${I('zap')}Akute</span>`;
+const flab=t=>`<div class="flab">${t}</div>`;
+const formHead=(p,draft,bar=true)=>`${bar?statusBar():''}<div class="hd"><span class="back">${I('x')}</span><h1>Rezultati</h1></div><div class="who"><b>${p.c.name}</b><span>${p.meta}</span></div>${draft?`<span class="draft">${I('clock')}Draft, ruajtur 21:40</span>`:''}`;
+function dxField(st){
+  if(st.sel) return `<div class="fld sel"><b>${st.sel}</b>${kchip(st.k)}${I('x','xs')}</div>`;
+  const v=st.q!==undefined?`<span>${st.q}<span class="caret"></span></span>`:`<span class="ph">Kërkoni diagnozën</span>`;
+  return `<div class="fld ${st.err?'err':''} ${st.focus?'focus':''}">${I('search')}${v}${st.err?I('alert','mark'):st.q?I('xc','clear'):''}</div>`;
+}
+const mark=(t,q,cls)=>{if(!q)return t;const i=t.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').indexOf(q);return i<0?t:t.slice(0,i)+`<span class="${cls}">${t.slice(i,i+q.length)}</span>`+t.slice(i+q.length)};
+function dd(groups,o={}){
+  return `<div class="dd">${groups.map(g=>`${g.label?`<div class="gl">${g.label}</div>`:''}${g.rows.map(([t,k])=>`<div class="r"><span>${mark(t,o.q,'hl')}</span>${kchip(k)}</div>`).join('')}`).join('')}${o.add?`<div class="r add">${I('plus')}Shto "${o.add}"</div>`:''}${o.bar?'<span class="bar"></span>':''}</div>`;
+}
+const noteBox=t=>`<div class="notebox">${t}</div>`;
+const vl=(t,n,lim)=>`<div class="vl"><p>${t||''}</p><small class="${lim?'limit':''}">${n}/250</small></div>`;
+function items(list,o={}){
+  return `<div class="items">${list.map((x,i)=>`<div class="it ${o.added===i?'new':''}"><i>${I(x[0])}</i><div class="tx"><b>${x[1]}</b>${x[2]?`<span>${x[2]}</span>`:''}</div></div>`).join('')}<div class="addrow"><span>${I('plus')}Ilaç</span><span>${I('plus')}Analizë</span><span>${I('plus')}Referim</span></div></div>`;
+}
+function guide(o){
+  const steps=(o.steps||[]).map((s,i)=>o.typing===i?`<div class="gr typing"><span class="n">${i+1}</span><p>${s}<span class="caret"></span></p></div>`:`<div class="gr"><span class="n">${i+1}</span><p>${s}</p>${I('x','rx')}</div>`).join('');
+  const n=(o.steps||[]).length+1;
+  const stepPh=o.err?`<div class="gr err"><span class="n ph">1</span><p class="ph">Shtoni një hap</p>${I('alert','mk')}</div>`
+    :o.cursorNew?`<div class="gr typing"><span class="n">${n}</span><p><span class="caret" style="margin:0 4px 0 0"></span><span class="ph">Shtoni një hap</span></p></div>`
+    :`<div class="gr"><span class="n ph">${n}</span><p class="ph">Shtoni një hap</p></div>`;
+  const warns=(o.warns||[]).map(s=>`<div class="gr">${I('alert','warnic')}<p>${s}</p>${I('x','rx')}</div>`).join('');
+  const warnPh=o.err?`<div class="gr err"><span class="plus">${I('plus')}</span><p class="ph">Shtoni një shenjë</p>${I('alert','mk')}</div>`:`<div class="gr"><span class="plus">${I('plus')}</span><p class="ph">Shtoni një shenjë</p></div>`;
+  return `<div class="guide"><div class="gs"><h4>Hapat</h4>${steps}${stepPh}</div><div class="gs"><h4>Kujdes nëse...</h4>${warns}${warnPh}</div></div>`;
+}
+const win=h=>`<div class="win">${[12,24,48,72].map(x=>`<span class="${x===h?'on':''}">${x} orë</span>`).join('')}</div>`;
+const dock=(st,fail)=>`<div class="dock">${fail?`<div class="failrow">${I('tri')}Rezultati nuk u dërgua<b>Provoni përsëri</b></div>`:''}<span class="b shiko">${I('eye')}Shiko</span><span class="b send ${st==='dis'?'dis':st==='going'?'going':''}">${st==='going'?'<span class="spin"></span>Duke dërguar':I('send')+'Dërgo rezultatin'}</span></div>`;
+
+/* whole form */
+function form(p,o={}){
+  const dxs=o.dx||{};
+  return `<div class="fp bg ${o.vp?'vp':''}">${formHead(p,o.draft)}
+   ${flab('Diagnoza')}${dxField(dxs)}${o.dd||''}
+   ${flab('Shënimi i prindit')}${noteBox(p.note)}
+   ${flab('Vlerësimi')}${vl(o.vl&&o.vl[0],o.vl?o.vl[1]:0)}
+   ${flab('Ilaçe, analiza, referime')}${items(o.items||[])}
+   ${flab('Udhëzimet për prindin')}${guide(o.g||{})}
+   ${flab("Prindi mund t'ju shkruajë edhe")}${win(24)}
+   ${dock(o.dock||'dis',o.fail)}</div>`;
+}
+const FULL_A={dx:{sel:'Përkeqësim i astmës',k:'a'},vl:[VL_A,97],items:ITEMS_A,g:{steps:STEPS_A,warns:WARN},dock:'on'};
+const READY_N={dx:{sel:'Otit akut',k:'a'},vl:[VL_N,74],g:{steps:['Kontroll te pediatri pas 3 ditësh nëse dhimbja vazhdon'],warns:['Përgjumje e pazakontë']},dock:'on'};
+
+/* sheets over the blurred form */
+function sheetOver(p,inner,o={}){
+  return `<div class="ov bg"><div class="under">${form(p,o.under||{})}</div><div class="glass"></div><div class="sh"><div class="grab"></div><span class="xbtn">${I('x')}</span>${inner}</div></div>`;
+}
+const inp=(o)=>`<div class="inp ${o.focus?'focus':''}">${I('search')}${o.v!==undefined?`<span>${o.v}<span class="caret"></span></span>`:`<span><span class="caret" style="margin:0 3px 0 0"></span><span class="ph">${o.ph}</span></span>`}${o.v?I('xc','clear'):''}</div>`;
+const rr=(ic,t,s,o={})=>`<div class="rr ${o.add?'add':''}"><i class="${o.add?'g':''}">${I(ic)}</i><div class="tx"><b>${t}</b>${s?`<span>${s}</span>`:''}</div>${o.x?I('x','xs'):''}</div>`;
+const res=rows=>`<div class="res">${rows.join('')}</div>`;
+const bold=(t,q)=>mark(t,q.toLowerCase(),'bold');
+const siMerret=v=>`<div class="sl">Si merret</div><div class="inp ${v?'focus':''}" style="${v?'':''}">${v?`<span>${v}<span class="caret"></span></span>`:'<span class="ph">p.sh. 1 spërkatje, 2 herë në ditë, 4 javë</span>'}</div>`;
+const FLUTI=[['Flutikazon 125 mcg','Inhalator'],['Flutikazon 250 mcg','Inhalator'],['Flutikazon 50 mcg','Sprej hundësh']];
+
+/* result page variants (the one Kartela consultation page) */
+const RES_A={title:'Përkeqësim i astmës',chips:chipAkute,who:'Valbona Xhaferraj, nëna',note:A.note,assess:VL_A,
+  meds:[['Flutikazon 125 mcg','1 spërkatje, 2 herë në ditë, 4 javë'],['Salbutamol 100 mcg','2 spërkatje sipas nevojës']],
+  tests:[['IgE specifike','22.10'],['Spirometri','22.10',1]],ref:['Alergolog','Dr. Ilir Basha, 22.10'],steps:STEPS_A,warn:WARN,
+  date:'22.10.2026, 21:10',type:'Video, 20 min',doc:'Dr. Blerina Kola',nr:'1937'};
+const RES_N={title:'Otit akut',chips:chipAkute,who:'Klea Leka, nëna',note:N.note,assess:VL_N,steps:['Kontroll te pediatri pas 3 ditësh nëse dhimbja vazhdon'],warn:['Përgjumje e pazakontë'],
+  date:'28.10.2026, 18:30',type:'Video, 12 min',doc:'Dr. Blerina Kola',nr:'1937'};
+const X_NAV={icon:'x',label:''};
+
+/* ---------- frames ---------- */
+const F={
+ 'path-1':()=>form(N),
+ 'path-2':()=>form(N,{dx:{err:1},g:{err:1}}),
+ 'path-3':()=>form(N,{vp:1,dx:{focus:1},dd:dd([{label:'Diagnoza të tjera',rows:OTHER}],{bar:1})}),
+ 'path-4':()=>form(N,{vp:1,dx:{focus:1,q:'otit'},dd:dd([{label:'Diagnoza të tjera',rows:[['Otit akut','a'],['Otit akut bilateral','a'],['Otit me efuzion','a'],['Otit i jashtëm','a']]}],{q:'otit',add:'otit'})}).replace(/<span class="hl">/g,'<span class="bold">'),
+ 'path-5':()=>form(N,READY_N),
+ 'path-6':()=>sheetOver(N,`<h3>Shto ilaç</h3><div class="sl">Ilaçi</div>${inp({focus:1,ph:'Kërkoni ilaçin'})}${siMerret()}<div class="pbtn off">Shto ilaçin</div>`,{under:READY_N}),
+ 'path-7':()=>sheetOver(N,`<h3>Shto analizë</h3><div class="sl">Analiza</div>${inp({focus:1,ph:'Kërkoni analizën'})}`,{under:READY_N}),
+ 'path-8':()=>sheetOver(N,`<h3>Shto referim</h3><div class="sl">Mjeku</div>${inp({focus:1,ph:'Kërkoni mjekun ose specialitetin'})}`,{under:READY_N}),
+ 'path-9':()=>consultPage({...RES_N,nav:X_NAV,chat:1}),
+ 'screen-full':()=>form(A,FULL_A),
+ 'head-min':()=>`<div class="fp bg" style="padding-bottom:16px">${formHead(N,0,false)}</div>`,
+ 'head-long':()=>`<div class="fp bg" style="padding-bottom:16px">${formHead(A,0,false)}</div>`,
+ 'head-draft':()=>`<div class="fp bg" style="padding-bottom:16px">${formHead(A,1,false)}</div>`,
+ 'dx-min':()=>`<div class="fp bg dcrop">${flab('Diagnoza')}${dxField({})}</div>`,
+ 'dx-open-k':()=>`<div class="fp bg dcrop">${flab('Diagnoza')}${dxField({focus:1})}${dd([{label:'Sëmundje kronike të konfirmuara',rows:KRON},{label:'Diagnoza të tjera',rows:OTHER.slice(0,1)}],{bar:1})}</div>`,
+ 'dx-open-none':()=>`<div class="fp bg dcrop">${flab('Diagnoza')}${dxField({focus:1})}${dd([{label:'Diagnoza të tjera',rows:OTHER}],{bar:1})}</div>`,
+ 'dx-q':()=>`<div class="fp bg dcrop">${flab('Diagnoza')}${dxField({focus:1,q:'astme'})}${dd([{label:'Sëmundje kronike të konfirmuara',rows:[['Astmë bronkiale','k']]},{label:'Diagnoza të tjera',rows:[['Përkeqësim i astmës','a'],['Astmë alergjike','k'],['Bronkit astmatik','a']]}],{q:'astme',bar:1})}</div>`,
+ 'dx-q-none':()=>`<div class="fp bg dcrop">${flab('Diagnoza')}${dxField({focus:1,q:'otalgji'})}${dd([],{add:'otalgji'})}</div>`,
+ 'dx-sel':()=>`<div class="fp bg dcrop">${flab('Diagnoza')}${dxField({sel:'Përkeqësim i astmës',k:'a'})}</div>`,
+ 'dx-selk':()=>`<div class="fp bg dcrop">${flab('Diagnoza')}${dxField({sel:'Astmë bronkiale',k:'k'})}</div>`,
+ 'dx-long':()=>`<div class="fp bg dcrop">${flab('Diagnoza')}${dxField({sel:'Infeksion viral i rrugëve të sipërme',k:'a'})}</div>`,
+ 'dx-err':()=>`<div class="fp bg dcrop">${flab('Diagnoza')}${dxField({err:1})}</div>`,
+ 'note':()=>`<div class="fp bg dcrop">${flab('Shënimi i prindit')}${noteBox(A.note)}</div>`,
+ 'note-long':()=>`<div class="fp bg dcrop">${flab('Shënimi i prindit')}${noteBox(A.note+' Nuk ha mirë dhe zgjohet natën 2 deri në 3 herë. Kemi provuar avull dhe çaj me mjaltë, por nuk ka ndryshim.')}</div>`,
+ 'vl-min':()=>`<div class="fp bg dcrop">${flab('Vlerësimi')}${vl('',0)}</div>`,
+ 'vl-full':()=>`<div class="fp bg dcrop">${flab('Vlerësimi')}${vl(VL_A,97)}</div>`,
+ 'vl-limit':()=>`<div class="fp bg dcrop">${flab('Vlerësimi')}${vl('Përkeqësim i moderuar pas infeksioni viral. Fishkëllima bilaterale, pa tërheqje. Saturimi 95% sipas prindit. Rritet Flutikazon për 4 javë, Salbutamol sipas nevojës. Spirometri këtë javë dhe kontroll pas 7 ditësh ose më herët nëse pompa duhet më shpes',250,1)}</div>`,
+ 'it-min':()=>`<div class="fp bg dcrop">${flab('Ilaçe, analiza, referime')}${items([])}</div>`,
+ 'it-one':()=>`<div class="fp bg dcrop">${flab('Ilaçe, analiza, referime')}${items([['pill','Paracetamol 120 mg/5 ml','5 ml çdo 6 orë, nëse ka temperaturë']])}</div>`,
+ 'it-full':()=>`<div class="fp bg dcrop">${flab('Ilaçe, analiza, referime')}${items(ITEMS_A)}</div>`,
+ 'it-added':()=>`<div class="fp bg dcrop">${flab('Ilaçe, analiza, referime')}${items([ITEMS_A[1],ITEMS_A[0],...ITEMS_A.slice(2)],{added:1})}</div>`,
+ 'it-bare':()=>`<div class="fp bg dcrop">${flab('Ilaçe, analiza, referime')}${items([['pill','Ibuprofen sirop'],['flask','Hemogram i plotë'],['arrow','Spitali Pediatrik']])}</div>`,
+ 'it-long':()=>`<div class="fp bg dcrop">${flab('Ilaçe, analiza, referime')}${items([['pill','Amoksicilinë me acid klavulanik 400 mg/57 mg','5 ml dy herë në ditë pas ngrënies, për 7 ditë, edhe nëse temperatura bie më herët'],['flask','Antitrupa anti-transglutaminazë indore IgA'],['arrow','Dr. Anastasia Kristofori-Papadhimitri','Gastroenterolog pediatrik']])}</div>`,
+ 'med0':()=>sheetOver(A,`<h3>Shto ilaç</h3><div class="sl">Ilaçi</div>${inp({focus:1,ph:'Kërkoni ilaçin'})}${siMerret()}<div class="pbtn off">Shto ilaçin</div>`,{under:FULL_A}),
+ 'med1':()=>sheetOver(A,`<h3>Shto ilaç</h3><div class="sl">Ilaçi</div>${inp({focus:1,v:'fluti'})}${res([...FLUTI.map(([t,s])=>rr('pill',bold(t,'fluti'),s)),rr('plus','Shto "fluti"','',{add:1})])}${siMerret()}<div class="pbtn off">Shto ilaçin</div>`,{under:FULL_A}),
+ 'medNo':()=>sheetOver(A,`<h3>Shto ilaç</h3><div class="sl">Ilaçi</div>${inp({focus:1,v:'ibuprofen sirop'})}${res([rr('plus','Shto "ibuprofen sirop"','',{add:1})])}${siMerret()}<div class="pbtn off">Shto ilaçin</div>`,{under:FULL_A}),
+ 'med2':()=>sheetOver(A,`<h3>Shto ilaç</h3><div class="sl">Ilaçi</div><div class="chosen">${rr('pill','Flutikazon 125 mcg','Inhalator',{x:1})}</div>${siMerret()}<div class="pbtn on">Shto ilaçin</div>`,{under:FULL_A}),
+ 'med3':()=>sheetOver(A,`<h3>Shto ilaç</h3><div class="sl">Ilaçi</div><div class="chosen">${rr('pill','Flutikazon 125 mcg','Inhalator',{x:1})}</div>${siMerret('1 spërkatje, 2 herë në ditë, 4 javë')}<div class="pbtn on">Shto ilaçin</div>`,{under:FULL_A}),
+ 'medEdit':()=>sheetOver(A,`<h3>Ndrysho ilaçin</h3><div class="sl">Ilaçi</div><div class="chosen">${rr('pill','Flutikazon 125 mcg','Inhalator',{x:1})}</div><div class="sl">Si merret</div><div class="inp"><span>1 spërkatje, 2 herë në ditë, 4 javë</span></div><div class="pbtn on">Ruaj</div><div class="pbtn del">Hiqe ilaçin</div>`,{under:FULL_A}),
+ 'an0':()=>sheetOver(A,`<h3>Shto analizë</h3><div class="sl">Analiza</div>${inp({focus:1,ph:'Kërkoni analizën'})}`,{under:FULL_A}),
+ 'an1':()=>sheetOver(A,`<h3>Shto analizë</h3><div class="sl">Analiza</div>${inp({focus:1,v:'spiro'})}${res([rr('flask',bold('Spirometri','spiro')),rr('flask',bold('Spirometri me bronkodilatator','spiro')),rr('plus','Shto "spiro"','',{add:1})])}`,{under:FULL_A}),
+ 'anEdit':()=>sheetOver(A,`<h3>Ndrysho analizën</h3><div class="sl">Analiza</div><div class="chosen">${rr('flask','Spirometri','',{x:1})}</div><div class="pbtn on">Ruaj</div><div class="pbtn del">Hiqe analizën</div>`,{under:FULL_A}),
+ 'ref0':()=>sheetOver(A,`<h3>Shto referim</h3><div class="sl">Mjeku</div>${inp({focus:1,ph:'Kërkoni mjekun ose specialitetin'})}`,{under:FULL_A}),
+ 'ref1':()=>sheetOver(A,`<h3>Shto referim</h3><div class="sl">Mjeku</div>${inp({focus:1,v:'ilir'})}${res([rr('user','Dr. '+mark('Ilir','ilir','hl')+' Basha','Alergolog, Tiranë'),rr('user','Dr. '+mark('Ilir','ilir','hl')+' Hoxha','Pulmolog pediatrik, Durrës'),rr('plus','Shto "ilir"','',{add:1})])}`,{under:FULL_A}),
+ 'refSpec':()=>sheetOver(A,`<h3>Shto referim</h3><div class="sl">Mjeku</div>${inp({focus:1,v:'alergolog'})}${res([rr('user','Dr. Ilir Basha','Alergolog, Tiranë'),rr('user','Dr. Elda Muça','Alergolog, Shkodër'),rr('plus','Shto "alergolog"','',{add:1})])}`,{under:FULL_A}),
+ 'refEdit':()=>sheetOver(A,`<h3>Ndrysho referimin</h3><div class="sl">Mjeku</div><div class="chosen">${rr('user','Dr. Ilir Basha','Alergolog, Tiranë',{x:1})}</div><div class="pbtn on">Ruaj</div><div class="pbtn del">Hiqe referimin</div>`,{under:FULL_A}),
+ 'g-min':()=>`<div class="fp bg dcrop">${flab('Udhëzimet për prindin')}${guide({})}</div>`,
+ 'g-typing':()=>`<div class="fp bg dcrop">${flab('Udhëzimet për prindin')}${guide({steps:[...STEPS_A,'Kontroll pas 2 javësh'],typing:4,warns:WARN.slice(0,2)}).replace(/<div class="gr"><span class="n ph">6<\/span><p class="ph">Shtoni një hap<\/p><\/div>/,'')}</div>`,
+ 'g-enter':()=>`<div class="fp bg dcrop">${flab('Udhëzimet për prindin')}${guide({steps:[...STEPS_A,'Kontroll pas 2 javësh'],cursorNew:1,warns:WARN.slice(0,2)})}</div>`,
+ 'g-paste':()=>`<div class="fp bg dcrop">${flab('Udhëzimet për prindin')}${guide({steps:STEPS_A.slice(0,3)}).replace(/<div class="gr"><span class="n">/g,'<div class="gr" style="background:#F2F7FF"><span class="n">')}</div>`,
+ 'g-one':()=>`<div class="fp bg dcrop">${flab('Udhëzimet për prindin')}${guide({steps:['Paracetamol vetëm nëse temperatura kalon 38.5°C'],warns:['Temperaturë mbi 39°C që nuk bie me ilaç']})}</div>`,
+ 'g-full':()=>`<div class="fp bg dcrop">${flab('Udhëzimet për prindin')}${guide({steps:STEPS_A,warns:WARN})}</div>`,
+ 'g-err':()=>`<div class="fp bg dcrop">${flab('Udhëzimet për prindin')}${guide({err:1})}</div>`,
+ 'win':()=>`<div class="fp bg dcrop">${flab("Prindi mund t'ju shkruajë edhe")}${win(24)}</div>`,
+ 'win-72':()=>`<div class="fp bg dcrop">${flab("Prindi mund t'ju shkruajë edhe")}${win(72)}</div>`,
+ 'dock-dis':()=>`<div class="bg dcrop" style="padding:0 20px">${dock('dis')}</div>`,
+ 'dock-on':()=>`<div class="bg dcrop" style="padding:0 20px">${dock('on')}</div>`,
+ 'dock-sending':()=>`<div class="bg dcrop" style="padding:0 20px">${dock('going')}</div>`,
+ 'dock-fail':()=>form(A,{...FULL_A,vp:1,fail:1}),
+ 'preview-full':()=>consultPage({...RES_A,nav:X_NAV,chat:1,allPending:1}),
+ 'parent-full':()=>consultPage({...RES_A,nav:{icon:'back',label:'Konsultat'},chat:1}),
+ 'parent-bare':()=>consultPage({...RES_N,meds:[['Ibuprofen sirop','']],nav:{icon:'back',label:'Konsultat'},chat:1}),
+ 'k-dx':()=>consultPage(RES_A)
+};
+window.FRAME_IDS=Object.keys(F);
+function show(){
+  const id=location.hash.slice(1)||'path-1';
+  document.getElementById('f').innerHTML=(F[id]||F['path-1'])();
+  requestAnimationFrame(()=>{try{parent.postMessage({liveFrame:id,h:document.getElementById('f').scrollHeight},'*')}catch(e){}});
+}
+addEventListener('hashchange',show);show();
+document.fonts&&document.fonts.ready.then(show);
+</script>
+</body>
+</html>

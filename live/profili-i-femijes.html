@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="sq">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=393">
+<title>Profili i fëmijës frames</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="kidocare.css">
+
+</head>
+<body>
+<div id="f"></div>
+<script src="kidocare.js"></script>
+<script>
+/* ---------- frames ---------- */
+const F={
+ 'pf-screen-min':()=>profile(NOA),
+ 'pf-screen-full':()=>profile(ANISA),
+ 'pf-id-min':()=>crop(idCard(NOA)),
+ 'pf-id-full':()=>crop(idCard(ANISA)),
+ 'pf-id-animal':()=>crop(idCard(ANISA,{photo:1})),
+ 'pf-id-col':()=>crop(compact(ANISA)),
+ 'pf-g-min':()=>crop(guardians(NOA.guardians)),
+ 'pf-g-full':()=>crop(guardians(ANISA.guardians)),
+ 'pf-g-long':()=>crop(guardians([['Valbona Marjeta Xhaferraj-Gjonbalaj','Nëna',1],['Gentian Gjonbalaj','Babai']])),
+ 'pf-c-full':()=>crop(clinical(ANISA.chronic,ANISA.current)),
+ 'pf-c-mixed':()=>crop(clinical(['Astmë bronkiale'],[])),
+ 'pf-c-long':()=>crop(clinical(['Astmë bronkiale'],['Amoksicilinë me acid klavulanik 400 mg/57 mg (pezulli orale)','Salbutamol 100 mcg'])),
+ 'pf-a-kartela':()=>crop(`<div style="padding:12px 0 8px">${kartelaBtn().replace('margin-top:20px','')}</div>`),
+ 'pf-a-cons':()=>crop(`<div style="padding:12px 0 8px">${consBtn(5)}</div>`),
+ 'pf-a-cons-one':()=>crop(`<div style="padding:12px 0 8px">${consBtn(1)}</div>`),
+ 'pf-consults':()=>`<div class="ov bg"><div class="under">${profile(ANISA)}</div><div class="glass"></div><div style="position:absolute;top:0;left:0;right:0">${statusBar()}</div><div class="bs"><div class="grab"></div><span class="xbtn">${I('x')}</span><h3>Konsultat me ju <span class="cnt2">5</span></h3>${ANISA.consults.map(([t,d])=>`<div class="cl"><i>${I('video')}</i><div class="tx"><b>${t}</b><span>${d}</span></div>${I('chev','chev')}</div>`).join('')}</div></div>`
+};
+window.FRAME_IDS=Object.keys(F);
+function show(){
+  const id=location.hash.slice(1)||'pf-screen-min';
+  document.getElementById('f').innerHTML=(F[id]||F['pf-screen-min'])();
+  const post=()=>{try{parent.postMessage({liveFrame:id,h:document.getElementById('f').scrollHeight},'*')}catch(e){}};
+  requestAnimationFrame(post);document.querySelectorAll('#f img').forEach(i=>i.complete||i.addEventListener('load',post));
+}
+addEventListener('hashchange',show);show();
+document.fonts&&document.fonts.ready.then(show);
+</script>
+</body>
+</html>

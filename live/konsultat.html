@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="sq">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=393">
+<title>Konsultat frames</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="kidocare.css">
+<style>
+/* Konsultat: the doctor's consultation list, read like a WhatsApp chat list */
+.scr{min-height:852px;position:relative;padding:0 16px 130px}
+.kh{height:44px;display:flex;align-items:center;margin:8px 4px 16px}
+.kh h1{font-size:30px;font-weight:600;letter-spacing:-.02em;line-height:1}
+.srch{height:52px;border-radius:26px;background:#fff;display:flex;align-items:center;gap:10px;padding:0 18px;color:var(--muted);font-size:16px;box-shadow:0 10px 30px rgba(40,80,160,.06)}
+.srch svg{width:19px;height:19px}
+.klab{font-size:14px;font-weight:500;color:var(--muted);margin:18px 4px 2px}
+/* one conversation row */
+.cr{display:flex;align-items:center;gap:12px;padding:0 4px}
+.av{width:50px;height:50px;border-radius:25px;background:#fff;color:var(--blue-ink);display:grid;place-items:center;font-size:19px;font-weight:600;flex:none;box-shadow:0 4px 12px rgba(40,80,160,.06)}
+.cr .bd{flex:1;min-width:0;padding:13px 0;border-bottom:1px solid rgba(160,180,215,.28)}
+.cr:last-child .bd{border-bottom:0}
+.l1,.l2{display:flex;align-items:center;gap:8px}
+.l1 b{font-size:17px;font-weight:600;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.l1 .tm{margin-left:auto;font-size:13px;color:var(--muted);white-space:nowrap;flex:none;display:flex;align-items:center;gap:4px;padding-left:6px}
+.l2{margin-top:2px}
+.l2 p{flex:1;min-width:0;font-size:15px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.35}
+.l2 p.new{color:var(--ink)}
+.l2 p svg{width:16px;height:16px;vertical-align:-3px;margin-right:6px}
+/* status hints: a slight tint, words stay the same */
+.l2 p.s-draft{color:#6B7280;font-weight:500}
+.l2 p.s-result{color:var(--amber);font-weight:500}
+.bdg{min-width:21px;height:21px;border-radius:11px;background:var(--blue);color:#fff;font-size:12px;font-weight:600;display:grid;place-items:center;padding:0 6px;flex:none}
+.empty3{display:flex;flex-direction:column;align-items:center;text-align:center;gap:8px;margin-top:70px;color:var(--muted);font-size:15px}
+.empty3 i{width:58px;height:58px;border-radius:29px;background:#fff;display:grid;place-items:center;color:var(--soft);margin-bottom:6px}
+.empty3 i svg{width:24px;height:24px}
+.empty3 b{font-size:17px;font-weight:600;color:var(--ink)}
+</style>
+</head>
+<body>
+<div id="f"></div>
+<script src="kidocare.js"></script>
+<script>
+Object.assign(P,{
+ pen:'<path d="M21.17 6.81a1 1 0 0 0-3.99-3.99L3.84 16.17a2 2 0 0 0-.5.83l-1.32 4.35a.5.5 0 0 0 .62.62l4.35-1.32a2 2 0 0 0 .83-.5z"/>',
+
+});
+/* ---------- components ---------- */
+const head=()=>`<div class="kh"><h1>Konsultat</h1></div><div class="srch">${I('search')}Kërko fëmijën</div>`;
+const tabsK=(n,closed)=>`<div class="seg2"><div class="t ${closed?'':'on'}">Aktive${n?` <b>${n}</b>`:''}</div><div class="t ${closed?'on':''}">Të mbyllura</div></div>`;
+const ini=c=>c.name.trim()[0];
+/* o: {t:time, kind:'unread'|'result'|'draft'|'follow'|'closed', n, text, timer} */
+function crow(c,o){
+  const st=(i,t,c)=>`<p${c?` class="${c}"`:''}>${I(i)}${t}</p>`;
+  let line='',right='';
+  if(o.kind==='unread'){line=`<p class="new">${o.text}</p>`;right=`<span class="bdg">${o.n||1}</span>`}
+  else if(o.kind==='result')line=st('file','Pa rezultat','s-result');
+  else if(o.kind==='draft')line=st('pen','Draft','s-draft');
+  else if(o.kind==='follow')line=st('clock',`Ndjekje edhe ${o.timer}`);
+  else if(o.kind==='closed')line=`<p>${o.text}</p>`;
+  return `<div class="cr"><span class="av">${ini(c)}</span><div class="bd"><div class="l1"><b>${c.name}</b><span class="tm">${o.t}</span></div><div class="l2">${line}${right}</div></div></div>`;
+}
+const clist=r=>`<div>${r.join('')}</div>`;
+const klabel=t=>`<div class="klab">${t}</div>`;
+const NOTE_NOA='Ka temperaturë 38.2°C që nga mëngjesi. Ha pak, por pi ujë normalisht.';
+const ELA_Q='Faleminderit! A t’i jap ibuprofen nëse temperatura rritet natën?';
+const BEN_F='Më shkruani pas tre ditësh si është.';
+const noaRow=()=>crow(NOA,{t:'23:14',kind:'unread',text:NOTE_NOA});
+const fullActive=()=>klabel('Kërkojnë veprim')+clist([
+  crow(ANISA,{t:'23:39',kind:'result'}),
+  crow(ELA,{t:'23:31',kind:'unread',text:ELA_Q}),
+  crow(NOA,{t:'23:14',kind:'draft'}),
+])+klabel('Në ndjekje')+clist([
+  crow(BEN,{t:'19:40',kind:'follow',timer:'20 orë'})
+]);
+const emptyK=(t,p,icon)=>`<div class="empty3"><i>${I(icon)}</i><b>${t}</b><span>${p}</span></div>`;
+const screen=(body,n,closed,badge)=>`<div class="scr bg">${statusBar()}${head()}${tabsK(n,closed)}${body}${gnav(1,{0:3,1:badge})}</div>`;
+const closedList=()=>clist([
+  crow(ANISA,{t:'22.10',kind:'closed',text:'Përkeqësim i astmës'}),
+  crow(ANISA,{t:'12.07',kind:'closed',text:'Dermatit atopik'}),
+  crow(ANISA,{t:'03.02',kind:'closed',text:'Bronkit akut'}),
+  crow(ANISA,{t:'2025',kind:'closed',text:'Urtikarie'})
+]);
+
+const F={
+ 'path-1':()=>screen(klabel('Kërkojnë veprim')+clist([noaRow()]),1,0,1),
+ 'path-2':()=>screen(emptyK('Nuk keni konsulta të mbyllura','Konsultat e përfunduara shfaqen këtu.','file'),1,1,1),
+ 'screen-min':()=>screen(klabel('Kërkojnë veprim')+clist([noaRow()]),1,0,1),
+ 'screen-full':()=>screen(fullActive(),4,0,3),
+ 'hd':()=>crop(head()),
+ 'seg-act':()=>crop(tabsK(4,0)),
+ 'seg-closed':()=>crop(tabsK(4,1)),
+ 'r-unread':()=>crop(clist([noaRow()])),
+ 'r-unread-many':()=>crop(clist([crow(ELA,{t:'23:31',kind:'unread',n:3,text:ELA_Q})])),
+ 'r-result':()=>crop(clist([crow(ANISA,{t:'23:39',kind:'result'})])),
+ 'r-draft':()=>crop(clist([crow(NOA,{t:'23:14',kind:'draft'})])),
+ 'r-follow':()=>crop(clist([crow(BEN,{t:'19:40',kind:'follow',timer:'20 orë'})])),
+ 'r-long':()=>crop(clist([crow(ANISA,{t:'23:31',kind:'unread',text:'Kollitet fort që nga mbrëmja dhe merr frymë me vështirësi. Ka përdorur pompën 3 herë sot.'})])),
+ 'c-list':()=>crop(closedList()),
+ 'screen-closed':()=>screen(closedList(),4,1,3),
+ 'e-active':()=>screen(emptyK('Nuk keni konsulta aktive','Konsultat që pranoni nga Turni shfaqen këtu.','chat'),0,0,0)
+};
+window.FRAME_IDS=Object.keys(F);
+function show(){
+  const id=location.hash.slice(1)||'path-1';
+  document.getElementById('f').innerHTML=(F[id]||F['path-1'])();
+  const post=()=>{try{parent.postMessage({liveFrame:id,h:document.getElementById('f').scrollHeight},'*')}catch(e){}};
+  requestAnimationFrame(post);document.querySelectorAll('#f img').forEach(i=>i.complete||i.addEventListener('load',post));
+}
+addEventListener('hashchange',show);show();
+document.fonts&&document.fonts.ready.then(show);
+</script>
+</body>
+</html>
