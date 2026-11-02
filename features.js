@@ -2,7 +2,7 @@
 // Frame: { state: min|col|exp|det|full|sys, img, title?, spec, via?, page?, from? }. "via" draws an arrow with that trigger before the frame; without it, frames sit side by side. "from" reads the image from another feature's folder.
 // "path" (optional, shown first): every screen a doctor can reach for the minimal child (Noa), in tap order, before the full screen and the components.
 // Features listed in LIVE render their frames from one HTML file instead of images: the frame's img name (without .jpg) is the frame id in that file.
-window.LIVE = { "kartela-mjekesore": "live/kartela-mjekesore.html", "rezultati": "live/rezultati.html", "profili-i-femijes": "live/profili-i-femijes.html", "profili-i-kujdestarit": "live/profili-i-kujdestarit.html", "gjendjet-e-sistemit": "live/gjendjet-e-sistemit.html", "profili-i-mjekut": "live/profili-i-mjekut.html", "turni-live": "live/turni-live.html", "thirrja-video": "live/thirrja-video.html", "konsultat": "live/konsultat.html" };
+window.LIVE = { "kartela-mjekesore": "live/kartela-mjekesore.html", "rezultati": "live/rezultati.html", "profili-i-femijes": "live/profili-i-femijes.html", "profili-i-kujdestarit": "live/profili-i-kujdestarit.html", "gjendjet-e-sistemit": "live/gjendjet-e-sistemit.html", "profili-i-mjekut": "live/profili-i-mjekut.html", "turni-live": "live/turni-live.html", "thirrja-video": "live/thirrja-video.html", "konsultat": "live/konsultat.html", "biseda": "live/biseda.html" };
 window.FEATURES = [
   {
     id: "turni-live",
@@ -66,7 +66,7 @@ window.FEATURES = [
     date: "01.11.2026",
     purpose: "The doctor's consultation list, read like WhatsApp's chat list: name and time, then one quiet line: the parent's unread message with a count, or an icon and one word for what is owed (Pa rezultat amber, Draft grey).",
     path: {
-      note: "Noa is the only active consultation: the parent's first message, not yet read. Tapping the row opens the chat, which is redesigned next, so the path covers the two tabs.",
+      note: "Noa is the only active consultation: the parent's first message, not yet read. Tapping the row opens Biseda, so the path covers the two tabs.",
       frames: [
         { state: "min", img: "path-1.jpg", page: true, title: "Aktive", spec: "Opens on Aktive. One row: initial, name, time, and the parent's message with a blue count." },
         { state: "min", img: "path-2.jpg", page: true, via: "Tap Të mbyllura", title: "Të mbyllura, empty", spec: "Noa has no finished consultations, so a quiet empty state." }
@@ -108,6 +108,74 @@ window.FEATURES = [
       ["One thing per row, by priority", "Unread message first, then Draft, then Pa rezultat. Pa rezultat comes back as soon as the doctor has read the parent's messages."],
       ["Two sections, no filters", "Kërkojnë veprim holds anything with a draft, an unread message or a missing result; Në ndjekje holds consultations with a result sent and the follow-up still running. A parent reply moves the row back up. Sections with no rows are hidden."],
       ["Slight colour only", "Pa rezultat is amber text, Draft is neutral grey text, the unread count is blue; nothing else is coloured. No status icons on the initial, no tinted rows, no pills. The Konsultat badge in the bottom bar counts the rows under Kërkojnë veprim."]
+    ]
+  },
+  {
+    id: "biseda",
+    name: "Biseda",
+    side: "doctor",
+    date: "02.11.2026",
+    purpose: "The consultation chat: who the child is and what is still owed at the top, the conversation in the middle, and one way to write the result at the bottom.",
+    path: {
+      note: "Noa's video consultation, opened from Konsultat. Noa has no allergies or chronic illnesses, so the header shows only name, age, type and status. Before the result there is no message box: in a video consultation messaging opens with the result.",
+      frames: [
+        { state: "min", img: "path-1.jpg", page: true, title: "Before the result", spec: "Parent's note, the call, and Shkruaj rezultatin as the only action. Pa rezultat in amber under the name." },
+        { state: "min", img: "path-1.jpg", from: "rezultati", page: true, via: "Tap Shkruaj rezultatin", title: "Rezultati", spec: "The result form opens full screen." },
+        { state: "col", img: "path-3.jpg", page: true, via: "Dërgo rezultatin", title: "Result sent", spec: "The result card joins the thread, the status line shows the follow-up time left, and the message box opens." },
+        { state: "det", img: "path-9.jpg", from: "rezultati", page: true, via: "Tap Hape", title: "The result page", spec: "The same result page as everywhere else." },
+        { state: "det", img: "pf-screen-min.jpg", from: "profili-i-femijes", page: true, via: "Back, tap Noa Leka", title: "Profili i fëmijës", spec: "The name opens the child's profile; the Kartela opens from there." },
+        { state: "det", img: "path-6.jpg", page: true, via: "Back, tap the urgent button", title: "Urgjencë", spec: "The same confirmation as in the call. Anulo goes back." },
+        { state: "col", img: "path-7.jpg", page: true, via: "Po, dërgoje", title: "Urgent advice sent", spec: "The message the parent got appears in the thread, tinted pink." },
+        { state: "det", img: "path-8.jpg", page: true, via: "Tap +", title: "Dërgoni prindit", spec: "The camera moved in here; the message box keeps only + and the field." }
+      ]
+    },
+    screen: {
+      note: "Header, thread and bottom are one column. The header never scrolls away, so status, allergies and the urgent button stay in reach.",
+      frames: [
+        { state: "min", img: "screen-min.jpg", title: "Noa Leka", spec: "Video consultation, before the result." },
+        { state: "full", img: "screen-full.jpg", title: "Anisa", spec: "Long name wraps, both chips, a dropped call followed by a full one." }
+      ]
+    },
+    components: [
+      { name: "Header", note: "Back, then who: name with chevron (opens Profili i fëmijës), age and consultation type, one status line, then the allergy and chronic chips exactly as in Thirrja video (see its header variants). The old Rezultati pill is gone: status is a line, not a button.", frames: [
+        { state: "min", img: "head-pend.jpg", title: "Pa rezultat", spec: "No result yet: amber file icon and Pa rezultat, the same words as in Konsultat." },
+        { state: "col", img: "head-follow.jpg", title: "Në ndjekje", spec: "Result sent: grey clock and the time the parent can still write, the same words as in Konsultat." },
+        { state: "col", img: "head-full.jpg", title: "Chips, long name", spec: "Pink allergy chip, amber chronic chip, each with +n. The name wraps." }
+      ]},
+      { name: "Urgjencë", note: "The pink button top right sends the urgent-care advice, the same message and confirmation as in the call. Rare, so confirmed every time.", frames: [
+        { state: "det", img: "urg-sheet.jpg", page: true, title: "Confirm", spec: "Shows the parent's message word for word. No close button: Anulo cancels." },
+        { state: "col", img: "urg-sent.jpg", via: "Po, dërgoje", title: "In the thread", spec: "The advice as a pink message on the doctor's side." }
+      ]},
+      { name: "Messages", note: "Parent on the left in white, doctor on the right in blue with read ticks. A date chip starts each day.", frames: [
+        { state: "col", img: "msg.jpg", title: "After the result", spec: "The doctor's message, read (two ticks), and the parent's reply." }
+      ]},
+      { name: "Call", note: "Each call is one card on the doctor's side.", frames: [
+        { state: "col", img: "call-ok.jpg", title: "Ended normally", spec: "Video-thirrje and its length." },
+        { state: "col", img: "call-drop.jpg", title: "Dropped, latest", spec: "Ended by lost connection (Thirrja video, Call dropped), not by Mbyll: amber icon, Thirrja u ndërpre. Telefono përsëri calls the parent again." },
+        { state: "col", img: "call-drop-old.jpg", title: "Dropped, then called again", spec: "Once a later call exists, the dropped card loses its button." }
+      ]},
+      { name: "Result card", note: "Sent result in the thread, titled by its diagnosis. Hape opens the result page. This is the only way into the result from the chat.", frames: [
+        { state: "col", img: "res.jpg", title: "Sent", spec: "Green file icon, Rezultati, the diagnosis, Hape." },
+        { state: "col", img: "res-long.jpg", title: "Long diagnosis", spec: "Wraps; nothing is cut." }
+      ]},
+      { name: "Kërkesë për riplanifikim", note: "The doctor's request to move a scheduled consultation, on the doctor's side of the thread. The proposed time is always inside the shift.", frames: [
+        { state: "col", img: "rs-pend.jpg", title: "Waiting", spec: "Old time struck through, new time, one grey line on what happens without an answer, pink Në pritje të prindit. Anulo kërkesën withdraws it." },
+        { state: "col", img: "rs-ok.jpg", title: "Accepted", spec: "Only the new time and green Prindi pranoi. No button." },
+        { state: "col", img: "rs-no.jpg", title: "Refused", spec: "Grey Prindi refuzoi; the consultation is cancelled." },
+        { state: "col", img: "rs-none.jpg", title: "No answer", spec: "Grey Pa përgjigje; the consultation is cancelled at the old time." }
+      ]},
+      { name: "Bottom", note: "One layout for every consultation: Shkruaj rezultatin until the result is sent, the message box when messaging is open. Video consultations open messaging with the result; text consultations have it from the start.", frames: [
+        { state: "min", img: "bot-video.jpg", title: "Video, before the result", spec: "Only Shkruaj rezultatin." },
+        { state: "col", img: "bot-text.jpg", title: "Text, before the result", spec: "Shkruaj rezultatin above the message box, so a text consultation can be closed from here too." },
+        { state: "col", img: "bot-draft.jpg", title: "Draft saved", spec: "The doctor left the form: Vazhdo rezultatin reopens the draft." },
+        { state: "col", img: "bot-empty.jpg", via: "Result sent", title: "Message box, empty", spec: "+ and the field; send is grey until there is text." },
+        { state: "col", img: "bot-typed.jpg", via: "Type", title: "Message box, typed", spec: "Send turns blue." },
+        { state: "det", img: "attach.jpg", page: true, via: "Tap +", title: "Dërgoni prindit", spec: "Bëni një foto, Zgjidhni nga galeria, Dokument. To confirm against what the app sends today." }
+      ]}
+    ],
+    rules: [
+      ["Status is a line, not a button", "Pa rezultat and Ndjekje edhe n orë use the words of Konsultat. The result is opened from its card and written from the bottom button, never from the header."],
+      ["Pink is for alerts only", "Allergies, the urgent button and the urgent advice. A missing result is amber, as in Konsultat."]
     ]
   },
   {

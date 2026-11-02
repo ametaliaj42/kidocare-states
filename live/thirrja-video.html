@@ -67,12 +67,8 @@
 .urg svg{width:17px;height:17px;color:#FF8A9C}
 .urg.sent{box-shadow:none;color:rgba(255,255,255,.8)}
 .urg.sent svg{color:#7FE0AE}
-/* sheets over the call */
-.dim{position:absolute;inset:0;background:rgba(10,18,40,.35)}
+/* sheets over the call (base sheet styles are shared in kidocare.css) */
 .vc .bs{color:var(--ink)}
-.bs .stitle{font-size:22px;font-weight:600;letter-spacing:-.01em;line-height:1.2;margin:10px 52px 4px 0}
-.bs.nx .stitle{margin-right:0}
-.bs .ssub{font-size:15px;color:var(--muted);margin-bottom:16px;line-height:1.4}
 .bs .note{background:var(--blue-fill);border-radius:14px;padding:11px 13px 12px;margin-bottom:10px}
 .bs .note small{display:flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:var(--blue-ink);margin-bottom:3px}
 .bs .note small svg{width:14px;height:14px}
@@ -100,14 +96,6 @@
 .ta small.limit{color:#B07A14;font-weight:600}
 .hint{display:flex;align-items:center;gap:7px;font-size:14px;color:var(--muted);margin-top:10px}
 .hint svg{width:15px;height:15px}
-.msg{display:flex;gap:10px;background:#FFE9F3;border-radius:16px;padding:13px 14px;font-size:16px;line-height:1.4;margin-bottom:10px}
-.msg svg{width:20px;height:20px;color:var(--pink);margin-top:1px}
-.btnb{height:54px;border-radius:27px;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:600;margin-top:10px}
-.btnb.red{background:var(--red);color:#fff;margin-top:18px}
-.btnb.blue{background:var(--blue);color:#fff;box-shadow:0 12px 26px rgba(80,140,250,.30);margin-top:18px}
-.btnb.redo svg{width:18px;height:18px}
-.btnb.redo{background:#fff;color:var(--red);box-shadow:inset 0 0 0 1.5px var(--red)}
-.btnb.ghost{background:var(--track);color:var(--ink)}
 /* floating call over other screens */
 .pipwrap{position:relative;height:852px;overflow:hidden}
 .pip{position:absolute;right:16px;bottom:34px;width:112px;height:150px;border-radius:18px;overflow:hidden;background:linear-gradient(180deg,#46577A,#1B2540);box-shadow:0 16px 34px rgba(14,27,61,.35)}
@@ -176,17 +164,12 @@ function call(c,o={}){
 const mid=(ic,t,s,dots)=>`<div class="mid"><i>${I(ic)}</i><b>${t}</b>${s?`<span>${s}</span>`:''}${dots?'<div class="dots3"><em></em><em></em><em></em></div>':''}</div>`;
 
 /* sheets */
-const sheet=(inner,x=true)=>`<div class="dim"></div><div class="bs"><div class="grab"></div>${x?`<span class="xbtn">${I('x')}</span>`:''}${inner}</div>`;
 function notesSheet(txt,n){
   const lim=n>=250;
   const body=txt?`${txt}<span class="caret"></span>`:`<span class="caret"></span><span class="ph">Shkruani vlerësimin tuaj</span>`;
   return sheet(`<div class="stitle">Shënime</div><div class="ssub">Ruhen dhe shfaqen te Vlerësimi.</div>
    <div class="ta">${body}<small class="${lim?'limit':''}">${n}/250</small></div>`);
 }
-const urgSheet=()=>sheet(`<div class="stitle">Të këshilloni kujdes urgjent?</div><div class="ssub">Prindi e sheh menjëherë këtë mesazh në bisedë:</div>
-   <div class="msg">${I('tri')}<span>Kjo mund të jetë urgjencë. Telefononi 112 tani ose shkoni te urgjenca më e afërt.</span></div>
-   <div class="ssub" style="margin:0">Nuk mund të zhbëhet. Thirrja vazhdon.</div>
-   <div class="btnb red">Po, dërgoje</div><div class="btnb ghost">Anulo</div>`,false);
 const endSheet=()=>sheet(`<div class="stitle">Të mbyllni konsultën?</div><div class="ssub" style="margin-bottom:0">Pas mbylljes hapet Rezultati. Nëse dilni pa e dërguar, ruhet si draft te Konsultat.</div>
    <div class="btnb blue">Mbyll dhe shkruaj rezultatin</div><div class="btnb redo">${I('tri')}&nbsp;Këshilloni kujdes urgjent</div><div class="btnb ghost">Vazhdo thirrjen</div>`,false);
 /* the call keeps running in a floating tile while the doctor reads another screen; tap returns to the call, drag moves it */

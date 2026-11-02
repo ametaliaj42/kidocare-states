@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="sq">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=393">
+<title>Biseda frames</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="kidocare.css">
+<style>
+/* Biseda: the consultation chat on the doctor side */
+.cs{height:852px;position:relative;display:flex;flex-direction:column;overflow:hidden}
+/* header: back, who (tap opens Profili i fëmijës), urgent advice */
+.bh{display:flex;align-items:flex-start;gap:12px;padding:8px 16px 12px}
+.bh .back{margin-top:2px}
+.bwho{flex:1;min-width:0}
+.bwho b{display:block;font-size:20px;font-weight:600;letter-spacing:-.01em;line-height:1.25}
+.bwho b svg{width:18px;height:18px;color:var(--soft);vertical-align:-3px;margin-left:2px}
+.bwho .meta{display:block;font-size:14px;color:var(--muted);margin-top:1px}
+.bwho .stl{display:flex;align-items:center;gap:6px;font-size:14px;margin-top:5px;color:var(--muted)}
+.bwho .stl svg{width:15px;height:15px}
+.bwho .stl.pend{color:var(--amber);font-weight:500}
+.bwho .chips{margin-top:9px;gap:6px}
+.bwho .chip{height:26px;font-size:14px;border-radius:13px;padding:0 10px}
+.bwho .chip em{font-style:normal;opacity:.75;font-weight:500}
+.ubtn{width:44px;height:44px;border-radius:22px;background:var(--pink-fill);color:var(--pink);display:grid;place-items:center;flex:none;margin-top:2px}
+.ubtn svg{width:20px;height:20px}
+/* messages */
+.thread{flex:1;display:flex;flex-direction:column;justify-content:flex-end;gap:10px;padding:0 16px 14px;min-height:0}
+.day{align-self:center;height:28px;padding:0 13px;border-radius:14px;background:rgba(255,255,255,.7);font-size:13px;font-weight:500;color:var(--muted);display:grid;place-items:center;margin:4px 0}
+.bb{max-width:290px;padding:10px 14px 7px;font-size:16px;line-height:1.4;border-radius:20px;position:relative}
+.bb .tm{display:flex;justify-content:flex-end;align-items:center;gap:4px;font-size:12px;margin-top:2px}
+.bb .tm svg{width:15px;height:15px}
+.bb.p{align-self:flex-start;background:#fff;border-bottom-left-radius:6px;box-shadow:0 6px 18px rgba(40,80,160,.06)}
+.bb.p .tm{color:var(--muted)}
+.bb.d{align-self:flex-end;background:var(--blue);color:#fff;border-bottom-right-radius:6px}
+.bb.d .tm{color:rgba(255,255,255,.8)}
+.bb.u{align-self:flex-end;background:var(--pink-fill);color:var(--ink);border-bottom-right-radius:6px}
+.bb.u .lb2{display:flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:var(--pink);margin-bottom:3px}
+.bb.u .lb2 svg{width:15px;height:15px}
+.bb.u .tm{color:var(--muted)}
+/* cards inside the thread: call, result, reschedule */
+.ec{align-self:flex-end;width:286px;border-radius:20px;border-bottom-right-radius:6px;background:var(--blue);color:#fff;overflow:hidden}
+.ec .top{display:flex;align-items:center;gap:12px;padding:12px 14px 6px 12px}
+.ec .top i{width:46px;height:46px;border-radius:14px;background:#fff;color:var(--blue-ink);display:grid;place-items:center;flex:none}
+.ec .top i svg{width:22px;height:22px}
+.ec .top i.round{border-radius:23px}
+.ec .top i.ok{background:var(--green-fill,#E2F5EA);color:#1A9E63}
+.ec .top i.amb{background:var(--amber-fill);color:var(--amber)}
+.ec .tx{flex:1;min-width:0}
+.ec .tx b{display:block;font-size:17px;font-weight:600;line-height:1.3}
+.ec .tx span{display:block;font-size:15px;color:rgba(255,255,255,.85);line-height:1.35}
+.ec .tm{display:flex;justify-content:flex-end;font-size:12px;color:rgba(255,255,255,.8);padding:0 14px 8px}
+.ec .act{display:flex;align-items:center;justify-content:center;gap:6px;height:46px;border-top:1px solid rgba(255,255,255,.22);font-size:16px;font-weight:600}
+.ec .act svg{width:17px;height:17px}
+/* reschedule: a white system card on the doctor's side */
+.rs{align-self:flex-end;width:300px;background:#fff;border-radius:20px;border-bottom-right-radius:6px;box-shadow:0 10px 30px rgba(40,80,160,.08);overflow:hidden}
+.rs .in{padding:14px 16px 10px}
+.rs .h{display:flex;align-items:center;gap:10px;font-size:16px;font-weight:600}
+.rs .h i{width:36px;height:36px;border-radius:18px;background:var(--blue-fill);color:var(--blue-ink);display:grid;place-items:center;flex:none}
+.rs .h i svg{width:18px;height:18px}
+.rs .tt{display:flex;align-items:center;gap:8px;margin:12px 0 0;font-size:15px}
+.rs .tt s{color:var(--muted)}
+.rs .tt svg{width:16px;height:16px;color:var(--soft)}
+.rs .tt b{font-size:18px;font-weight:600}
+.rs .q{font-size:14px;color:var(--muted);line-height:1.4;margin-top:8px}
+.rs .ft{display:flex;align-items:center;justify-content:space-between;margin-top:10px}
+.rs .ft .chip{height:26px;font-size:13px;border-radius:13px;padding:0 10px}
+.rs .ft .chip svg{width:14px;height:14px}
+.rs .ft small{font-size:12px;color:var(--muted)}
+.rs .act{height:46px;border-top:1px solid var(--line);display:grid;place-items:center;font-size:16px;font-weight:600;color:var(--pink)}
+/* bottom: result action and composer */
+.bot{padding:0 16px 30px;display:flex;flex-direction:column;gap:10px}
+.rbtn{height:54px;border-radius:27px;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;gap:9px;font-size:17px;font-weight:600;box-shadow:0 12px 26px rgba(80,140,250,.30)}
+.rbtn svg{width:20px;height:20px}
+.cmp{display:flex;align-items:center;gap:10px}
+.fld{flex:1;min-width:0;height:52px;border-radius:26px;background:#fff;display:flex;align-items:center;gap:10px;padding:0 16px 0 8px;box-shadow:0 10px 30px rgba(40,80,160,.06);font-size:16px;color:#8E9AB3}
+.fld .pl{width:36px;height:36px;border-radius:18px;background:var(--blue-fill);color:var(--blue-ink);display:grid;place-items:center;flex:none}
+.fld .pl svg{width:19px;height:19px}
+.fld .val{color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.fld .caret{display:inline-block;width:2px;height:19px;background:var(--blue);vertical-align:-4px;margin-left:1px}
+.snd{width:52px;height:52px;border-radius:26px;display:grid;place-items:center;flex:none;background:var(--grey-fill);color:#9098AD}
+.snd svg{width:21px;height:21px}
+.snd.on{background:var(--blue);color:#fff;box-shadow:0 10px 22px rgba(80,140,250,.30)}
+/* attachment sheet */
+.opt{display:flex;align-items:center;gap:14px;height:58px;font-size:17px;font-weight:500;border-bottom:1px solid var(--line)}
+.opt:last-child{border-bottom:0}
+.opt i{width:40px;height:40px;border-radius:20px;background:var(--blue-fill);color:var(--blue-ink);display:grid;place-items:center}
+.opt i svg{width:19px;height:19px}
+.cropc{padding:16px 16px 18px;display:flex;flex-direction:column;gap:10px}
+</style>
+</head>
+<body>
+<div id="f"></div>
+<script src="kidocare.js"></script>
+<script>
+Object.assign(P,{
+ ck1:'<path d="M20 6 9 17l-5-5"/>',
+ ck2:'<path d="M18 6 7 17l-5-5"/><path d="m22 10-7.5 7.5L13 16"/>',
+ vidoff:'<path d="M2 2l20 20"/><path d="M10.66 6H14a2 2 0 0 1 2 2v2.5l5.25-3.06A.5.5 0 0 1 22 7.87v8.26"/><path d="M16 16a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h2"/>',
+ fchk:'<path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h6"/><path d="M14 2v4a2 2 0 0 0 2 2h4v5"/><path d="m15 19 2 2 4-4"/>',
+ cam:'<path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3z"/><circle cx="12" cy="13" r="3"/>',
+ imgs:'<rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.09-3.09a2 2 0 0 0-2.82 0L6 21"/>',
+ arr:'<path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>'
+});
+/* ---------- data ---------- */
+const N_NOTE='Ka temperaturë që mbrëmë dhe qan kur i prek veshin e djathtë.';
+const A_NOTE='Kollë natën prej 4 ditësh, ka përdorur pompën 3 herë sot. Merr frymë me vështirësi pas vrapit.';
+const ageT=c=>`${c.age[0]} vjeç &amp; ${c.age[1]} muaj`;
+
+/* ---------- header ----------
+   o.st: 'pend' (Pa rezultat, amber) | 'follow' (time left, grey) ; o.left: follow-up time left */
+function chatHead(c,o={}){
+  const al=c.allergies||[],ch=c.chronic||[];
+  const chip=(l,cls,ic)=>l.length?`<span class="chip ${cls}">${I(ic)}${l[0]}${l.length>1?` <em>+${l.length-1}</em>`:''}</span>`:'';
+  const chips=(al.length||ch.length)?`<div class="chips">${chip(al,'c-pink','tri')}${chip(ch,'c-amber','refresh')}</div>`:'';
+  const st=o.st==='follow'?`<span class="stl">${I('clock')}Ndjekje edhe ${o.left||'24 orë'}</span>`:`<span class="stl pend">${I('file')}Pa rezultat</span>`;
+  return `<div class="bh"><span class="back">${I('back')}</span><div class="bwho"><b>${c.name}&#8288;${I('chev')}</b><span class="meta">${ageT(c)}, ${o.type||'video'}</span>${st}${chips}</div><span class="ubtn">${I('tri')}</span></div>`;
+}
+/* ---------- thread pieces ---------- */
+const day=t=>`<div class="day">${t}</div>`;
+const pMsg=(t,tm)=>`<div class="bb p">${t}<span class="tm">${tm}</span></div>`;
+const dMsg=(t,tm,read=true)=>`<div class="bb d">${t}<span class="tm">${tm}${I(read?'ck2':'ck1')}</span></div>`;
+const uMsg=tm=>`<div class="bb u"><span class="lb2">${I('tri')}Këshillë për kujdes urgjent</span>Kjo mund të jetë urgjencë. Telefononi 112 tani ose shkoni te urgjenca më e afërt.<span class="tm">${tm}${I('ck1')}</span></div>`;
+/* call: o.drop = ended by lost connection; o.last = the latest call, so it can be redialled */
+const callCard=(dur,tm,o={})=>o.drop
+  ?`<div class="ec"><div class="top"><i class="round amb">${I('vidoff')}</i><div class="tx"><b>Thirrja u ndërpre</b><span>${dur}</span></div></div><div class="tm">${tm}</div>${o.last?`<div class="act">${I('video')}Telefono përsëri</div>`:''}</div>`
+  :`<div class="ec"><div class="top"><i class="round">${I('video')}</i><div class="tx"><b>Video-thirrje</b><span>${dur}</span></div></div><div class="tm">${tm}</div></div>`;
+const resCard=(dx,tm)=>`<div class="ec"><div class="top"><i class="ok">${I('fchk')}</i><div class="tx"><b>Rezultati</b><span>${dx}</span></div></div><div class="tm">${tm}</div><div class="act">Hape${I('chev')}</div></div>`;
+/* reschedule: o.st 'pend' | 'ok' | 'no' | 'none' */
+function resched(o={}){
+  const st=o.st||'pend';
+  const time=st==='ok'?`<div class="tt"><b>Sot, 22:00</b></div>`:`<div class="tt"><s>Sot, 21:00</s>${I('arr')}<b>Sot, 22:00</b></div>`;
+  const chip={pend:`<span class="chip c-pink">${I('clock')}Në pritje të prindit</span>`,ok:`<span class="chip c-green">${I('ck1')}Prindi pranoi</span>`,no:`<span class="chip c-grey">Prindi refuzoi</span>`,none:`<span class="chip c-grey">Pa përgjigje</span>`}[st];
+  const q=st==='pend'?`<div class="q">Nëse prindi refuzon ose nuk përgjigjet para orës 21:00, konsulta anulohet.</div>`:(st==='no'||st==='none')?`<div class="q">Konsulta u anulua.</div>`:'';
+  return `<div class="rs"><div class="in"><div class="h"><i>${I('cal')}</i>Kërkesë për riplanifikim</div>${time}${q}<div class="ft">${chip}<small>20:12</small></div></div>${st==='pend'?'<div class="act">Anulo kërkesën</div>':''}</div>`;
+}
+/* ---------- bottom ----------
+   o.res: 'new' (Shkruaj rezultatin) | 'draft' (Vazhdo rezultatin) | false (result sent) ; o.text: messaging open before the result (text consultation) ; o.typed */
+function bottom(o={}){
+  const rb=o.res?`<div class="rbtn">${I('file')}${o.res==='draft'?'Vazhdo rezultatin':'Shkruaj rezultatin'}</div>`:'';
+  const showCmp=!o.res||o.text;
+  const val=o.typed?`<span class="val">${o.typed}<span class="caret"></span></span>`:'Shkruani prindit...';
+  const cmp=showCmp?`<div class="cmp"><div class="fld"><span class="pl">${I('plus')}</span>${val}</div><span class="snd ${o.typed?'on':''}">${I('send')}</span></div>`:'';
+  return `<div class="bot">${rb}${cmp}</div>`;
+}
+const attachSheet=()=>sheet(`<div class="stitle">Dërgoni prindit</div><div style="margin-top:8px">
+  <div class="opt"><i>${I('cam')}</i>Bëni një foto</div><div class="opt"><i>${I('imgs')}</i>Zgjidhni nga galeria</div><div class="opt"><i>${I('file')}</i>Dokument</div></div>`);
+/* ---------- screens ---------- */
+const chat=(c,head,thread,bot,over='')=>`<div class="cs bg">${statusBar()}${chatHead(c,head)}<div class="thread">${thread}</div>${bottom(bot)}${over}</div>`;
+const N_PEND=day('Sot')+pMsg(N_NOTE,'23:02')+callCard('9 min','23:14');
+const N_SENT=N_PEND+resCard('Otit akut','23:31');
+const noaPend=(over)=>chat(NOA,{},N_PEND,{res:'new'},over);
+const noaSent=(o={})=>chat(NOA,{st:'follow'},N_SENT+(o.urg?uMsg('23:40'):''),{typed:o.typed},o.over);
+const A_THREAD=day('Sot')+pMsg(A_NOTE,'23:12')+callCard('17 sek','23:20',{drop:1})+callCard('11 min','23:39');
+const anisaFull=()=>chat(ANISA,{},A_THREAD,{res:'new'});
+const cropc=h=>`<div class="cropc bg">${h}</div>`;
+const headCrop=(c,o)=>`<div class="bg" style="padding-top:12px">${chatHead(c,o)}</div>`;
+
+const F={
+ 'path-1':()=>noaPend(),
+ 'path-3':()=>noaSent(),
+ 'path-6':()=>noaSent({over:urgSheet('')}),
+ 'path-7':()=>noaSent({urg:1}),
+ 'path-8':()=>noaSent({over:attachSheet()}),
+ 'screen-min':()=>noaPend(),
+ 'screen-full':()=>anisaFull(),
+ 'head-pend':()=>headCrop(NOA,{}),
+ 'head-follow':()=>headCrop(NOA,{st:'follow',left:'21 orë'}),
+ 'head-full':()=>headCrop(ANISA,{}),
+ 'urg-sheet':()=>noaPend(urgSheet('')),
+ 'urg-sent':()=>cropc(uMsg('23:40')),
+ 'msg':()=>cropc(resCard('Otit akut','23:31')+dMsg('Më shkruani pas tre ditësh si është.','23:32')+pMsg('Faleminderit!','23:35')),
+ 'call-ok':()=>cropc(callCard('11 min','23:39')),
+ 'call-drop':()=>cropc(callCard('17 sek','23:20',{drop:1,last:1})),
+ 'call-drop-old':()=>cropc(callCard('17 sek','23:20',{drop:1})+callCard('11 min','23:39')),
+ 'res':()=>cropc(resCard('Otit akut','23:31')),
+ 'res-long':()=>cropc(resCard('Infeksion viral i rrugëve të sipërme','23:31')),
+ 'rs-pend':()=>cropc(resched({st:'pend'})),
+ 'rs-ok':()=>cropc(resched({st:'ok'})),
+ 'rs-no':()=>cropc(resched({st:'no'})),
+ 'rs-none':()=>cropc(resched({st:'none'})),
+ 'bot-video':()=>`<div class="bg" style="padding-top:16px">${bottom({res:'new'})}</div>`,
+ 'bot-text':()=>`<div class="bg" style="padding-top:16px">${bottom({res:'new',text:1})}</div>`,
+ 'bot-draft':()=>`<div class="bg" style="padding-top:16px">${bottom({res:'draft'})}</div>`,
+ 'bot-empty':()=>`<div class="bg" style="padding-top:16px">${bottom({})}</div>`,
+ 'bot-typed':()=>`<div class="bg" style="padding-top:16px">${bottom({typed:'Si është temperatura sot?'})}</div>`,
+ 'attach':()=>noaSent({over:attachSheet()})
+};
+window.FRAME_IDS=Object.keys(F);
+function show(){
+  const id=location.hash.slice(1)||'path-1';
+  document.getElementById('f').innerHTML=(F[id]||F['path-1'])();
+  const post=()=>{try{parent.postMessage({liveFrame:id,h:document.getElementById('f').scrollHeight},'*')}catch(e){}};
+  requestAnimationFrame(post);document.querySelectorAll('#f img').forEach(i=>i.complete||i.addEventListener('load',post));
+}
+addEventListener('hashchange',show);show();
+document.fonts&&document.fonts.ready.then(show);
+</script>
+</body>
+</html>

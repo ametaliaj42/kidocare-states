@@ -212,3 +212,10 @@ const ELA={name:'Ela Xhaferraj',age:['4','1']}, BEN={name:'Ben Xhaferraj',age:['
 const ageLabel=c=>c.age[0]==='0'?`${c.age[1]} muaj`:`${c.age[0]} vjeç${c.age[1]&&c.age[1]!=='0'?` &amp; ${c.age[1]} muaj`:''}`;
 /* glass bottom bar of the current app: on = active index, b = {index: badge} */
 const gnav=(on=0,b={})=>`<div class="gnav">${[['steth','Turni'],['chat','Konsultat'],['info','Infopoint'],['forum','Forumi'],['office','Zyra']].map(([i,l],k)=>`<div class="g ${k===on?'on':''}">${I(i)}${l}${b[k]?`<em>${b[k]}</em>`:''}</div>`).join('')}</div>`;
+
+/* bottom sheet and the urgent-care confirmation, shared by Thirrja video and Biseda */
+const sheet=(inner,x=true)=>`<div class="dim"></div><div class="bs"><div class="grab"></div>${x?`<span class="xbtn">${I('x')}</span>`:''}${inner}</div>`;
+const urgSheet=(after='Thirrja vazhdon.')=>sheet(`<div class="stitle">Të këshilloni kujdes urgjent?</div><div class="ssub">Prindi e sheh menjëherë këtë mesazh në bisedë:</div>
+   <div class="msg">${I('tri')}<span>Kjo mund të jetë urgjencë. Telefononi 112 tani ose shkoni te urgjenca më e afërt.</span></div>
+   <div class="ssub" style="margin:0">Nuk mund të zhbëhet. ${after}</div>
+   <div class="btnb red">Po, dërgoje</div><div class="btnb ghost">Anulo</div>`,false);
