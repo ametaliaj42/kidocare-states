@@ -38,6 +38,7 @@ const F={
  'test-min':()=>crop(`<h2 class="sec">Historiku mjekësor</h2>${tabs(NOA,2)}${empty('flask','Ende pa analiza')}`),
  'test-col':()=>crop(testList(ANISA.tests)),
  'long':()=>crop(testCard({t:'Antitrupa anti-transglutaminazë indore IgA',f:'Gastroenterit akut me dehidratim të moderuar',d:'2025',k:'PDF'})+medCard({t:'Amoksicilinë me acid klavulanik 400 mg/57 mg',d:'Që nga 22.10',f:'Otit akut me perforacion të membranës timpanike'})),
+ 'test-link':()=>crop(testList([{t:'Hemogram i plotë',d:'27.10',link:'portal.laborator.al'}].concat(ANISA.tests.slice(0,2)))),
  'test-det':()=>fileOverlay(ANISA.tests[1],{pages:2}),
  'test-det-one':()=>fileOverlay(ANISA.tests[2]),
  'test-det-err':()=>fileOverlay(ANISA.tests[3],{err:1}),

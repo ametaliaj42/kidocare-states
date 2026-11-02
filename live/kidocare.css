@@ -123,6 +123,8 @@ h2.sec{font-size:22px;font-weight:600;letter-spacing:-.01em;line-height:1;margin
 .file b{position:absolute;left:0;right:0;bottom:0;height:17px;background:#fff;font-size:10px;font-weight:600;color:var(--blue-ink);text-align:center;line-height:17px}
 .file.wait{background:var(--amber-fill);border:0;display:grid;place-items:center;color:var(--amber)}
 .file.wait svg{width:18px;height:18px}
+.file.lnk{background:var(--tile);border:0;display:grid;place-items:center;color:var(--blue-ink)}
+.file.lnk>svg{width:20px;height:20px;margin-bottom:14px}
 
 /* detail page */
 .det{padding:0 16px}
@@ -281,3 +283,7 @@ h2.sec{font-size:22px;font-weight:600;letter-spacing:-.01em;line-height:1;margin
 .btnb.redo svg{width:18px;height:18px}
 .btnb.redo{background:#fff;color:var(--red);box-shadow:inset 0 0 0 1.5px var(--red)}
 .btnb.ghost{background:var(--track);color:var(--ink)}
+/* toast: a short confirmation over the bottom of the screen (shared) */
+.toast{position:absolute;left:16px;right:16px;bottom:30px;height:54px;border-radius:20px;background:#0E1B3D;color:#fff;display:flex;align-items:center;gap:12px;padding:0 16px;font-size:16px;font-weight:500}
+.toast i{width:26px;height:26px;border-radius:13px;background:#22C17A;display:grid;place-items:center}
+.toast i svg{width:15px;height:15px;stroke-width:2.4}

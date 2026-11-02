@@ -174,9 +174,6 @@
 .edock .fail svg{width:18px;height:18px}
 .edock .fail b{margin-left:auto;font-weight:600}
 .spin{width:20px;height:20px;border-radius:10px;border:2.5px solid rgba(255,255,255,.45);border-top-color:#fff}
-.toast{position:absolute;left:16px;right:16px;bottom:30px;height:54px;border-radius:20px;background:#0E1B3D;color:#fff;display:flex;align-items:center;gap:12px;padding:0 16px;font-size:16px;font-weight:500}
-.toast i{width:26px;height:26px;border-radius:13px;background:#22C17A;display:grid;place-items:center}
-.toast i svg{width:15px;height:15px;stroke-width:2.4}
 /* sheets */
 .bs h3{font-size:21px;font-weight:600;margin:16px 0 4px}
 .bs p.sub2{font-size:15px;color:var(--muted);margin-bottom:18px}
@@ -275,7 +272,7 @@ const bioBlock=d=>`<div class="bioh">Bio</div>${d.bio?`<div class="bio">${d.bio}
 const profTop=()=>`<div class="ph-top"><span class="l"><span class="back">${I('back')}</span>Zyra</span><span class="edit">${I('pen')}Ndrysho</span></div>`;
 function prof(d,o={}){
   const body=o.tab===1?reviewsTab(d):about(d,{lic:d.licSoon?'soon':''})+bioBlock(d);
-  return `<div class="page bg ${o.toast?'':''}" style="${o.toast?'height:852px;overflow:hidden':''}">${statusBar()}${profTop()}${hero(d)}${ptabs(d,o.tab||0)}${body}${o.toast?`<div class="toast"><i>${I('check')}</i>Ndryshimet u ruajtën</div>`:''}</div>`;
+  return `<div class="page bg ${o.toast?'':''}" style="${o.toast?'height:852px;overflow:hidden':''}">${statusBar()}${profTop()}${hero(d)}${ptabs(d,o.tab||0)}${body}${o.toast?toast('Ndryshimet u ruajtën'):''}</div>`;
 }
 function rv(r,o={}){
   return `<div class="rv"><div class="h">${stars(r[0])}<span>${r[1]}</span></div>${r[2]?`<p class="${o.cut?'cut':''}">${r[2]}</p>${o.cut?'<div class="more">Më shumë</div>':o.open?'<div class="more">Më pak</div>':''}`:'<p class="only">Vetëm vlerësim, pa koment</p>'}<small>${r[3]}</small></div>`;

@@ -218,6 +218,40 @@ mark{background:#FFE3A3;color:inherit;border-radius:4px;padding:0 2px}
 .drow i{width:42px;height:42px;border-radius:12px;background:var(--blue-fill);color:var(--blue-ink);display:grid;place-items:center;flex:none}
 .drow i svg{width:20px;height:20px}
 .drow .tx{flex:1}.drow b{display:block;font-size:16px;font-weight:600}.drow span{font-size:13px;color:var(--muted)}
+/* a long thread keeps its pieces whole; older messages run off the top, as when scrolled to the end */
+.thread.long{clip-path:inset(0 -30px -40px -30px)}.thread.long>*{flex-shrink:0}
+/* typing: next to the presence dot, only while the parent types */
+.bwho .ty{flex:none;font-size:14px;font-weight:500;color:var(--blue-ink);margin-left:8px;white-space:nowrap}
+/* sending and failed: a clock before the first tick; a red line under a failed message, tap retries */
+.fail{align-self:flex-end;display:flex;align-items:center;gap:6px;font-size:13px;color:var(--red);margin-top:-5px;padding-right:4px}
+.fail svg{width:15px;height:15px}
+.fail b{font-weight:600}
+.bb.d.nf{background:#8DB6FF}
+/* the doctor's own photo and document: right side, blue, with ticks */
+.ph.me{align-self:flex-end;background:var(--blue);border-radius:20px;border-bottom-right-radius:6px;box-shadow:none}
+.ph.me .im{border-color:transparent}
+.ph.me .tm{color:rgba(255,255,255,.8);align-items:center;gap:4px}
+.ph .tm svg{width:15px;height:15px}
+.ph.me .tm svg.seen{color:#A6F4CB}
+.ph.me.nf{background:#8DB6FF}
+.ph .im .ring{position:absolute;left:50%;top:50%;width:52px;height:52px;margin:-26px 0 0 -26px;border-radius:26px;background:rgba(14,27,61,.35);display:grid;place-items:center}
+.ph .im .ring svg{width:40px;height:40px;transform:rotate(-90deg)}
+.dc.me{align-self:flex-end;background:var(--blue);color:#fff;border-radius:20px;border-bottom-right-radius:6px;box-shadow:none}
+.dc.me .r{background:rgba(255,255,255,.18)}
+.dc.me .r span{color:rgba(255,255,255,.85)}
+.dc.me .tm{color:rgba(255,255,255,.8);align-items:center;gap:4px}
+.dc .tm svg{width:15px;height:15px}
+.dc.me .tm svg.seen{color:#A6F4CB}
+.dc.me.nf{background:#8DB6FF}
+.dc .bar{height:4px;border-radius:2px;background:rgba(255,255,255,.3);margin-top:6px;overflow:hidden}
+.dc .bar i{display:block;height:100%;width:60%;background:#fff;border-radius:2px}
+.dc .r .tx2{flex:1;min-width:0}
+/* unread divider */
+.unr{align-self:stretch;display:flex;align-items:center;gap:10px;margin:4px 0;font-size:13px;font-weight:600;color:var(--blue-ink)}
+.unr:before,.unr:after{content:"";flex:1;height:1px;background:rgba(47,111,224,.25)}
+.unr span{height:28px;padding:0 13px;border-radius:14px;background:var(--blue-fill);display:grid;place-items:center}
+/* search without matches */
+.snav span.b i.off{background:var(--grey-fill);color:#C3CBDA}
 </style>
 </head>
 <body>
@@ -238,8 +272,6 @@ Object.assign(P,{
  save:'<path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M12 18v-6"/><path d="m9 15 3 3 3-3"/>',
  flag:'<path d="M4 22V4a1 1 0 0 1 .4-.8A6 6 0 0 1 8 2c3 0 5 2 7.33 2q2 0 3.67-1.33a1 1 0 0 1 1.6.8v9.53a1 1 0 0 1-.4.8A6 6 0 0 1 16.67 14c-2.33 0-4.33-2-7.33-2-1.6 0-2.93.53-4 1.33"/>',
  ban:'<circle cx="12" cy="12" r="10"/><path d="m4.9 4.9 14.2 14.2"/>',
- ext:'<path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>',
- link:'<path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>',
  up:'<path d="m18 15-6-6-6 6"/>',
  down:'<path d="m6 9 6 6 6-6"/>',
  arr:'<path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>'
@@ -252,15 +284,22 @@ const ageT=c=>`${c.age[0]} vjeç &amp; ${c.age[1]} muaj`;
 /* ---------- header ----------
    back, the child's name (opens the chat info) with the parent's presence dot, ⋯ for the menu. o.off: parent offline */
 function chatHead(c,o={}){
-  return `<div class="bh"><span class="back">${I('back')}</span><div class="bwho one"><b>${c.name}</b><i class="pd ${o.off?'':'on'}"></i></div><span class="mbtn">${I('dots')}</span></div>`;
+  return `<div class="bh"><span class="back">${I('back')}</span><div class="bwho one"><b>${c.name}</b><i class="pd ${o.off?'':'on'}"></i>${o.typing&&!o.off?'<span class="ty">duke shkruar...</span>':''}</div><span class="mbtn">${I('dots')}</span></div>`;
 }
 /* ---------- thread pieces ---------- */
 const day=t=>`<div class="day">${t}</div>`;
 const rquote=(who,txt)=>`<div class="qt"><b>${who}</b><span>${txt}</span></div>`;
 const pMsg=(t,tm,q='')=>`<div class="bb p">${q}${t}<span class="tm">${tm}</span></div>`;
 /* doctor message: tk 'sent' one tick, 'dlv' two ticks, 'seen' two mint ticks */
-const tick=(tk,cls='')=>tk==='sent'?I('ck1'):I('ck2',tk==='seen'?'seen':'');
-const dMsg=(t,tm,tk='seen',q='')=>`<div class="bb d">${q}${t}<span class="tm">${tm}${tick(tk)}</span></div>`;
+/* tk 'wait' clock while sending (before the first tick); 'fail' no tick, a red line under the message */
+const tick=(tk,cls='')=>tk==='wait'?I('clock'):tk==='fail'?'':tk==='sent'?I('ck1'):I('ck2',tk==='seen'?'seen':'');
+const failLine=()=>`<div class="fail">${I('alert')}Nuk u dërgua. <b>Provoni përsëri</b></div>`;
+const dMsg=(t,tm,tk='seen',q='')=>`<div class="bb d ${tk==='fail'?'nf':''}">${q}${t}<span class="tm">${tm}${tick(tk)}</span></div>${tk==='fail'?failLine():''}`;
+/* the doctor's own photo and document; tk as dMsg plus 'up' (uploading: progress, clock) */
+const ring=`<span class="ring"><svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="16" fill="none" stroke="rgba(255,255,255,.35)" stroke-width="3"/><circle cx="20" cy="20" r="16" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-dasharray="100.5" stroke-dashoffset="40"/></svg></span>`;
+const myPhoto=(tm,tk='seen')=>`<div class="ph me ${tk==='fail'?'nf':''}"><div class="im">${X()}${tk==='up'?ring:''}</div><div class="tm">${tm}${tick(tk==='up'?'wait':tk)}</div></div>${tk==='fail'?failLine():''}`;
+const myDoc=(n,s,tm,tk='seen')=>`<div class="dc me ${tk==='fail'?'nf':''}"><div class="r"><i>${I('file')}</i><div class="tx2"><b>${n}</b><span>${tk==='up'?'Duke ngarkuar':s}</span>${tk==='up'?'<div class="bar"><i></i></div>':''}</div></div><div class="tm">${tm}${tick(tk==='up'?'wait':tk)}</div></div>${tk==='fail'?failLine():''}`;
+const unread=n=>`<div class="unr"><span>${n} mesazhe të palexuara</span></div>`;
 const delMsg=tm=>`<div class="bb d del">${I('ban')}Ju e fshitë këtë mesazh<span class="tm">${tm}</span></div>`;
 const uMsg=(tm,tk='seen')=>`<div class="bb u"><span class="lb2">${I('tri')}Këshillë për kujdes urgjent</span>Kjo mund të jetë urgjencë. Telefononi 112 tani ose shkoni te urgjenca më e afërt.<span class="tm">${tm}${tick(tk)}</span></div>`;
 const photoMsg=tm=>`<div class="ph"><div class="im">${X()}</div><div class="tm">${tm}</div></div>`;
@@ -290,52 +329,61 @@ function bottom(o={}){
   const cmp=showCmp?`<div class="cmp"><div class="fld"><span class="pl">${I('plus')}</span>${val}</div><span class="snd ${o.typed?'on':''}">${I('send')}</span></div>`:'';
   const rq=o.reply?`<div class="rbar">${rquote(o.reply[0],o.reply[1])}<span class="x2">${I('x')}</span></div>`:'';
   if(o.blocked)return `<div class="bot"><div class="blk">Keni bllokuar ${o.blocked}. <b>Zhblloko</b></div></div>`;
+  if(o.closed)return `<div class="bot"><div class="blk">Biseda u mbyll më ${o.closed}</div></div>`;
   return `<div class="bot">${rb}${rq}${cmp}</div>`;
 }
 /* ⋯ menu: o.sched adds Ripllanifikoni (scheduled consultations only) */
 function menuSheet(c,o={}){
   const op=(ic,l,cls='')=>`<div class="opt ${cls}"><i>${I(ic)}</i>${l}</div>`;
-  return bsheet(`<div class="stitle">Biseda</div><div class="mn">${op('search','Kërko në bisedë')}${o.sched?op('cal','Ripllanifikoni konsultën'):''}${op('tri','Këshilloni kujdes urgjent','dg')}</div>`);
+  return bsheet(`<div class="stitle">Biseda</div><div class="mn">${op('search','Kërko në bisedë')}${o.sched?op('cal','Ripllanifikoni konsultën'):''}${o.closed?'':op('tri','Këshilloni kujdes urgjent','dg')}</div>`);
 }
 const reportSheet=c=>bsheet(`<div class="stitle">Raportoni ${c.guardian[0]}</div><div class="ssub">Ekipi i Kidocare e shqyrton raportimin. Prindi nuk njoftohet.</div>
   ${['Sjellje fyese ose kërcënuese','Mesazhe të papërshtatshme','Informacion i rremë','Tjetër'].map((r,k)=>`<div class="rsn ${k===0?'on':''}"><i></i>${r}</div>`).join('')}
   <div class="btnb red">Dërgo raportimin</div>`);
-const blockSheet=c=>bsheet(`<div class="stitle">Të bllokoni ${c.guardian[0]}?</div><div class="ssub" style="margin-bottom:0">Nuk do t’ju shkruajë më dhe nuk do t’ju zgjedhë për konsulta. Konsulta e hapur mbyllet. Mund ta zhbllokoni më vonë.</div>
+const blockSheet=c=>bsheet(`<div class="stitle">Të bllokoni ${c.guardian[0]}?</div><div class="ssub" style="margin-bottom:0">Nuk do t’ju shkruajë më dhe nuk do t’ju zgjedhë për konsulta. Mund ta zhbllokoni më vonë.</div>
   <div class="btnb red">Blloko</div><div class="btnb ghost">Anulo</div>`,false);
 /* long press: the pressed message lifted, actions under it */
 const lp=(msg,acts,right)=>`<div class="lp">${msg}<div class="menu ${right?'r':''}">${acts.map(([l,ic,dg,s])=>`<div class="${dg?'dg':''}">${l}${s?`<small>${s}</small>`:''}${I(ic)}</div>`).join('')}</div></div>`;
 const attachSheet=()=>bsheet(`<div class="stitle">Dërgoni prindit</div><div style="margin-top:8px">
   <div class="opt"><i>${I('cam')}</i>Bëni një foto</div><div class="opt"><i>${I('imgs')}</i>Zgjidhni nga galeria</div><div class="opt"><i>${I('file')}</i>Dokument</div></div>`);
 /* ---------- screens ---------- */
-const chat=(c,head,thread,bot,over='')=>`<div class="cs bg">${statusBar()}${chatHead(c,head)}<div class="thread">${thread}</div>${bottom(bot)}${over}</div>`;
+const chat=(c,head,thread,bot,over='',cls='')=>`<div class="cs bg">${statusBar()}${chatHead(c,head)}<div class="thread ${cls}">${thread}</div>${bottom(bot)}${over}</div>`;
 const N_Q='A t’i jap ibuprofen nëse temperatura rritet natën?';
 const N_A='Ndiqni hapat te rezultati dhe më shkruani nëse temperatura nuk bie.';
 const N_PEND=day('Sot')+pMsg(N_NOTE,'23:02')+callCard('9 min','23:14');
 const N_SENT=N_PEND+resCard('Otit akut','23:31')+fu('24 orë')+pMsg(N_Q,'23:35');
 const noaPend=(over)=>chat(NOA,{},N_PEND,{res:'new'},over);
-const noaSent=(o={})=>chat(NOA,{},N_SENT+(o.more||''),o.bot||{},o.over);
+const noaSent=(o={})=>chat(NOA,o.head||{},N_SENT+(o.more||''),o.bot||{},o.over,o.long?'long':'');
+/* after the follow-up window: read-only, the result card loses its time-left line */
+const N_CLOSED=day('28.10')+pMsg(N_NOTE,'23:02')+callCard('9 min','23:14')+resCard('Otit akut','23:31')+pMsg(N_Q,'23:35');
+const noaClosed=(over='',more='')=>chat(NOA,{},N_CLOSED+(more||OWN_C),{closed:'29.10, 23:31'},over);
+/* reopened from Konsultat after two new parent messages */
+const N_LATE=unread(2)+pMsg('Temperatura ra në 38,2.','23:52')+pMsg('A ta zgjoj natën për ta matur përsëri?','23:54');
+const MYDOC=['Udhëzime për temperaturën.pdf','1 faqe'];
 const A_THREAD=day('Sot')+pMsg(A_NOTE,'23:12')+callCard('17 sek','23:20',{drop:1})+callCard('11 min','23:39');
 const anisaFull=(over)=>chat(ANISA,{},A_THREAD,{res:'new'},over);
 const cropc=h=>`<div class="cropc bg">${h}</div>`;
 const headCrop=(c,o)=>`<div class="bg" style="padding-top:12px">${chatHead(c,o)}</div>`;
 const botCrop=o=>`<div class="bg" style="padding-top:16px">${bottom(o)}</div>`;
 /* search: header becomes the field, matches marked, bottom steps through them */
-const searchScreen=()=>{
-  const m=s=>s.replace(/temperatur/i,x=>`<mark>${x}</mark>`);
+/* none: a word with no match, nothing marked, arrows greyed */
+const searchScreen=(none)=>{
+  const m=s=>none?s:s.replace(/temperatur/i,x=>`<mark>${x}</mark>`);
   const th=day('Sot')+pMsg(m(N_NOTE),'23:02')+callCard('9 min','23:14')+resCard('Otit akut','23:31')+fu('24 orë')+pMsg(m(N_Q),'23:35');
-  return `<div class="cs bg">${statusBar()}<div class="sh"><div class="fld">${I('search')}<span class="val">temperatur<span class="caret"></span></span></div><span class="cn">Anulo</span></div><div class="thread">${th}</div><div class="bot"><div class="snav">2 nga 2<span class="b"><i>${I('up')}</i><i>${I('down')}</i></span></div></div></div>`;
+  const q=none?'antibiotik':'temperatur';
+  return `<div class="cs bg">${statusBar()}<div class="sh"><div class="fld">${I('search')}<span class="val">${q}<span class="caret"></span></span></div><span class="cn">Anulo</span></div><div class="thread">${th}</div><div class="bot"><div class="snav">${none?'Asnjë rezultat':'2 nga 2'}<span class="b"><i class="${none?'off':''}">${I('up')}</i><i class="${none?'off':''}">${I('down')}</i></span></div></div></div>`;
 };
 /* chat info page, opened from the name: like a WhatsApp contact page */
 function infoPage(c,o={}){
   const g=c.guardians[0];
   const media=o.media?`<div class="gcard"><div class="mh"><b>Foto, lidhje dhe dokumente</b><span>5${I('chev')}</span></div><div class="thumbs"><div class="t">${X()}</div><div class="t lnk">${I('link')}<small>Lidhje</small></div><div class="t pdf">${I('file')}<small>PDF</small></div><div class="t">${X()}</div></div></div>`:'';
-  return `<div class="ip bg">${statusBar()}<div class="hd"><span class="back">${I('back')}</span></div>
+  return `<div class="ip bg"${o.toast?' style="position:relative;height:852px;overflow:hidden"':''}>${statusBar()}<div class="hd"><span class="back">${I('back')}</span></div>
    <div class="idh"><div class="ava"><img src="${c.avatar}" alt=""></div><b>${c.name}</b><span>${ageT(c)}</span></div>
    <div class="tiles3"><div>${I('steth')}Kartela mjekësore</div><div>${I('user')}Profili i fëmijës</div></div>
    ${media}
    <div class="gcard"><div class="cap">Prindi në bisedë</div><div class="grow"><i>${I('user')}</i><div class="tx"><b>${g[0]}</b><span>${g[1]}</span></div>${I('chev','chev')}</div></div>
    <div class="gcard"><div class="grow dg">${I('ban')}Bllokoni ${g[0]}</div><div class="grow dg">${I('flag')}Raportoni ${g[0]}</div></div>
-   ${o.over||''}</div>`;
+   ${o.over||''}${o.toast?toast(o.toast):''}</div>`;
 }
 const mediaPage=(tab)=>{
   const body=tab===0?`<div class="mlab">Sot</div><div class="mg"><div class="t">${X()}</div><div class="t">${X()}</div></div><div class="mlab">Dje</div><div class="mg"><div class="t">${X()}</div></div>`
@@ -345,6 +393,7 @@ const mediaPage=(tab)=>{
   <div class="seg3">${[['Foto',3],['Lidhje',1],['Dokumente',1]].map(([l,n],k)=>`<div class="t ${k===tab?'on':''}">${l} <b>${n}</b></div>`).join('')}</div>${body}</div>`;
 };
 const OWN=dMsg(N_A,'23:38','seen');
+const OWN_C=OWN;
 const F={
  'path-1':()=>noaPend(),
  'path-3':()=>noaSent(),
@@ -357,11 +406,20 @@ const F={
  'path-11':()=>infoPage(NOA,{over:blockSheet(NOA)}),
  'path-12':()=>noaSent({more:OWN,over:lp(OWN,[['Përgjigju','reply'],['Kopjo','copy'],['Fshi','trash',1]],1)}),
  'path-13':()=>noaSent({over:attachSheet()}),
+ 'path-typing':()=>noaSent({head:{typing:1}}),
+ 'path-sending':()=>noaSent({more:dMsg(N_A,'23:38','wait')}),
+ 'path-report-sent':()=>infoPage(NOA,{toast:'Raportimi u dërgua'}),
+ 'path-search-none':()=>searchScreen(1),
+ 'path-upload':()=>noaSent({more:OWN+myPhoto('23:40','up'),long:1}),
+ 'path-unread':()=>noaSent({more:OWN+N_LATE,long:1}),
+ 'path-closed':()=>noaClosed(),
  'screen-min':()=>noaPend(),
  'screen-full':()=>anisaFull(),
  'head-on':()=>headCrop(NOA,{}),
  'head-off':()=>headCrop(NOA,{off:1}),
  'head-long':()=>headCrop(ANISA,{}),
+ 'head-typing':()=>headCrop(NOA,{typing:1}),
+ 'head-typing-long':()=>headCrop(ANISA,{typing:1}),
  'info-min':()=>infoPage(NOA),
  'info-full':()=>infoPage(ANISA,{media:1}),
  'media-photo':()=>mediaPage(0),
@@ -369,20 +427,32 @@ const F={
  'media-doc':()=>mediaPage(2),
  'menu-min':()=>noaSent({over:menuSheet(NOA)}),
  'menu-sched':()=>anisaFull(menuSheet(ANISA,{sched:1})),
+ 'menu-closed':()=>noaClosed(menuSheet(NOA,{closed:1})),
  'search':()=>searchScreen(),
+ 'search-none':()=>searchScreen(1),
  'urg-sheet':()=>noaPend(urgSheet('')),
  'urg-sent':()=>cropc(uMsg('23:40')),
  'report':()=>infoPage(NOA,{over:reportSheet(NOA)}),
+ 'report-sent':()=>infoPage(NOA,{toast:'Raportimi u dërgua'}),
  'block':()=>infoPage(NOA,{over:blockSheet(NOA)}),
  'blocked':()=>noaSent({bot:{blocked:'Klea Leka'}}),
  'tk-sent':()=>cropc(dMsg(N_A,'23:38','sent')),
  'tk-dlv':()=>cropc(dMsg(N_A,'23:38','dlv')),
  'tk-seen':()=>cropc(dMsg(N_A,'23:38','seen')),
+ 'tk-wait':()=>cropc(dMsg(N_A,'23:38','wait')),
+ 'tk-fail':()=>cropc(dMsg(N_A,'23:38','fail')),
+ 'my-file':()=>cropc(myPhoto('23:40','seen')+myDoc(MYDOC[0],MYDOC[1],'23:41','dlv')),
+ 'my-file-up':()=>cropc(myPhoto('23:40','up')+myDoc(MYDOC[0],MYDOC[1],'23:41','up')),
+ 'my-file-fail':()=>cropc(myPhoto('23:40','fail')+myDoc(MYDOC[0],MYDOC[1],'23:41','fail')),
+ 'unread':()=>noaSent({more:OWN+N_LATE,long:1}),
  'msg-file':()=>cropc(photoMsg('22:51')+docMsg('IgE specifike.pdf','2 faqe','22:52')+linkMsg('22:53')),
  'lp-own':()=>noaSent({more:OWN,over:lp(OWN,[['Përgjigju','reply'],['Kopjo','copy'],['Fshi','trash',1]],1)}),
  'lp-parent':()=>noaSent({over:lp(pMsg(N_Q,'23:35'),[['Përgjigju','reply'],['Kopjo','copy']])}),
+ 'lp-closed':()=>noaClosed(lp(OWN,[['Kopjo','copy']],1)),
+ 'lp-photo':()=>anisaFull(lp(photoMsg('22:51'),[['Përgjigju','reply'],['Ruaj në Kartela','save']])),
  'lp-file':()=>anisaFull(lp(docMsg('IgE specifike.pdf','2 faqe','22:52'),[['Përgjigju','reply'],['Ruaj në Kartela','save']])),
  'lp-link':()=>anisaFull(lp(linkMsg('22:53'),[['Hap lidhjen','ext'],['Përgjigju','reply'],['Kopjo lidhjen','copy'],['Ruaj në Kartela','save']])),
+ 'saved':()=>anisaFull(toast('U ruajt te Analiza',96)),
  'reply-bar':()=>botCrop({reply:['Klea Leka',N_Q],typed:'Ndiqni hapat te'}),
  'reply-msg':()=>cropc(pMsg(N_Q,'23:35')+dMsg(N_A,'23:38','seen',rquote('Klea Leka',N_Q))),
  'deleted':()=>cropc(delMsg('23:38')),
@@ -390,6 +460,7 @@ const F={
  'call-drop':()=>cropc(callCard('17 sek','23:20',{drop:1,last:1})),
  'call-drop-old':()=>cropc(callCard('17 sek','23:20',{drop:1})+callCard('11 min','23:39')),
  'res':()=>cropc(resCard('Otit akut','23:31')+fu('24 orë')),
+ 'res-closed':()=>cropc(resCard('Otit akut','23:31')),
  'res-long':()=>cropc(resCard('Infeksion viral i rrugëve të sipërme','23:31')+fu('3 orë')),
  'rs-pend':()=>cropc(resched({st:'pend'})),
  'rs-ok':()=>cropc(resched({st:'ok'})),
@@ -400,6 +471,7 @@ const F={
  'bot-draft':()=>botCrop({res:'draft'}),
  'bot-empty':()=>botCrop({}),
  'bot-typed':()=>botCrop({typed:'Si është temperatura sot?'}),
+ 'bot-closed':()=>botCrop({closed:'29.10, 23:31'}),
  'attach':()=>noaSent({over:attachSheet()})
 };
 window.FRAME_IDS=Object.keys(F);

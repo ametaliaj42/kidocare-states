@@ -1,6 +1,8 @@
 /* Shared Kidocare pieces: tokens live in kidocare.css; icons, the two children and shared components here. */
 /* ---------- icons ---------- */
 const P={
+ ext:'<path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>',
+ link:'<path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>',
  steth:'<path d="M11 2v2M5 2v2M5 3H4a2 2 0 0 0-2 2v4a6 6 0 0 0 12 0V5a2 2 0 0 0-2-2h-1"/><path d="M8 15a6 6 0 0 0 12 0v-3"/><circle cx="20" cy="10" r="2"/>',
  pill:'<path d="m10.5 20.5 10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7Z"/><path d="m8.5 8.5 7 7"/>',
  flask:'<path d="M14 2v6a2 2 0 0 0 .245.96l5.51 10.08A2 2 0 0 1 18 22H6a2 2 0 0 1-1.755-2.96l5.51-10.08A2 2 0 0 0 10 8V2"/><path d="M6.453 15h11.094"/><path d="M8.5 2h7"/>',
@@ -119,9 +121,11 @@ function medList(list){
   if(p.length)h+=`<div class="grp">${gh('clock','Të mëparshme',p.length,'var(--muted)','#C3CBDA','#fff','var(--muted)')}${p.map(medCard).join('')}</div>`;
   return h;
 }
+/* test card. t.link = [site] for a link saved from the chat: link preview instead of a file, the site next to the date, opens in the browser */
 function testCard(t){
-  const prev=t.wait?`<div class="file wait">${I('clock')}</div>`:`<div class="file">${X()}<b>${t.k}</b></div>`;
-  return `<div class="lc fixed">${prev}<div class="tx"><b>${t.t}</b>${t.f?`<span class="for">Për: ${t.f}</span>`:''}<span>${t.d}${t.wait?'<span class="pend">Pa rezultat</span>':''}</span></div>${t.wait?'':I('chev','chev')}</div>`;
+  const prev=t.wait?`<div class="file wait">${I('clock')}</div>`:t.link?`<div class="file lnk">${I('link')}<b>Lidhje</b></div>`:`<div class="file">${X()}<b>${t.k}</b></div>`;
+  const end=t.wait?'':t.link?I('ext','chev'):I('chev','chev');
+  return `<div class="lc fixed">${prev}<div class="tx"><b>${t.t}</b>${t.f?`<span class="for">Për: ${t.f}</span>`:''}<span>${t.link?`${t.link}, `:''}${t.d}${t.wait?'<span class="pend">Pa rezultat</span>':''}</span></div>${end}</div>`;
 }
 const testList=l=>l.map(testCard).join('');
 
@@ -214,6 +218,8 @@ const ageLabel=c=>c.age[0]==='0'?`${c.age[1]} muaj`:`${c.age[0]} vjeç${c.age[1]
 const gnav=(on=0,b={})=>`<div class="gnav">${[['steth','Turni'],['chat','Konsultat'],['info','Infopoint'],['forum','Forumi'],['office','Zyra']].map(([i,l],k)=>`<div class="g ${k===on?'on':''}">${I(i)}${l}${b[k]?`<em>${b[k]}</em>`:''}</div>`).join('')}</div>`;
 
 /* bottom sheet and the urgent-care confirmation, shared by Thirrja video and Biseda */
+/* toast: quiet confirmation; bottom in px when something sits under it (e.g. the chat's message box) */
+const toast=(t,bottom)=>`<div class="toast"${bottom?` style="bottom:${bottom}px"`:''}><i>${I('check')}</i>${t}</div>`;
 const bsheet=(inner,x=true)=>`<div class="dim"></div><div class="bs"><div class="grab"></div>${x?`<span class="xbtn">${I('x')}</span>`:''}${inner}</div>`;
 const urgSheet=(after='Thirrja vazhdon.')=>bsheet(`<div class="stitle">Të këshilloni kujdes urgjent?</div><div class="ssub">Prindi e sheh menjëherë këtë mesazh në bisedë:</div>
    <div class="msg">${I('tri')}<span>Kjo mund të jetë urgjencë. Telefononi 112 tani ose shkoni te urgjenca më e afërt.</span></div>
