@@ -115,7 +115,7 @@ window.FEATURES = [
     name: "Biseda",
     side: "doctor",
     date: "02.11.2026",
-    purpose: "The consultation chat, built like WhatsApp: the child and whether the parent is online at the top, the conversation with sent, delivered and seen ticks, one way to write the result at the bottom. The name opens the chat info; ⋯ holds search, urgent advice, report and block.",
+    purpose: "The consultation chat, built like WhatsApp: the child and whether the parent is online at the top, the conversation with sent, delivered and seen ticks, one way to write the result at the bottom. The name opens the chat info, like a WhatsApp contact page; ⋯ holds search and urgent advice.",
     path: {
       note: "Noa's video consultation, opened from Konsultat. Before the result there is no message box: in a video consultation messaging opens with the result. Noa has no photos or documents in the chat, so the info page has no media section.",
       frames: [
@@ -123,17 +123,17 @@ window.FEATURES = [
         { state: "min", img: "path-1.jpg", from: "rezultati", page: true, via: "Tap Shkruaj rezultatin", title: "Rezultati", spec: "The result form opens full screen." },
         { state: "col", img: "path-3.jpg", page: true, via: "Dërgo rezultatin", title: "Result sent", spec: "The result card joins the thread with how long the parent can still write under it, and the message box opens." },
         { state: "det", img: "path-9.jpg", from: "rezultati", page: true, via: "Tap Hape", title: "The result page", spec: "The same result page as everywhere else." },
-        { state: "det", img: "path-5.jpg", page: true, via: "Back, tap Noa Leka", title: "Chat info", spec: "Avatar, name and age; Kartela mjekësore (blue), Profili i fëmijës, and the guardian in the chat." },
+        { state: "det", img: "path-5.jpg", page: true, via: "Back, tap Noa Leka", title: "Chat info", spec: "Avatar, name and age; Kartela mjekësore and Profili i fëmijës tiles, the guardian in the chat, Bllokoni and Raportoni in red." },
         { state: "det", img: "pf-screen-min.jpg", from: "profili-i-femijes", page: true, via: "Tap Profili i fëmijës", title: "Profili i fëmijës", spec: "Allergies and chronic illnesses are read here, not in the chat." },
         { state: "det", img: "screen-min.jpg", from: "kartela-mjekesore", page: true, via: "Back, tap Kartela mjekësore", title: "Kartela", spec: "Opens on Diagnoza." },
         { state: "det", img: "gp-min.jpg", from: "profili-i-kujdestarit", page: true, via: "Back, tap Klea Leka", title: "Guardian", spec: "The guardian sheet, read-only." },
-        { state: "det", img: "path-6.jpg", page: true, via: "Back to the chat, tap ⋯", title: "Menu", spec: "Kërko në bisedë, Këshilloni kujdes urgjent, then Raportoni and Blloko after a gap." },
+        { state: "det", img: "path-10.jpg", page: true, via: "Close, tap Raportoni Klea Leka", title: "Raporto", spec: "One reason, then Dërgo raportimin. The parent is not told." },
+        { state: "det", img: "path-11.jpg", page: true, via: "Close, tap Bllokoni Klea Leka", title: "Blloko", spec: "Confirm sheet that says what blocking does." },
+        { state: "det", img: "path-6.jpg", page: true, via: "Anulo, back to the chat, tap ⋯", title: "Menu", spec: "Kërko në bisedë and Këshilloni kujdes urgjent." },
         { state: "exp", img: "path-7.jpg", page: true, via: "Tap Kërko në bisedë", title: "Search", spec: "The header becomes the field; matches are marked and the bottom steps through them." },
         { state: "det", img: "path-8.jpg", page: true, via: "Anulo, ⋯, Këshilloni kujdes urgjent", title: "Urgjencë", spec: "The same confirmation as in the call." },
         { state: "col", img: "path-9.jpg", page: true, via: "Po, dërgoje", title: "Urgent advice sent", spec: "The advice appears in the thread, tinted pink, with its ticks." },
-        { state: "det", img: "path-10.jpg", page: true, via: "⋯, Raportoni prindin", title: "Raporto", spec: "One reason, then Dërgo raportimin. The parent is not told." },
-        { state: "det", img: "path-11.jpg", page: true, via: "Close, ⋯, Blloko Klea Leka", title: "Blloko", spec: "Confirm sheet that says what blocking does." },
-        { state: "exp", img: "path-12.jpg", page: true, via: "Anulo, hold your message", title: "Hold a message", spec: "The message lifts over a blurred chat with Përgjigju, Kopjo and Fshi." },
+        { state: "exp", img: "path-12.jpg", page: true, via: "Hold your message", title: "Hold a message", spec: "The message lifts over a blurred chat with Përgjigju, Kopjo and Fshi." },
         { state: "det", img: "path-13.jpg", page: true, via: "Tap +", title: "Dërgoni prindit", spec: "Camera, gallery and documents." }
       ]
     },
@@ -150,16 +150,17 @@ window.FEATURES = [
         { state: "col", img: "head-off.jpg", title: "Parent offline", spec: "Grey dot and \"jashtë linje\". Messages still arrive as notifications." },
         { state: "col", img: "head-long.jpg", title: "Long name", spec: "The name wraps; the presence line stays one line." }
       ]},
-      { name: "Chat info", note: "Opened from the name, like a WhatsApp contact page. Everything about the child and the people in the chat starts here.", frames: [
-        { state: "min", img: "info-min.jpg", page: true, title: "Nothing shared", spec: "Avatar, name, age; Kartela mjekësore, Profili i fëmijës, the guardian in the chat. No media section." },
-        { state: "full", img: "info-full.jpg", page: true, title: "With photos and documents", spec: "Foto dhe dokumente with the count and the latest four; tap opens them all." }
+      { name: "Chat info", note: "Opened from the name, laid out like a WhatsApp contact page: the child's avatar standing free (as on the profile), name and age, two tiles, shared media, the guardian in the chat, and Bllokoni and Raportoni in red at the bottom.", frames: [
+        { state: "min", img: "info-min.jpg", page: true, title: "Nothing shared", spec: "No photos, links or documents yet, so no media card." },
+        { state: "full", img: "info-full.jpg", page: true, title: "With media", spec: "Foto, lidhje dhe dokumente with the count and the latest four; tap opens them all. A long name wraps." }
       ]},
-      { name: "Foto dhe dokumente", note: "Everything sent in this chat, newest first, grouped by day.", frames: [
+      { name: "Foto, lidhje dhe dokumente", note: "Everything sent in this chat, newest first, grouped by day, in three tabs.", frames: [
         { state: "det", img: "media-photo.jpg", page: true, title: "Foto", spec: "Grid of photos; tap opens the photo full screen." },
+        { state: "det", img: "media-link.jpg", page: true, title: "Lidhje", spec: "One row per link with its title, site and date; tap opens it in the browser." },
         { state: "det", img: "media-doc.jpg", page: true, title: "Dokumente", spec: "One row per file with pages and date; tap opens it in the file overlay." }
       ]},
-      { name: "Menu", note: "Bottom sheet from ⋯. Report and block sit apart at the bottom, in red.", frames: [
-        { state: "det", img: "menu-min.jpg", page: true, title: "Default", spec: "Kërko në bisedë, Këshilloni kujdes urgjent, Raportoni prindin, Blloko." },
+      { name: "Menu", note: "Bottom sheet from ⋯. Only what is done inside this chat; report and block are in the chat info, as in WhatsApp.", frames: [
+        { state: "det", img: "menu-min.jpg", page: true, title: "Default", spec: "Kërko në bisedë and Këshilloni kujdes urgjent." },
         { state: "det", img: "menu-sched.jpg", page: true, title: "Scheduled consultation", spec: "Ripllanifikoni konsultën appears only for a scheduled consultation and sends the reschedule card." }
       ]},
       { name: "Kërko në bisedë", note: "Search inside this chat only.", frames: [
@@ -169,7 +170,7 @@ window.FEATURES = [
         { state: "det", img: "urg-sheet.jpg", page: true, title: "Confirm", spec: "Shows the parent's message word for word. No close button: Anulo cancels." },
         { state: "col", img: "urg-sent.jpg", via: "Po, dërgoje", title: "In the thread", spec: "The advice as a pink message on the doctor's side." }
       ]},
-      { name: "Raporto and Blloko", note: "For a parent who is abusive or misuses the app. Report goes to the Kidocare team; block stops the parent from writing to or choosing this doctor. Behaviour to confirm with the team.", frames: [
+      { name: "Raporto and Blloko", note: "From the bottom of the chat info. For a parent who is abusive or misuses the app. Report goes to the Kidocare team; block stops the parent from writing to or choosing this doctor. Behaviour to confirm with the team.", frames: [
         { state: "det", img: "report.jpg", page: true, title: "Raporto", spec: "One reason (radio), Dërgo raportimin in red. The parent is not told." },
         { state: "det", img: "block.jpg", page: true, title: "Blloko", spec: "Says what happens: no more messages or bookings, the open consultation closes, can be undone." },
         { state: "col", img: "blocked.jpg", page: true, via: "Blloko", title: "Blocked", spec: "The message box is replaced by a grey line with Zhblloko." }
@@ -178,7 +179,7 @@ window.FEATURES = [
         { state: "col", img: "tk-sent.jpg", title: "Sent", spec: "One white tick: it left the phone." },
         { state: "col", img: "tk-dlv.jpg", title: "Delivered", spec: "Two white ticks: it reached the parent's phone." },
         { state: "col", img: "tk-seen.jpg", title: "Seen", spec: "Two mint ticks: the parent opened it." },
-        { state: "col", img: "msg-file.jpg", title: "Photo and document", spec: "From the parent. Tap opens full screen or in the file overlay." },
+        { state: "col", img: "msg-file.jpg", title: "Photo, document, link", spec: "From the parent. A photo opens full screen, a document in the file overlay, a link in the browser; a link shows its title and site." },
         { state: "col", img: "reply-msg.jpg", title: "Reply", spec: "The quoted message sits on top of the answer; tap jumps to it." },
         { state: "col", img: "deleted.jpg", title: "Deleted", spec: "\"Ju e fshitë këtë mesazh\"; the parent sees \"Mesazhi u fshi\"." }
       ]},
@@ -186,6 +187,7 @@ window.FEATURES = [
         { state: "exp", img: "lp-own.jpg", page: true, title: "Your message", spec: "Përgjigju, Kopjo, and Fshi in red (only shortly after sending; window to confirm)." },
         { state: "exp", img: "lp-parent.jpg", page: true, title: "Parent's message", spec: "Përgjigju and Kopjo." },
         { state: "exp", img: "lp-file.jpg", page: true, title: "Parent's file", spec: "Përgjigju and Ruaj në Kartela, which adds it to Analiza without the parent uploading it again." },
+        { state: "exp", img: "lp-link.jpg", page: true, title: "Parent's link", spec: "Përgjigju, Kopjo lidhjen, Ruaj në Kartela. A saved link sits in Analiza like a file and opens in the browser." },
         { state: "col", img: "reply-bar.jpg", via: "Tap Përgjigju", title: "Replying", spec: "The quote sits above the field; X cancels the reply." }
       ]},
       { name: "Call", note: "Each call is one card on the doctor's side.", frames: [
@@ -215,8 +217,8 @@ window.FEATURES = [
     rules: [
       ["No tags in the header", "The header says who the child is and whether the parent is online. What is owed shows at the bottom; allergies and chronic illnesses are in Profili i fëmijës, one tap away through the chat info."],
       ["Ticks, not message info", "One tick sent, two delivered, two mint seen. There is no separate info screen."],
-      ["Nothing leaves the chat", "No forward and no export. A parent's file can only be saved into the child's own Kartela."],
-      ["Rare actions behind ⋯", "Search, urgent advice, report and block live in the menu, so the header keeps two buttons: back and ⋯."]
+      ["Nothing leaves the chat", "No forward and no export. A parent's file or link can only be saved into the child's own Kartela."],
+      ["Rare actions out of the way", "Search and urgent advice live behind ⋯; report and block at the bottom of the chat info. The header keeps two buttons: back and ⋯."]
     ]
   },
   {
