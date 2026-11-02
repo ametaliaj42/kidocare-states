@@ -21,6 +21,9 @@
 .bh{align-items:center}
 .bwho .pd{display:inline-block;width:10px;height:10px;border-radius:5px;background:#C3CBDA;margin-left:8px;vertical-align:2px}
 .bwho .pd.on{background:#22C17A}
+.bwho.one{display:flex;align-items:center;min-width:0}
+.bwho.one b{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.bwho.one .pd{flex:none}
 .bwho .pr{display:flex;align-items:center;gap:7px;font-size:14px;color:var(--muted);margin-top:3px}
 .bwho .pr i{width:9px;height:9px;border-radius:5px;background:#C3CBDA;flex:none}
 .bwho .pr.on i{background:#22C17A}
@@ -249,7 +252,7 @@ const ageT=c=>`${c.age[0]} vjeç &amp; ${c.age[1]} muaj`;
 /* ---------- header ----------
    back, the child's name (opens the chat info) with the parent's presence dot, ⋯ for the menu. o.off: parent offline */
 function chatHead(c,o={}){
-  return `<div class="bh"><span class="back">${I('back')}</span><div class="bwho"><b>${c.name}<i class="pd ${o.off?'':'on'}"></i></b></div><span class="mbtn">${I('dots')}</span></div>`;
+  return `<div class="bh"><span class="back">${I('back')}</span><div class="bwho one"><b>${c.name}</b><i class="pd ${o.off?'':'on'}"></i></div><span class="mbtn">${I('dots')}</span></div>`;
 }
 /* ---------- thread pieces ---------- */
 const day=t=>`<div class="day">${t}</div>`;

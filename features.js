@@ -141,14 +141,14 @@ window.FEATURES = [
       note: "Header, thread and bottom are one column. The header never scrolls away. No tags in the header: what is owed shows at the bottom, allergies are in Profili i fëmijës.",
       frames: [
         { state: "min", img: "screen-min.jpg", title: "Noa Leka", spec: "Video consultation, before the result." },
-        { state: "full", img: "screen-full.jpg", title: "Anisa", spec: "Long name wraps; a dropped call followed by a full one." }
+        { state: "full", img: "screen-full.jpg", title: "Anisa", spec: "Long name cut to one line; a dropped call followed by a full one." }
       ]
     },
     components: [
       { name: "Header", note: "Back, the child's name with one dot for the parent's presence, and ⋯. Nothing else: age, type and guardian are one tap away in the chat info, which the name opens.", frames: [
         { state: "min", img: "head-on.jpg", title: "Parent online", spec: "Green dot while the parent has the app open." },
         { state: "col", img: "head-off.jpg", title: "Parent offline", spec: "Grey dot. Messages still arrive as notifications." },
-        { state: "col", img: "head-long.jpg", title: "Long name", spec: "The name wraps; the dot follows the last word." }
+        { state: "col", img: "head-long.jpg", title: "Long name", spec: "One line: the name is cut with an ellipsis and the dot stays right after it. The full name is in the chat info." }
       ]},
       { name: "Chat info", note: "Opened from the name, laid out like a WhatsApp contact page: the child's avatar standing free (as on the profile), name and age, two tiles, shared media, the guardian in the chat, and Bllokoni and Raportoni in red at the bottom.", frames: [
         { state: "min", img: "info-min.jpg", page: true, title: "Nothing shared", spec: "No photos, links or documents yet, so no media card." },
