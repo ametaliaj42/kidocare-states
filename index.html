@@ -102,6 +102,37 @@ select:focus-visible,a:focus-visible{outline:2px solid var(--blue);outline-offse
 .path .strip{margin:0 -24px;padding:4px 24px 22px}
 .path .eyebrow{margin-bottom:6px}
 .none{color:var(--muted);font-size:15px;background:var(--surface);border-radius:18px;padding:16px 18px;opacity:.8}
+/* Review: Proposed (default), then Rejected (with a comment), Approved, Done */
+:root{--r-pro:#6E7790;--r-pro-f:#F0F3FA;--r-rej:#C2394B;--r-rej-f:#FDECEE;--r-app:#13774A;--r-app-f:#E2F5EA;--r-done:#2F6FE0;--r-done-f:#E9F2FF}
+:root[data-theme="dark"]{--r-pro:#A3ADC2;--r-pro-f:#1F2A3F;--r-rej:#FF8796;--r-rej-f:#3A1C23;--r-app:#3FC48A;--r-app-f:#16352A;--r-done:#8DB6FF;--r-done-f:#1B2B4B}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--r-pro:#A3ADC2;--r-pro-f:#1F2A3F;--r-rej:#FF8796;--r-rej-f:#3A1C23;--r-app:#3FC48A;--r-app-f:#16352A;--r-done:#8DB6FF;--r-done-f:#1B2B4B}}
+.rv{display:flex;flex-direction:column;gap:8px;align-items:flex-start;width:100%}
+.rv-row{display:flex;flex-wrap:wrap;align-items:center;gap:6px}
+.rv-st{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;border-radius:8px;padding:3px 9px}
+.rv-st::before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor}
+.rv-proposed{background:var(--r-pro-f);color:var(--r-pro)}
+.rv-rejected{background:var(--r-rej-f);color:var(--r-rej)}
+.rv-approved{background:var(--r-app-f);color:var(--r-app)}
+.rv-done{background:var(--r-done-f);color:var(--r-done)}
+.rv-b{font:600 13px var(--font);border:1px solid var(--line);background:var(--surface);color:var(--muted);border-radius:999px;padding:5px 12px;cursor:pointer}
+.rv-b:hover{color:var(--ink)}
+.rv-b[disabled]{opacity:.6;cursor:default}
+.rv-b.on.b-rejected{background:var(--r-rej);border-color:var(--r-rej);color:#fff}
+.rv-b.on.b-approved{background:var(--r-app);border-color:var(--r-app);color:#fff}
+.rv-b.on.b-done{background:var(--r-done);border-color:var(--r-done);color:#fff}
+.rv-c{font-size:14px;line-height:1.45;color:var(--ink);background:var(--r-rej-f);border-radius:12px;padding:8px 12px;white-space:pre-wrap;overflow-wrap:anywhere;max-width:100%}
+.rv-c small{display:block;color:var(--muted);font-size:12.5px;margin-top:2px}
+.rv-form{display:flex;flex-direction:column;gap:8px;width:100%}
+.rv-form textarea{font:14px/1.45 var(--font);color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:8px 10px;min-height:76px;resize:vertical;width:100%}
+.rv-form textarea:focus-visible,.rv-b:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+.rv-send{background:var(--r-rej);border-color:var(--r-rej);color:#fff}
+.rv-send:hover{color:#fff}
+.rv-err{font-size:13px;color:var(--r-rej)}
+.rv-feat{margin-top:18px;background:var(--surface);border-radius:18px;padding:14px 16px;max-width:560px}
+.rv-feat .eyebrow{margin-bottom:2px}
+.rv-local{font-size:13px;color:var(--muted)}
+.feat .rv-st{align-self:flex-start;margin-top:6px}
+.rv-sum{display:flex;flex-wrap:wrap;gap:6px}
 </style>
 <div class="wrap">
   <nav class="bar" aria-label="Functionalities">
@@ -124,7 +155,7 @@ const LIVE = window.LIVE || {};
 const media = (f, fr) => { const src = fr.from || f.id;
   if (LIVE[src]) return `<div class="lv"><iframe src="${LIVE[src]}#${fr.img.replace(/\.jpg$/, "")}" scrolling="no" loading="lazy" title="${esc(fr.title || fr.img)}"></iframe></div>`;
   return `<img src="img/${src}/${fr.img}" alt="${esc(fr.title || TAG[fr.state][1])}" loading="lazy">`; };
-const frame = (f, fr, wide) => `<figure class="frame ${wide ? "wide page" : ""} ${fr.page ? "page" : ""}" style="margin:0">${media(f, fr)}<figcaption class="cap"><span class="st-tag ${TAG[fr.state][0]}">${TAG[fr.state][1]}</span>${fr.title ? `<b>${esc(fr.title)}</b>` : ""}<span>${esc(fr.spec)}</span>${LIVE[fr.from || f.id] ? fbtn(fr.from || f.id, fr.img.replace(/\.jpg$/, "")) : ""}</figcaption></figure>`;
+const frame = (f, fr, wide, review) => `<figure class="frame ${wide ? "wide page" : ""} ${fr.page ? "page" : ""}" style="margin:0">${media(f, fr)}<figcaption class="cap"><span class="st-tag ${TAG[fr.state][0]}">${TAG[fr.state][1]}</span>${fr.title ? `<b>${esc(fr.title)}</b>` : ""}<span>${esc(fr.spec)}</span>${LIVE[fr.from || f.id] ? fbtn(fr.from || f.id, fr.img.replace(/\.jpg$/, "")) : ""}${review ? rvBlock(frameKey(f, fr)) : ""}</figcaption></figure>`;
 /* live frames: scale the 393px phone to the frame width and size it to its content */
 const fit = () => document.querySelectorAll(".lv").forEach(w => { const i = w.querySelector("iframe"), k = w.clientWidth / 393; i.style.transform = `scale(${k})`; if (i._h) w.style.height = Math.ceil(i._h * k) + "px"; });
 addEventListener("message", e => { if (!e.data || e.data.liveFrame === undefined) return;
@@ -144,7 +175,7 @@ function home() {
     ${srcBtn("all") ? `<div class="meta" style="margin-top:16px">${srcBtn("all")}</div>` : ""}<div class="keys">${["min", "col", "exp", "det"].map(s => `<span class="k"><span class="st-tag ${TAG[s][0]}">${TAG[s][1]}</span>${{ min: "Sign-up data only", col: "As it sits on screen", exp: "Opened in place", det: "Its own page" }[s]}</span>`).join("")}</div></header>
   ${SIDES.map(([k, l]) => { const fs = F.filter(f => f.side === k);
     return `<section class="side"><h2>${l}</h2>${fs.length ? `<div class="feats">${fs.map(f => { const c = count(f);
-      return `<a class="feat" href="#${f.id}"><b>${esc(f.name)}</b><span>${esc(f.purpose)}</span><small>${c.c} components, ${c.n} frames · ${f.date}</small></a>`; }).join("")}</div>`
+      return `<a class="feat" href="#${f.id}"><b>${esc(f.name)}</b><span>${esc(f.purpose)}</span><small>${c.c} components, ${c.n} frames · ${f.date}</small>${RV_ON ? `<span data-rvchip="${f.id}">${rvChip(f.id)}</span>` : ""}</a>`; }).join("")}</div>`
       : `<p class="none">Nothing here yet.</p>`}</section>`; }).join("")}`;
 }
 
@@ -152,11 +183,11 @@ function feature(f) {
   const c = count(f);
   return `<header class="col"><div class="eyebrow">Kidocare, ${SIDES.find(s => s[0] === f.side)[1].toLowerCase()}</div><h1>${esc(f.name)}</h1>
     <p class="lead">${esc(f.purpose)}</p>
-    <div class="meta"><span class="pill">Arjola Metaliaj</span><span class="pill">${f.date}</span><span class="pill">${c.c} components, ${c.n} frames</span></div>${LIVE[f.id] ? `<div class="meta" style="margin-top:12px">${srcBtn(f.id)}</div>` : ""}</header>
+    <div class="meta"><span class="pill">Arjola Metaliaj</span><span class="pill">${f.date}</span><span class="pill">${c.c} components, ${c.n} frames</span></div>${LIVE[f.id] ? `<div class="meta" style="margin-top:12px">${srcBtn(f.id)}</div>` : ""}${RV_ON ? `<div class="rv-feat"><div class="eyebrow">Feature review</div>${rvBlock(f.id)}</div>` : ""}</header>
   ${f.path ? `<section class="path"><div class="sh"><div class="eyebrow">Start here</div><h2>Minimal path</h2><p>${esc(f.path.note)}</p></div>
-    <div class="strip"><div class="states">${f.path.frames.map((fr, j) => (j ? arrow(fr.via || "") : "") + frame(f, fr, true)).join("")}</div></div></section>` : ""}
+    <div class="strip"><div class="states">${f.path.frames.map((fr, j) => (j ? arrow(fr.via || "") : "") + frame(f, fr, true, RV_ON)).join("")}</div></div></section>` : ""}
   <section><div class="sh"><h2>Whole screen</h2><p>${esc(f.screen.note)}</p></div>
-    <div class="pair">${f.screen.frames.map(fr => frame(f, fr, true)).join("")}</div></section>
+    <div class="pair">${f.screen.frames.map(fr => frame(f, fr, true, RV_ON && !f.path)).join("")}</div></section>
   ${f.components.map((cp, i) => `<section><div class="sh"><span class="n">${String(i + 1).padStart(2, "0")}</span><h2>${esc(cp.name)}</h2><p>${esc(cp.note)}</p></div>
     <div class="strip"><div class="states">${cp.frames.map((fr, j) => (j ? (fr.via ? arrow(fr.via) : `<div class="gap"></div>`) : "") + frame(f, fr)).join("")}</div></div></section>`).join("")}
   ${f.rules && f.rules.length ? `<section class="col"><h2 style="margin-bottom:16px">Rules</h2><ul class="list">${f.rules.map(([t, d]) => `<li><b>${esc(t)}</b><span>${esc(d)}</span></li>`).join("")}</ul></section>` : ""}`;
@@ -256,6 +287,66 @@ if (WANT && !IN_CLAUDE) addEventListener("load", () => {
     .catch(() => { bar.textContent = "Could not prepare it. Use the download buttons on the page."; })
     .finally(() => setTimeout(() => bar.remove(), 5000));
 });
+
+/* Review. Every feature and every main-flow frame (the minimal path; the whole screen when a feature has no path)
+   starts as Proposed. Rejected needs a comment; Approved and Done don't. Tapping the active button again returns it to Proposed.
+   Saved on the Vercel site through /api/review, shared by everyone who opens it. If that storage is not reachable,
+   the choice is kept in this browser only and the page says so. Hidden inside Claude, where /api does not exist. */
+const RV_ON = !IN_CLAUDE;
+const RV_LABEL = { proposed: "Proposed", rejected: "Rejected", approved: "Approved", done: "Done" };
+const RV_LS = "kidocare-review";
+let RV = {}, RV_SHARED = false, RV_OPEN = null;
+const frameKey = (f, fr) => `${f.id}/${fr.from ? fr.from + ":" : ""}${fr.img.replace(/\.jpg$/, "")}`;
+const rvGet = k => RV[k] || { status: "proposed" };
+const rvChip = k => { const s = rvGet(k).status; return `<span class="rv-st rv-${s}">${RV_LABEL[s]}</span>`; };
+const rvDate = t => { const d = new Date(t), now = new Date(), p = n => String(n).padStart(2, "0");
+  return `${p(d.getDate())}.${p(d.getMonth() + 1)}${d.getFullYear() !== now.getFullYear() ? "." + d.getFullYear() : ""}, ${p(d.getHours())}:${p(d.getMinutes())}`; };
+function rvInner(k, err) {
+  const r = rvGet(k), open = RV_OPEN === k;
+  return `<div class="rv-row">${rvChip(k)}</div>
+    <div class="rv-row">${["rejected", "approved", "done"].map(s => `<button type="button" class="rv-b b-${s} ${r.status === s ? "on" : ""}" data-rv="${s}" aria-pressed="${r.status === s}">${RV_LABEL[s]}</button>`).join("")}</div>
+    ${open ? `<div class="rv-form"><textarea maxlength="1000" placeholder="What needs to change?" aria-label="Comment for the rejection">${r.status === "rejected" ? esc(r.comment || "") : ""}</textarea>
+      <div class="rv-row"><button type="button" class="rv-b rv-send" data-rv="send">Reject with comment</button><button type="button" class="rv-b" data-rv="cancel">Cancel</button></div></div>`
+    : r.status === "rejected" && r.comment ? `<div class="rv-c">${esc(r.comment)}${r.at ? `<small>${rvDate(r.at)}</small>` : ""}</div>` : ""}
+    ${err ? `<span class="rv-err">${esc(err)}</span>` : ""}
+    ${!RV_SHARED ? `<span class="rv-local">Saved in this browser only</span>` : ""}`;
+}
+const rvBlock = k => `<div class="rv" data-rvkey="${esc(k)}">${rvInner(k)}</div>`;
+function rvPaint(k, err) {
+  document.querySelectorAll(".rv").forEach(el => { if (el.dataset.rvkey === k) el.innerHTML = rvInner(k, err); });
+  document.querySelectorAll("[data-rvchip]").forEach(el => { if (el.dataset.rvchip === k) el.innerHTML = rvChip(k); });
+}
+function rvLocal() { try { return JSON.parse(localStorage.getItem(RV_LS) || "{}"); } catch (e) { return {}; } }
+function rvSaveLocal() { try { localStorage.setItem(RV_LS, JSON.stringify(RV)); } catch (e) {} }
+async function rvLoad() {
+  try { const r = await fetch("/api/review", { cache: "no-store" }); if (!r.ok) throw 0;
+    RV = (await r.json()).items || {}; RV_SHARED = true; }
+  catch (e) { RV = rvLocal(); RV_SHARED = false; }
+  render(true);
+}
+async function rvSet(k, status, comment) {
+  const entry = { key: k, status, comment: status === "rejected" ? comment : "", at: Date.now() };
+  if (RV_SHARED) {
+    const r = await fetch("/api/review", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(entry) });
+    if (!r.ok) throw new Error("save");
+    RV[k] = (await r.json()).entry;
+  } else { RV[k] = entry; rvSaveLocal(); }
+  RV_OPEN = null; rvPaint(k);
+}
+document.addEventListener("click", async e => {
+  const b = e.target.closest("button[data-rv]"); if (!b) return;
+  const box = b.closest(".rv"), k = box.dataset.rvkey, act = b.dataset.rv, cur = rvGet(k).status;
+  if (act === "cancel") { RV_OPEN = null; return rvPaint(k); }
+  if (act === "rejected" && cur !== "rejected") { RV_OPEN = k; rvPaint(k); const t = box.querySelector("textarea"); if (t) t.focus(); return; }
+  if (act === "send") { const c = box.querySelector("textarea").value.trim();
+    if (!c) return rvPaint(k, "Add a comment to reject."); }
+  const status = act === "send" ? "rejected" : (act === cur ? "proposed" : act);
+  const comment = act === "send" ? box.querySelector("textarea").value.trim() : "";
+  box.querySelectorAll("button").forEach(x => { x.disabled = true; });
+  try { await rvSet(k, status, comment); }
+  catch (err) { rvPaint(k, "Could not save. Try again."); }
+});
+if (RV_ON) rvLoad();
 
 addEventListener("hashchange", () => render());
 render();
