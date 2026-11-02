@@ -187,7 +187,7 @@ window.FEATURES = [
         { state: "exp", img: "lp-own.jpg", page: true, title: "Your message", spec: "Përgjigju, Kopjo, and Fshi in red (only shortly after sending; window to confirm)." },
         { state: "exp", img: "lp-parent.jpg", page: true, title: "Parent's message", spec: "Përgjigju and Kopjo." },
         { state: "exp", img: "lp-file.jpg", page: true, title: "Parent's file", spec: "Përgjigju and Ruaj në Kartela, which adds it to Analiza without the parent uploading it again." },
-        { state: "exp", img: "lp-link.jpg", page: true, title: "Parent's link", spec: "Përgjigju, Kopjo lidhjen, Ruaj në Kartela. A saved link sits in Analiza like a file and opens in the browser." },
+        { state: "exp", img: "lp-link.jpg", page: true, title: "Parent's link", spec: "Hap lidhjen first (opens it in the browser, same as a tap), then Përgjigju, Kopjo lidhjen, Ruaj në Kartela. A saved link sits in Analiza like a file and opens in the browser." },
         { state: "col", img: "reply-bar.jpg", via: "Tap Përgjigju", title: "Replying", spec: "The quote sits above the field; X cancels the reply." }
       ]},
       { name: "Call", note: "Each call is one card on the doctor's side.", frames: [
