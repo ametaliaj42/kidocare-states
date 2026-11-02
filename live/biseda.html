@@ -26,16 +26,7 @@
 /* follow-up time under the result card */
 .fu{align-self:flex-end;display:flex;align-items:center;gap:6px;font-size:13px;color:var(--muted);margin-top:-4px;padding-right:4px}
 .fu svg{width:14px;height:14px}
-/* menu sheet: what to keep in mind, then the rare actions */
-.facts{background:var(--tile);border-radius:18px;padding:4px 14px;margin:6px 0 4px}
-.fact{display:flex;gap:11px;padding:11px 0;border-bottom:1px solid var(--line)}
-.fact:last-child{border-bottom:0}
-.fact svg{width:19px;height:19px;flex:none;margin-top:1px}
-.fact small{display:block;font-size:13px;color:var(--muted)}
-.fact b{display:block;font-size:16px;font-weight:500;line-height:1.35}
-.fact.al svg{color:var(--pink)}.fact.ch svg{color:var(--amber)}
 .opt .chev{margin-left:auto}
-.facts+.opt,.opt:has(+.btnb){border-bottom:0}
 /* messages */
 .thread{flex:1;display:flex;flex-direction:column;justify-content:flex-end;gap:10px;padding:0 16px 14px;min-height:0}
 .day{align-self:center;height:28px;padding:0 13px;border-radius:14px;background:rgba(255,255,255,.7);font-size:13px;font-weight:500;color:var(--muted);display:grid;place-items:center;margin:4px 0}
@@ -99,6 +90,102 @@
 .opt i{width:40px;height:40px;border-radius:20px;background:var(--blue-fill);color:var(--blue-ink);display:grid;place-items:center}
 .opt i svg{width:19px;height:19px}
 .cropc{padding:16px 16px 18px;display:flex;flex-direction:column;gap:10px}
+/* ticks on blue: sent and delivered in white, seen in mint */
+.bb.d .tm svg.seen{color:#A6F4CB}
+.bb.u .tm svg.seen{color:var(--blue-ink)}
+/* deleted message */
+.bb.del{font-style:italic;opacity:.85}
+.bb.del svg.i{width:15px;height:15px;vertical-align:-2px;margin-right:4px}
+/* reply quote inside a bubble and above the field */
+.qt{border-left:3px solid currentColor;border-radius:8px;padding:5px 9px;margin:0 0 6px;font-size:14px;line-height:1.35}
+.bb.d .qt{background:rgba(255,255,255,.18);color:#fff}
+.bb.p .qt{background:var(--tile);color:var(--blue-ink)}
+.qt b{display:block;font-size:13px;font-weight:600}
+.qt span{display:block;opacity:.9;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rbar{display:flex;align-items:center;gap:10px;background:#fff;border-radius:18px;padding:9px 10px 9px 14px;box-shadow:0 10px 30px rgba(40,80,160,.06)}
+.rbar .qt{flex:1;min-width:0;margin:0;background:var(--tile);color:var(--blue-ink)}
+.rbar .x2{width:30px;height:30px;border-radius:15px;background:var(--track);display:grid;place-items:center;flex:none}
+.rbar .x2 svg{width:15px;height:15px}
+/* attachments in the thread */
+.ph{align-self:flex-start;width:220px;background:#fff;border-radius:20px;border-bottom-left-radius:6px;padding:6px;box-shadow:0 6px 18px rgba(40,80,160,.06)}
+.ph .im{height:160px;border-radius:15px;background:#F2F6FF;border:1px solid #AFC0D8;position:relative;overflow:hidden}
+.ph .im svg.x{position:absolute;inset:0;width:100%;height:100%;stroke:#AFC0D8;stroke-width:.6}
+.ph .tm{display:flex;justify-content:flex-end;font-size:12px;color:var(--muted);padding:5px 6px 1px}
+.dc{align-self:flex-start;width:260px;background:#fff;border-radius:20px;border-bottom-left-radius:6px;padding:10px 12px 6px;box-shadow:0 6px 18px rgba(40,80,160,.06)}
+.dc .r{display:flex;align-items:center;gap:11px;background:var(--tile);border-radius:14px;padding:10px}
+.dc .r i{width:38px;height:38px;border-radius:10px;background:#fff;color:var(--blue-ink);display:grid;place-items:center;flex:none}
+.dc .r i svg{width:19px;height:19px}
+.dc .r b{display:block;font-size:15px;font-weight:600}
+.dc .r span{display:block;font-size:13px;color:var(--muted)}
+.dc .tm{display:flex;justify-content:flex-end;font-size:12px;color:var(--muted);padding:5px 2px 0}
+/* long press: the message lifted over a dim layer, actions under it */
+.lp{position:absolute;inset:0;background:rgba(14,27,61,.28);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);display:flex;flex-direction:column;justify-content:center;padding:0 16px;gap:10px}
+.lp .menu{background:#fff;border-radius:18px;overflow:hidden;width:250px;box-shadow:0 16px 40px rgba(14,27,61,.18)}
+.lp .menu.r{align-self:flex-end}
+.lp .menu div{display:flex;align-items:center;justify-content:space-between;height:48px;padding:0 16px;font-size:16px;border-bottom:1px solid var(--line)}
+.lp .menu div:last-child{border-bottom:0}
+.lp .menu svg{width:19px;height:19px;color:var(--muted)}
+.lp .menu .dg{color:var(--red)}.lp .menu .dg svg{color:var(--red)}
+.lp .menu small{font-size:12px;color:var(--muted);margin-left:auto;margin-right:10px}
+/* menu sheet */
+.mn{margin-top:6px}
+.mn .opt{border-bottom:1px solid var(--line)}
+.mn .opt.dg{color:var(--red)}
+.mn .opt.dg i{background:#FDECEF;color:var(--red)}
+.mn hr{border:0;height:8px}
+/* search */
+.sh{display:flex;align-items:center;gap:10px;padding:8px 16px 12px}
+.sh .fld{box-shadow:0 10px 30px rgba(40,80,160,.08)}
+.sh .fld svg{width:19px;height:19px;color:var(--muted);margin-left:8px}
+.sh .cn{font-size:16px;font-weight:600;color:var(--blue-ink);flex:none}
+mark{background:#FFE3A3;color:inherit;border-radius:4px;padding:0 2px}
+.bb.d mark{background:#FFE3A3;color:var(--ink)}
+.snav{display:flex;align-items:center;justify-content:space-between;height:52px;border-radius:26px;background:#fff;padding:0 8px 0 20px;font-size:16px;color:var(--muted);box-shadow:0 10px 30px rgba(40,80,160,.06)}
+.snav span.b{display:flex;gap:6px}
+.snav span.b i{width:38px;height:38px;border-radius:19px;background:var(--blue-fill);color:var(--blue-ink);display:grid;place-items:center}
+.snav span.b i svg{width:19px;height:19px}
+/* blocked */
+.blk{height:52px;border-radius:26px;background:var(--grey-fill);display:flex;align-items:center;justify-content:center;gap:6px;font-size:15px;color:var(--muted)}
+.blk b{color:var(--blue-ink);font-weight:600}
+/* report sheet */
+.rsn{display:flex;align-items:center;gap:12px;height:52px;border-bottom:1px solid var(--line);font-size:16px}
+.rsn:last-of-type{border-bottom:0}
+.rsn i{width:22px;height:22px;border-radius:11px;border:2px solid #C3CBDA;flex:none}
+.rsn.on i{border:7px solid var(--blue)}
+/* chat info page */
+.ip{min-height:852px;padding:0 16px 40px}
+.ip .hd{margin-bottom:10px}
+.idh{display:flex;flex-direction:column;align-items:center;text-align:center;gap:4px;margin-bottom:6px}
+.idh img{width:104px;height:104px;border-radius:52px;background:#fff;box-shadow:0 10px 30px rgba(40,80,160,.10);margin-bottom:8px}
+.idh b{font-size:24px;font-weight:600;letter-spacing:-.01em;line-height:1.2}
+.idh span{font-size:15px;color:var(--muted)}
+.gcard{background:#fff;border-radius:24px;box-shadow:0 10px 30px rgba(40,80,160,.08);margin-top:12px;padding:4px 16px}
+.grow{display:flex;align-items:center;gap:14px;padding:12px 0}
+.grow i{width:44px;height:44px;border-radius:22px;background:var(--blue-fill);color:var(--blue-ink);display:grid;place-items:center;flex:none}
+.grow i svg{width:20px;height:20px}
+.grow .tx{flex:1;min-width:0}
+.grow .tx b{display:block;font-size:17px;font-weight:600}
+.grow .tx span{display:flex;align-items:center;gap:6px;font-size:14px;color:var(--muted)}
+.grow .tx span em{width:8px;height:8px;border-radius:4px;background:#22C17A}
+.mh{display:flex;align-items:center;justify-content:space-between;margin:24px 4px 12px}
+.mh h2{font-size:20px;font-weight:600;letter-spacing:-.01em}
+.mh span{display:flex;align-items:center;gap:4px;font-size:15px;color:var(--blue-ink);font-weight:500}
+.mh span svg{width:17px;height:17px}
+.thumbs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.thumbs .t{aspect-ratio:1;border-radius:14px;background:#F2F6FF;border:1px solid #AFC0D8;position:relative;overflow:hidden}
+.thumbs .t svg.x{position:absolute;inset:0;width:100%;height:100%;stroke:#AFC0D8;stroke-width:.8}
+.thumbs .t.pdf{background:#fff;border:0;display:grid;place-items:center;color:var(--blue-ink);box-shadow:0 6px 18px rgba(40,80,160,.06)}
+.thumbs .t.pdf svg{width:24px;height:24px;margin-bottom:12px}
+.thumbs .t.pdf small{position:absolute;bottom:8px;left:0;right:0;font-size:11px;font-weight:600;text-align:center}
+/* media page */
+.mg{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin-top:6px}
+.mg .t{aspect-ratio:1;border-radius:12px;background:#F2F6FF;border:1px solid #AFC0D8;position:relative;overflow:hidden}
+.mg .t svg.x{position:absolute;inset:0;width:100%;height:100%;stroke:#AFC0D8;stroke-width:.8}
+.mlab{font-size:14px;font-weight:500;color:var(--muted);margin:16px 4px 2px}
+.drow{display:flex;align-items:center;gap:12px;background:#fff;border-radius:20px;padding:12px 14px;margin-top:8px;box-shadow:0 6px 18px rgba(40,80,160,.06)}
+.drow i{width:42px;height:42px;border-radius:12px;background:var(--blue-fill);color:var(--blue-ink);display:grid;place-items:center;flex:none}
+.drow i svg{width:20px;height:20px}
+.drow .tx{flex:1}.drow b{display:block;font-size:16px;font-weight:600}.drow span{font-size:13px;color:var(--muted)}
 </style>
 </head>
 <body>
@@ -113,6 +200,14 @@ Object.assign(P,{
  cam:'<path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3z"/><circle cx="12" cy="13" r="3"/>',
  imgs:'<rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.09-3.09a2 2 0 0 0-2.82 0L6 21"/>',
  dots:'<circle cx="5" cy="12" r="1.6" fill="currentColor"/><circle cx="12" cy="12" r="1.6" fill="currentColor"/><circle cx="19" cy="12" r="1.6" fill="currentColor"/>',
+ reply:'<path d="M9 17 4 12l5-5"/><path d="M20 18v-2a4 4 0 0 0-4-4H4"/>',
+ copy:'<rect x="8" y="8" width="14" height="14" rx="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/>',
+ trash:'<path d="M3 6h18"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>',
+ save:'<path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M12 18v-6"/><path d="m9 15 3 3 3-3"/>',
+ flag:'<path d="M4 22V4a1 1 0 0 1 .4-.8A6 6 0 0 1 8 2c3 0 5 2 7.33 2q2 0 3.67-1.33a1 1 0 0 1 1.6.8v9.53a1 1 0 0 1-.4.8A6 6 0 0 1 16.67 14c-2.33 0-4.33-2-7.33-2-1.6 0-2.93.53-4 1.33"/>',
+ ban:'<circle cx="12" cy="12" r="10"/><path d="m4.9 4.9 14.2 14.2"/>',
+ up:'<path d="m18 15-6-6-6 6"/>',
+ down:'<path d="m6 9 6 6 6-6"/>',
  arr:'<path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>'
 });
 /* ---------- data ---------- */
@@ -121,7 +216,7 @@ const A_NOTE='Kollë natën prej 4 ditësh, ka përdorur pompën 3 herë sot. Me
 const ageT=c=>`${c.age[0]} vjeç &amp; ${c.age[1]} muaj`;
 
 /* ---------- header ----------
-   back, name (opens Profili i fëmijës), age and type, the parent's presence; ⋯ opens the menu. o.off: parent offline */
+   back, name (opens the chat info page), age and type, the parent's presence; ⋯ opens the menu. o.off: parent offline */
 function chatHead(c,o={}){
   const g=c.guardian[0];
   const pr=o.off?`<span class="pr"><i></i>${g}, jashtë linje</span>`:`<span class="pr on"><i></i>${g}, në linjë</span>`;
@@ -129,9 +224,15 @@ function chatHead(c,o={}){
 }
 /* ---------- thread pieces ---------- */
 const day=t=>`<div class="day">${t}</div>`;
-const pMsg=(t,tm)=>`<div class="bb p">${t}<span class="tm">${tm}</span></div>`;
-const dMsg=(t,tm,read=true)=>`<div class="bb d">${t}<span class="tm">${tm}${I(read?'ck2':'ck1')}</span></div>`;
-const uMsg=tm=>`<div class="bb u"><span class="lb2">${I('tri')}Këshillë për kujdes urgjent</span>Kjo mund të jetë urgjencë. Telefononi 112 tani ose shkoni te urgjenca më e afërt.<span class="tm">${tm}${I('ck1')}</span></div>`;
+const rquote=(who,txt)=>`<div class="qt"><b>${who}</b><span>${txt}</span></div>`;
+const pMsg=(t,tm,q='')=>`<div class="bb p">${q}${t}<span class="tm">${tm}</span></div>`;
+/* doctor message: tk 'sent' one tick, 'dlv' two ticks, 'seen' two mint ticks */
+const tick=(tk,cls='')=>tk==='sent'?I('ck1'):I('ck2',tk==='seen'?'seen':'');
+const dMsg=(t,tm,tk='seen',q='')=>`<div class="bb d">${q}${t}<span class="tm">${tm}${tick(tk)}</span></div>`;
+const delMsg=tm=>`<div class="bb d del">${I('ban')}Ju e fshitë këtë mesazh<span class="tm">${tm}</span></div>`;
+const uMsg=(tm,tk='seen')=>`<div class="bb u"><span class="lb2">${I('tri')}Këshillë për kujdes urgjent</span>Kjo mund të jetë urgjencë. Telefononi 112 tani ose shkoni te urgjenca më e afërt.<span class="tm">${tm}${tick(tk)}</span></div>`;
+const photoMsg=tm=>`<div class="ph"><div class="im">${X()}</div><div class="tm">${tm}</div></div>`;
+const docMsg=(n,s,tm)=>`<div class="dc"><div class="r"><i>${I('file')}</i><div><b>${n}</b><span>${s}</span></div></div><div class="tm">${tm}</div></div>`;
 /* call: o.drop = ended by lost connection; o.last = the latest call, so it can be redialled */
 const callCard=(dur,tm,o={})=>o.drop
   ?`<div class="ec"><div class="top"><i class="round amb">${I('vidoff')}</i><div class="tx"><b>Thirrja u ndërpre</b><span>${dur}</span></div></div><div class="tm">${tm}</div>${o.last?`<div class="act">${I('video')}Telefono përsëri</div>`:''}</div>`
@@ -153,43 +254,98 @@ function bottom(o={}){
   const showCmp=!o.res||o.text;
   const val=o.typed?`<span class="val">${o.typed}<span class="caret"></span></span>`:'Shkruani prindit...';
   const cmp=showCmp?`<div class="cmp"><div class="fld"><span class="pl">${I('plus')}</span>${val}</div><span class="snd ${o.typed?'on':''}">${I('send')}</span></div>`:'';
-  return `<div class="bot">${rb}${cmp}</div>`;
+  const rq=o.reply?`<div class="rbar">${rquote(o.reply[0],o.reply[1])}<span class="x2">${I('x')}</span></div>`:'';
+  if(o.blocked)return `<div class="bot"><div class="blk">Keni bllokuar ${o.blocked}. <b>Zhblloko</b></div></div>`;
+  return `<div class="bot">${rb}${rq}${cmp}</div>`;
 }
-function menuSheet(c){
-  const al=c.allergies||[],ch=c.chronic||[];
-  const facts=(al.length||ch.length)?`<div class="facts">${al.length?`<div class="fact al">${I('tri')}<div><small>Alergjitë</small><b>${al.join(', ')}</b></div></div>`:''}${ch.length?`<div class="fact ch">${I('refresh')}<div><small>Sëmundje kronike</small><b>${ch.join(', ')}</b></div></div>`:''}</div>`:'';
-  return bsheet(`<div class="stitle">${c.name}</div>${facts}<div class="opt"><i>${I('steth')}</i>Kartela mjekësore${I('chev','chev')}</div><div class="btnb redo">${I('tri')}&nbsp;Këshilloni kujdes urgjent</div>`);
+/* ⋯ menu: o.sched adds Ripllanifikoni (scheduled consultations only) */
+function menuSheet(c,o={}){
+  const op=(ic,l,cls='')=>`<div class="opt ${cls}"><i>${I(ic)}</i>${l}</div>`;
+  return bsheet(`<div class="stitle">Biseda</div><div class="mn">${op('search','Kërko në bisedë')}${o.sched?op('cal','Ripllanifikoni konsultën'):''}${op('tri','Këshilloni kujdes urgjent','dg')}<hr>${op('flag','Raportoni prindin','dg')}${op('ban',`Blloko ${c.guardian[0]}`,'dg')}</div>`);
 }
+const reportSheet=c=>bsheet(`<div class="stitle">Raportoni ${c.guardian[0]}</div><div class="ssub">Ekipi i Kidocare e shqyrton raportimin. Prindi nuk njoftohet.</div>
+  ${['Sjellje fyese ose kërcënuese','Mesazhe të papërshtatshme','Informacion i rremë','Tjetër'].map((r,k)=>`<div class="rsn ${k===0?'on':''}"><i></i>${r}</div>`).join('')}
+  <div class="btnb red">Dërgo raportimin</div>`);
+const blockSheet=c=>bsheet(`<div class="stitle">Të bllokoni ${c.guardian[0]}?</div><div class="ssub" style="margin-bottom:0">Nuk do t’ju shkruajë më dhe nuk do t’ju zgjedhë për konsulta. Konsulta e hapur mbyllet. Mund ta zhbllokoni më vonë.</div>
+  <div class="btnb red">Blloko</div><div class="btnb ghost">Anulo</div>`,false);
+/* long press: the pressed message lifted, actions under it */
+const lp=(msg,acts,right)=>`<div class="lp">${msg}<div class="menu ${right?'r':''}">${acts.map(([l,ic,dg,s])=>`<div class="${dg?'dg':''}">${l}${s?`<small>${s}</small>`:''}${I(ic)}</div>`).join('')}</div></div>`;
 const attachSheet=()=>bsheet(`<div class="stitle">Dërgoni prindit</div><div style="margin-top:8px">
   <div class="opt"><i>${I('cam')}</i>Bëni një foto</div><div class="opt"><i>${I('imgs')}</i>Zgjidhni nga galeria</div><div class="opt"><i>${I('file')}</i>Dokument</div></div>`);
 /* ---------- screens ---------- */
 const chat=(c,head,thread,bot,over='')=>`<div class="cs bg">${statusBar()}${chatHead(c,head)}<div class="thread">${thread}</div>${bottom(bot)}${over}</div>`;
+const N_Q='A t’i jap ibuprofen nëse temperatura rritet natën?';
+const N_A='Ndiqni hapat te rezultati dhe më shkruani nëse temperatura nuk bie.';
 const N_PEND=day('Sot')+pMsg(N_NOTE,'23:02')+callCard('9 min','23:14');
-const N_SENT=N_PEND+resCard('Otit akut','23:31')+fu('24 orë');
+const N_SENT=N_PEND+resCard('Otit akut','23:31')+fu('24 orë')+pMsg(N_Q,'23:35');
 const noaPend=(over)=>chat(NOA,{},N_PEND,{res:'new'},over);
-const noaSent=(o={})=>chat(NOA,{},N_SENT+(o.urg?uMsg('23:40'):''),{typed:o.typed},o.over);
+const noaSent=(o={})=>chat(NOA,{},N_SENT+(o.more||''),o.bot||{},o.over);
 const A_THREAD=day('Sot')+pMsg(A_NOTE,'23:12')+callCard('17 sek','23:20',{drop:1})+callCard('11 min','23:39');
-const anisaFull=()=>chat(ANISA,{},A_THREAD,{res:'new'});
+const anisaFull=(over)=>chat(ANISA,{},A_THREAD,{res:'new'},over);
 const cropc=h=>`<div class="cropc bg">${h}</div>`;
 const headCrop=(c,o)=>`<div class="bg" style="padding-top:12px">${chatHead(c,o)}</div>`;
+const botCrop=o=>`<div class="bg" style="padding-top:16px">${bottom(o)}</div>`;
+/* search: header becomes the field, matches marked, bottom steps through them */
+const searchScreen=()=>{
+  const m=s=>s.replace(/temperatur/i,x=>`<mark>${x}</mark>`);
+  const th=day('Sot')+pMsg(m(N_NOTE),'23:02')+callCard('9 min','23:14')+resCard('Otit akut','23:31')+fu('24 orë')+pMsg(m(N_Q),'23:35');
+  return `<div class="cs bg">${statusBar()}<div class="sh"><div class="fld">${I('search')}<span class="val">temperatur<span class="caret"></span></span></div><span class="cn">Anulo</span></div><div class="thread">${th}</div><div class="bot"><div class="snav">2 nga 2<span class="b"><i>${I('up')}</i><i>${I('down')}</i></span></div></div></div>`;
+};
+/* chat info page, opened from the name */
+function infoPage(c,o={}){
+  const g=c.guardians[0];
+  const media=o.media?`<div class="mh"><h2>Foto dhe dokumente</h2><span>4${I('chev')}</span></div><div class="thumbs"><div class="t">${X()}</div><div class="t">${X()}</div><div class="t">${X()}</div><div class="t pdf">${I('file')}<small>PDF</small></div></div>`:'';
+  return `<div class="ip bg">${statusBar()}<div class="hd"><span class="back">${I('back')}</span></div>
+   <div class="idh"><img src="${c.avatar}" alt=""><b>${c.name}</b><span>${ageT(c)}</span></div>
+   ${kartelaBtn()}<div class="bigbtn bb-sec" style="margin-top:12px"><i style="background:var(--blue-fill);color:var(--blue-ink)">${I('user')}</i><b>Profili i fëmijës</b>${I('chev','chev')}</div>
+   <div class="mh"><h2>Prindi në bisedë</h2></div><div class="gcard" style="margin-top:0"><div class="grow"><i>${I('user')}</i><div class="tx"><b>${g[0]}</b><span>${g[1]}</span></div>${I('chev','chev')}</div></div>
+   ${media}</div>`;
+}
+const mediaPage=(docs)=>`<div class="ip bg">${statusBar()}<div class="hd"><span class="back">${I('back')}</span><span class="t">Foto dhe dokumente</span></div>
+  <div class="seg2"><div class="t ${docs?'':'on'}">Foto <b>3</b></div><div class="t ${docs?'on':''}">Dokumente <b>1</b></div></div>
+  ${docs?`<div class="mlab">Dje</div><div class="drow"><i>${I('file')}</i><div class="tx"><b>IgE specifike.pdf</b><span>2 faqe, 27.10</span></div>${I('chev','chev')}</div>`
+  :`<div class="mlab">Sot</div><div class="mg"><div class="t">${X()}</div><div class="t">${X()}</div></div><div class="mlab">Dje</div><div class="mg"><div class="t">${X()}</div></div>`}</div>`;
 
+const OWN=dMsg(N_A,'23:38','seen');
 const F={
  'path-1':()=>noaPend(),
  'path-3':()=>noaSent(),
+ 'path-5':()=>infoPage(NOA),
  'path-6':()=>noaSent({over:menuSheet(NOA)}),
- 'path-7':()=>noaSent({over:urgSheet('')}),
- 'path-8':()=>noaSent({urg:1}),
- 'path-9':()=>noaSent({over:attachSheet()}),
+ 'path-7':()=>searchScreen(),
+ 'path-8':()=>noaSent({over:urgSheet('')}),
+ 'path-9':()=>noaSent({more:uMsg('23:40')}),
+ 'path-10':()=>noaSent({over:reportSheet(NOA)}),
+ 'path-11':()=>noaSent({over:blockSheet(NOA)}),
+ 'path-12':()=>noaSent({more:OWN,over:lp(OWN,[['Përgjigju','reply'],['Kopjo','copy'],['Fshi','trash',1]],1)}),
+ 'path-13':()=>noaSent({over:attachSheet()}),
  'screen-min':()=>noaPend(),
  'screen-full':()=>anisaFull(),
  'head-on':()=>headCrop(NOA,{}),
  'head-off':()=>headCrop(NOA,{off:1}),
  'head-long':()=>headCrop(ANISA,{}),
+ 'info-min':()=>infoPage(NOA),
+ 'info-full':()=>infoPage(ANISA,{media:1}),
+ 'media-photo':()=>mediaPage(0),
+ 'media-doc':()=>mediaPage(1),
  'menu-min':()=>noaSent({over:menuSheet(NOA)}),
- 'menu-full':()=>chat(ANISA,{},A_THREAD,{res:'new'},menuSheet(ANISA)),
+ 'menu-sched':()=>anisaFull(menuSheet(ANISA,{sched:1})),
+ 'search':()=>searchScreen(),
  'urg-sheet':()=>noaPend(urgSheet('')),
  'urg-sent':()=>cropc(uMsg('23:40')),
- 'msg':()=>cropc(resCard('Otit akut','23:31')+fu('24 orë')+dMsg('Më shkruani pas tre ditësh si është.','23:32')+pMsg('Faleminderit!','23:35')),
+ 'report':()=>noaSent({over:reportSheet(NOA)}),
+ 'block':()=>noaSent({over:blockSheet(NOA)}),
+ 'blocked':()=>noaSent({bot:{blocked:'Klea Leka'}}),
+ 'tk-sent':()=>cropc(dMsg(N_A,'23:38','sent')),
+ 'tk-dlv':()=>cropc(dMsg(N_A,'23:38','dlv')),
+ 'tk-seen':()=>cropc(dMsg(N_A,'23:38','seen')),
+ 'msg-file':()=>cropc(photoMsg('22:51')+docMsg('IgE specifike.pdf','2 faqe','22:52')),
+ 'lp-own':()=>noaSent({more:OWN,over:lp(OWN,[['Përgjigju','reply'],['Kopjo','copy'],['Fshi','trash',1]],1)}),
+ 'lp-parent':()=>noaSent({over:lp(pMsg(N_Q,'23:35'),[['Përgjigju','reply'],['Kopjo','copy']])}),
+ 'lp-file':()=>anisaFull(lp(docMsg('IgE specifike.pdf','2 faqe','22:52'),[['Përgjigju','reply'],['Ruaj në Kartela','save']])),
+ 'reply-bar':()=>botCrop({reply:['Klea Leka',N_Q],typed:'Ndiqni hapat te'}),
+ 'reply-msg':()=>cropc(pMsg(N_Q,'23:35')+dMsg(N_A,'23:38','seen',rquote('Klea Leka',N_Q))),
+ 'deleted':()=>cropc(delMsg('23:38')),
  'call-ok':()=>cropc(callCard('11 min','23:39')),
  'call-drop':()=>cropc(callCard('17 sek','23:20',{drop:1,last:1})),
  'call-drop-old':()=>cropc(callCard('17 sek','23:20',{drop:1})+callCard('11 min','23:39')),
@@ -199,11 +355,11 @@ const F={
  'rs-ok':()=>cropc(resched({st:'ok'})),
  'rs-no':()=>cropc(resched({st:'no'})),
  'rs-none':()=>cropc(resched({st:'none'})),
- 'bot-video':()=>`<div class="bg" style="padding-top:16px">${bottom({res:'new'})}</div>`,
- 'bot-text':()=>`<div class="bg" style="padding-top:16px">${bottom({res:'new',text:1})}</div>`,
- 'bot-draft':()=>`<div class="bg" style="padding-top:16px">${bottom({res:'draft'})}</div>`,
- 'bot-empty':()=>`<div class="bg" style="padding-top:16px">${bottom({})}</div>`,
- 'bot-typed':()=>`<div class="bg" style="padding-top:16px">${bottom({typed:'Si është temperatura sot?'})}</div>`,
+ 'bot-video':()=>botCrop({res:'new'}),
+ 'bot-text':()=>botCrop({res:'new',text:1}),
+ 'bot-draft':()=>botCrop({res:'draft'}),
+ 'bot-empty':()=>botCrop({}),
+ 'bot-typed':()=>botCrop({typed:'Si është temperatura sot?'}),
  'attach':()=>noaSent({over:attachSheet()})
 };
 window.FRAME_IDS=Object.keys(F);
