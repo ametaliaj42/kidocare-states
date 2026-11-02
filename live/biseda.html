@@ -18,6 +18,9 @@
 .bwho b{display:block;font-size:20px;font-weight:600;letter-spacing:-.01em;line-height:1.25}
 .bwho b svg{width:18px;height:18px;color:var(--soft);vertical-align:-3px;margin-left:2px}
 .bwho .meta{display:block;font-size:14px;color:var(--muted);margin-top:1px}
+.bh{align-items:center}
+.bwho .pd{display:inline-block;width:10px;height:10px;border-radius:5px;background:#C3CBDA;margin-left:8px;vertical-align:2px}
+.bwho .pd.on{background:#22C17A}
 .bwho .pr{display:flex;align-items:center;gap:7px;font-size:14px;color:var(--muted);margin-top:3px}
 .bwho .pr i{width:9px;height:9px;border-radius:5px;background:#C3CBDA;flex:none}
 .bwho .pr.on i{background:#22C17A}
@@ -244,11 +247,9 @@ const A_NOTE='Kollë natën prej 4 ditësh, ka përdorur pompën 3 herë sot. Me
 const ageT=c=>`${c.age[0]} vjeç &amp; ${c.age[1]} muaj`;
 
 /* ---------- header ----------
-   back, name (opens the chat info page), age and type, the parent's presence; ⋯ opens the menu. o.off: parent offline */
+   back, the child's name (opens the chat info) with the parent's presence dot, ⋯ for the menu. o.off: parent offline */
 function chatHead(c,o={}){
-  const g=c.guardian[0];
-  const pr=o.off?`<span class="pr"><i></i>${g}, jashtë linje</span>`:`<span class="pr on"><i></i>${g}, në linjë</span>`;
-  return `<div class="bh"><span class="back">${I('back')}</span><div class="bwho"><b>${c.name}&#8288;${I('chev')}</b><span class="meta">${ageT(c)}, ${o.type||'video'}</span>${pr}</div><span class="mbtn">${I('dots')}</span></div>`;
+  return `<div class="bh"><span class="back">${I('back')}</span><div class="bwho"><b>${c.name}<i class="pd ${o.off?'':'on'}"></i></b></div><span class="mbtn">${I('dots')}</span></div>`;
 }
 /* ---------- thread pieces ---------- */
 const day=t=>`<div class="day">${t}</div>`;

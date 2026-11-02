@@ -115,11 +115,11 @@ window.FEATURES = [
     name: "Biseda",
     side: "doctor",
     date: "02.11.2026",
-    purpose: "The consultation chat, built like WhatsApp: the child and whether the parent is online at the top, the conversation with sent, delivered and seen ticks, one way to write the result at the bottom. The name opens the chat info, like a WhatsApp contact page; ⋯ holds search and urgent advice.",
+    purpose: "The consultation chat, built like WhatsApp: the child's name with a presence dot at the top, the conversation with sent, delivered and seen ticks, one way to write the result at the bottom. The name opens the chat info, like a WhatsApp contact page; ⋯ holds search and urgent advice.",
     path: {
       note: "Noa's video consultation, opened from Konsultat. Before the result there is no message box: in a video consultation messaging opens with the result. Noa has no photos or documents in the chat, so the info page has no media section.",
       frames: [
-        { state: "min", img: "path-1.jpg", page: true, title: "Before the result", spec: "Parent's note, the call, and Shkruaj rezultatin as the only action. Green dot: Klea is in the app." },
+        { state: "min", img: "path-1.jpg", page: true, title: "Before the result", spec: "Parent's note, the call, and Shkruaj rezultatin as the only action. Green dot next to the name: Klea is in the app." },
         { state: "min", img: "path-1.jpg", from: "rezultati", page: true, via: "Tap Shkruaj rezultatin", title: "Rezultati", spec: "The result form opens full screen." },
         { state: "col", img: "path-3.jpg", page: true, via: "Dërgo rezultatin", title: "Result sent", spec: "The result card joins the thread with how long the parent can still write under it, and the message box opens." },
         { state: "det", img: "path-9.jpg", from: "rezultati", page: true, via: "Tap Hape", title: "The result page", spec: "The same result page as everywhere else." },
@@ -145,10 +145,10 @@ window.FEATURES = [
       ]
     },
     components: [
-      { name: "Header", note: "Back, then the name with chevron (opens the chat info), age and consultation type, and the guardian's presence. ⋯ on the right. No tags.", frames: [
-        { state: "min", img: "head-on.jpg", title: "Parent online", spec: "Green dot and \"Klea Leka, në linjë\" while the parent has the app open." },
-        { state: "col", img: "head-off.jpg", title: "Parent offline", spec: "Grey dot and \"jashtë linje\". Messages still arrive as notifications." },
-        { state: "col", img: "head-long.jpg", title: "Long name", spec: "The name wraps; the presence line stays one line." }
+      { name: "Header", note: "Back, the child's name with one dot for the parent's presence, and ⋯. Nothing else: age, type and guardian are one tap away in the chat info, which the name opens.", frames: [
+        { state: "min", img: "head-on.jpg", title: "Parent online", spec: "Green dot while the parent has the app open." },
+        { state: "col", img: "head-off.jpg", title: "Parent offline", spec: "Grey dot. Messages still arrive as notifications." },
+        { state: "col", img: "head-long.jpg", title: "Long name", spec: "The name wraps; the dot follows the last word." }
       ]},
       { name: "Chat info", note: "Opened from the name, laid out like a WhatsApp contact page: the child's avatar standing free (as on the profile), name and age, two tiles, shared media, the guardian in the chat, and Bllokoni and Raportoni in red at the bottom.", frames: [
         { state: "min", img: "info-min.jpg", page: true, title: "Nothing shared", spec: "No photos, links or documents yet, so no media card." },
@@ -215,7 +215,7 @@ window.FEATURES = [
       ]}
     ],
     rules: [
-      ["No tags in the header", "The header says who the child is and whether the parent is online. What is owed shows at the bottom; allergies and chronic illnesses are in Profili i fëmijës, one tap away through the chat info."],
+      ["Name and one dot", "The header shows only the child's name and a dot: green online, grey offline. What is owed shows at the bottom; allergies and chronic illnesses are in Profili i fëmijës, one tap away through the chat info."],
       ["Ticks, not message info", "One tick sent, two delivered, two mint seen. There is no separate info screen."],
       ["Nothing leaves the chat", "No forward and no export. A parent's file or link can only be saved into the child's own Kartela."],
       ["Rare actions out of the way", "Search and urgent advice live behind ⋯; report and block at the bottom of the chat info. The header keeps two buttons: back and ⋯."]
