@@ -167,10 +167,10 @@ const mid=(ic,t,s,dots)=>`<div class="mid"><i>${I(ic)}</i><b>${t}</b>${s?`<span>
 function notesSheet(txt,n){
   const lim=n>=250;
   const body=txt?`${txt}<span class="caret"></span>`:`<span class="caret"></span><span class="ph">Shkruani vlerësimin tuaj</span>`;
-  return sheet(`<div class="stitle">Shënime</div><div class="ssub">Ruhen dhe shfaqen te Vlerësimi.</div>
+  return bsheet(`<div class="stitle">Shënime</div><div class="ssub">Ruhen dhe shfaqen te Vlerësimi.</div>
    <div class="ta">${body}<small class="${lim?'limit':''}">${n}/250</small></div>`);
 }
-const endSheet=()=>sheet(`<div class="stitle">Të mbyllni konsultën?</div><div class="ssub" style="margin-bottom:0">Pas mbylljes hapet Rezultati. Nëse dilni pa e dërguar, ruhet si draft te Konsultat.</div>
+const endSheet=()=>bsheet(`<div class="stitle">Të mbyllni konsultën?</div><div class="ssub" style="margin-bottom:0">Pas mbylljes hapet Rezultati. Nëse dilni pa e dërguar, ruhet si draft te Konsultat.</div>
    <div class="btnb blue">Mbyll dhe shkruaj rezultatin</div><div class="btnb redo">${I('tri')}&nbsp;Këshilloni kujdes urgjent</div><div class="btnb ghost">Vazhdo thirrjen</div>`,false);
 /* the call keeps running in a floating tile while the doctor reads another screen; tap returns to the call, drag moves it */
 const pip=(screen,time='00:52')=>`<div class="pipwrap">${screen}<div class="pip">${X()}<span class="s"></span><span class="t"><i></i>${time}</span></div></div>`;

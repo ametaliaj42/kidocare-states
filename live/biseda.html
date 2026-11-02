@@ -158,9 +158,9 @@ function bottom(o={}){
 function menuSheet(c){
   const al=c.allergies||[],ch=c.chronic||[];
   const facts=(al.length||ch.length)?`<div class="facts">${al.length?`<div class="fact al">${I('tri')}<div><small>Alergjitë</small><b>${al.join(', ')}</b></div></div>`:''}${ch.length?`<div class="fact ch">${I('refresh')}<div><small>Sëmundje kronike</small><b>${ch.join(', ')}</b></div></div>`:''}</div>`:'';
-  return sheet(`<div class="stitle">${c.name}</div>${facts}<div class="opt"><i>${I('steth')}</i>Kartela mjekësore${I('chev','chev')}</div><div class="btnb redo">${I('tri')}&nbsp;Këshilloni kujdes urgjent</div>`);
+  return bsheet(`<div class="stitle">${c.name}</div>${facts}<div class="opt"><i>${I('steth')}</i>Kartela mjekësore${I('chev','chev')}</div><div class="btnb redo">${I('tri')}&nbsp;Këshilloni kujdes urgjent</div>`);
 }
-const attachSheet=()=>sheet(`<div class="stitle">Dërgoni prindit</div><div style="margin-top:8px">
+const attachSheet=()=>bsheet(`<div class="stitle">Dërgoni prindit</div><div style="margin-top:8px">
   <div class="opt"><i>${I('cam')}</i>Bëni një foto</div><div class="opt"><i>${I('imgs')}</i>Zgjidhni nga galeria</div><div class="opt"><i>${I('file')}</i>Dokument</div></div>`);
 /* ---------- screens ---------- */
 const chat=(c,head,thread,bot,over='')=>`<div class="cs bg">${statusBar()}${chatHead(c,head)}<div class="thread">${thread}</div>${bottom(bot)}${over}</div>`;
