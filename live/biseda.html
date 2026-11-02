@@ -18,14 +18,24 @@
 .bwho b{display:block;font-size:20px;font-weight:600;letter-spacing:-.01em;line-height:1.25}
 .bwho b svg{width:18px;height:18px;color:var(--soft);vertical-align:-3px;margin-left:2px}
 .bwho .meta{display:block;font-size:14px;color:var(--muted);margin-top:1px}
-.bwho .stl{display:flex;align-items:center;gap:6px;font-size:14px;margin-top:5px;color:var(--muted)}
-.bwho .stl svg{width:15px;height:15px}
-.bwho .stl.pend{color:var(--amber);font-weight:500}
-.bwho .chips{margin-top:9px;gap:6px}
-.bwho .chip{height:26px;font-size:14px;border-radius:13px;padding:0 10px}
-.bwho .chip em{font-style:normal;opacity:.75;font-weight:500}
-.ubtn{width:44px;height:44px;border-radius:22px;background:var(--pink-fill);color:var(--pink);display:grid;place-items:center;flex:none;margin-top:2px}
-.ubtn svg{width:20px;height:20px}
+.bwho .pr{display:flex;align-items:center;gap:7px;font-size:14px;color:var(--muted);margin-top:3px}
+.bwho .pr i{width:9px;height:9px;border-radius:5px;background:#C3CBDA;flex:none}
+.bwho .pr.on i{background:#22C17A}
+.mbtn{width:44px;height:44px;border-radius:22px;background:#fff;color:var(--ink);display:grid;place-items:center;flex:none;margin-top:2px;box-shadow:0 10px 24px rgba(40,80,160,.10)}
+.mbtn svg{width:20px;height:20px}
+/* follow-up time under the result card */
+.fu{align-self:flex-end;display:flex;align-items:center;gap:6px;font-size:13px;color:var(--muted);margin-top:-4px;padding-right:4px}
+.fu svg{width:14px;height:14px}
+/* menu sheet: what to keep in mind, then the rare actions */
+.facts{background:var(--tile);border-radius:18px;padding:4px 14px;margin:6px 0 4px}
+.fact{display:flex;gap:11px;padding:11px 0;border-bottom:1px solid var(--line)}
+.fact:last-child{border-bottom:0}
+.fact svg{width:19px;height:19px;flex:none;margin-top:1px}
+.fact small{display:block;font-size:13px;color:var(--muted)}
+.fact b{display:block;font-size:16px;font-weight:500;line-height:1.35}
+.fact.al svg{color:var(--pink)}.fact.ch svg{color:var(--amber)}
+.opt .chev{margin-left:auto}
+.facts+.opt,.opt:has(+.btnb){border-bottom:0}
 /* messages */
 .thread{flex:1;display:flex;flex-direction:column;justify-content:flex-end;gap:10px;padding:0 16px 14px;min-height:0}
 .day{align-self:center;height:28px;padding:0 13px;border-radius:14px;background:rgba(255,255,255,.7);font-size:13px;font-weight:500;color:var(--muted);display:grid;place-items:center;margin:4px 0}
@@ -102,6 +112,7 @@ Object.assign(P,{
  fchk:'<path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h6"/><path d="M14 2v4a2 2 0 0 0 2 2h4v5"/><path d="m15 19 2 2 4-4"/>',
  cam:'<path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3z"/><circle cx="12" cy="13" r="3"/>',
  imgs:'<rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.09-3.09a2 2 0 0 0-2.82 0L6 21"/>',
+ dots:'<circle cx="5" cy="12" r="1.6" fill="currentColor"/><circle cx="12" cy="12" r="1.6" fill="currentColor"/><circle cx="19" cy="12" r="1.6" fill="currentColor"/>',
  arr:'<path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>'
 });
 /* ---------- data ---------- */
@@ -110,13 +121,11 @@ const A_NOTE='Kollë natën prej 4 ditësh, ka përdorur pompën 3 herë sot. Me
 const ageT=c=>`${c.age[0]} vjeç &amp; ${c.age[1]} muaj`;
 
 /* ---------- header ----------
-   o.st: 'pend' (Pa rezultat, amber) | 'follow' (time left, grey) ; o.left: follow-up time left */
+   back, name (opens Profili i fëmijës), age and type, the parent's presence; ⋯ opens the menu. o.off: parent offline */
 function chatHead(c,o={}){
-  const al=c.allergies||[],ch=c.chronic||[];
-  const chip=(l,cls,ic)=>l.length?`<span class="chip ${cls}">${I(ic)}${l[0]}${l.length>1?` <em>+${l.length-1}</em>`:''}</span>`:'';
-  const chips=(al.length||ch.length)?`<div class="chips">${chip(al,'c-pink','tri')}${chip(ch,'c-amber','refresh')}</div>`:'';
-  const st=o.st==='follow'?`<span class="stl">${I('clock')}Ndjekje edhe ${o.left||'24 orë'}</span>`:`<span class="stl pend">${I('file')}Pa rezultat</span>`;
-  return `<div class="bh"><span class="back">${I('back')}</span><div class="bwho"><b>${c.name}&#8288;${I('chev')}</b><span class="meta">${ageT(c)}, ${o.type||'video'}</span>${st}${chips}</div><span class="ubtn">${I('tri')}</span></div>`;
+  const g=c.guardian[0];
+  const pr=o.off?`<span class="pr"><i></i>${g}, jashtë linje</span>`:`<span class="pr on"><i></i>${g}, në linjë</span>`;
+  return `<div class="bh"><span class="back">${I('back')}</span><div class="bwho"><b>${c.name}&#8288;${I('chev')}</b><span class="meta">${ageT(c)}, ${o.type||'video'}</span>${pr}</div><span class="mbtn">${I('dots')}</span></div>`;
 }
 /* ---------- thread pieces ---------- */
 const day=t=>`<div class="day">${t}</div>`;
@@ -127,6 +136,7 @@ const uMsg=tm=>`<div class="bb u"><span class="lb2">${I('tri')}Këshillë për k
 const callCard=(dur,tm,o={})=>o.drop
   ?`<div class="ec"><div class="top"><i class="round amb">${I('vidoff')}</i><div class="tx"><b>Thirrja u ndërpre</b><span>${dur}</span></div></div><div class="tm">${tm}</div>${o.last?`<div class="act">${I('video')}Telefono përsëri</div>`:''}</div>`
   :`<div class="ec"><div class="top"><i class="round">${I('video')}</i><div class="tx"><b>Video-thirrje</b><span>${dur}</span></div></div><div class="tm">${tm}</div></div>`;
+const fu=left=>`<div class="fu">${I('clock')}Prindi mund t’ju shkruajë edhe ${left}</div>`;
 const resCard=(dx,tm)=>`<div class="ec"><div class="top"><i class="ok">${I('fchk')}</i><div class="tx"><b>Rezultati</b><span>${dx}</span></div></div><div class="tm">${tm}</div><div class="act">Hape${I('chev')}</div></div>`;
 /* reschedule: o.st 'pend' | 'ok' | 'no' | 'none' */
 function resched(o={}){
@@ -145,14 +155,19 @@ function bottom(o={}){
   const cmp=showCmp?`<div class="cmp"><div class="fld"><span class="pl">${I('plus')}</span>${val}</div><span class="snd ${o.typed?'on':''}">${I('send')}</span></div>`:'';
   return `<div class="bot">${rb}${cmp}</div>`;
 }
+function menuSheet(c){
+  const al=c.allergies||[],ch=c.chronic||[];
+  const facts=(al.length||ch.length)?`<div class="facts">${al.length?`<div class="fact al">${I('tri')}<div><small>Alergjitë</small><b>${al.join(', ')}</b></div></div>`:''}${ch.length?`<div class="fact ch">${I('refresh')}<div><small>Sëmundje kronike</small><b>${ch.join(', ')}</b></div></div>`:''}</div>`:'';
+  return sheet(`<div class="stitle">${c.name}</div>${facts}<div class="opt"><i>${I('steth')}</i>Kartela mjekësore${I('chev','chev')}</div><div class="btnb redo">${I('tri')}&nbsp;Këshilloni kujdes urgjent</div>`);
+}
 const attachSheet=()=>sheet(`<div class="stitle">Dërgoni prindit</div><div style="margin-top:8px">
   <div class="opt"><i>${I('cam')}</i>Bëni një foto</div><div class="opt"><i>${I('imgs')}</i>Zgjidhni nga galeria</div><div class="opt"><i>${I('file')}</i>Dokument</div></div>`);
 /* ---------- screens ---------- */
 const chat=(c,head,thread,bot,over='')=>`<div class="cs bg">${statusBar()}${chatHead(c,head)}<div class="thread">${thread}</div>${bottom(bot)}${over}</div>`;
 const N_PEND=day('Sot')+pMsg(N_NOTE,'23:02')+callCard('9 min','23:14');
-const N_SENT=N_PEND+resCard('Otit akut','23:31');
+const N_SENT=N_PEND+resCard('Otit akut','23:31')+fu('24 orë');
 const noaPend=(over)=>chat(NOA,{},N_PEND,{res:'new'},over);
-const noaSent=(o={})=>chat(NOA,{st:'follow'},N_SENT+(o.urg?uMsg('23:40'):''),{typed:o.typed},o.over);
+const noaSent=(o={})=>chat(NOA,{},N_SENT+(o.urg?uMsg('23:40'):''),{typed:o.typed},o.over);
 const A_THREAD=day('Sot')+pMsg(A_NOTE,'23:12')+callCard('17 sek','23:20',{drop:1})+callCard('11 min','23:39');
 const anisaFull=()=>chat(ANISA,{},A_THREAD,{res:'new'});
 const cropc=h=>`<div class="cropc bg">${h}</div>`;
@@ -161,22 +176,25 @@ const headCrop=(c,o)=>`<div class="bg" style="padding-top:12px">${chatHead(c,o)}
 const F={
  'path-1':()=>noaPend(),
  'path-3':()=>noaSent(),
- 'path-6':()=>noaSent({over:urgSheet('')}),
- 'path-7':()=>noaSent({urg:1}),
- 'path-8':()=>noaSent({over:attachSheet()}),
+ 'path-6':()=>noaSent({over:menuSheet(NOA)}),
+ 'path-7':()=>noaSent({over:urgSheet('')}),
+ 'path-8':()=>noaSent({urg:1}),
+ 'path-9':()=>noaSent({over:attachSheet()}),
  'screen-min':()=>noaPend(),
  'screen-full':()=>anisaFull(),
- 'head-pend':()=>headCrop(NOA,{}),
- 'head-follow':()=>headCrop(NOA,{st:'follow',left:'21 orë'}),
- 'head-full':()=>headCrop(ANISA,{}),
+ 'head-on':()=>headCrop(NOA,{}),
+ 'head-off':()=>headCrop(NOA,{off:1}),
+ 'head-long':()=>headCrop(ANISA,{}),
+ 'menu-min':()=>noaSent({over:menuSheet(NOA)}),
+ 'menu-full':()=>chat(ANISA,{},A_THREAD,{res:'new'},menuSheet(ANISA)),
  'urg-sheet':()=>noaPend(urgSheet('')),
  'urg-sent':()=>cropc(uMsg('23:40')),
- 'msg':()=>cropc(resCard('Otit akut','23:31')+dMsg('Më shkruani pas tre ditësh si është.','23:32')+pMsg('Faleminderit!','23:35')),
+ 'msg':()=>cropc(resCard('Otit akut','23:31')+fu('24 orë')+dMsg('Më shkruani pas tre ditësh si është.','23:32')+pMsg('Faleminderit!','23:35')),
  'call-ok':()=>cropc(callCard('11 min','23:39')),
  'call-drop':()=>cropc(callCard('17 sek','23:20',{drop:1,last:1})),
  'call-drop-old':()=>cropc(callCard('17 sek','23:20',{drop:1})+callCard('11 min','23:39')),
- 'res':()=>cropc(resCard('Otit akut','23:31')),
- 'res-long':()=>cropc(resCard('Infeksion viral i rrugëve të sipërme','23:31')),
+ 'res':()=>cropc(resCard('Otit akut','23:31')+fu('24 orë')),
+ 'res-long':()=>cropc(resCard('Infeksion viral i rrugëve të sipërme','23:31')+fu('3 orë')),
  'rs-pend':()=>cropc(resched({st:'pend'})),
  'rs-ok':()=>cropc(resched({st:'ok'})),
  'rs-no':()=>cropc(resched({st:'no'})),
