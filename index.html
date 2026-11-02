@@ -133,6 +133,7 @@ select:focus-visible,a:focus-visible{outline:2px solid var(--blue);outline-offse
 .rv-local{font-size:13px;color:var(--muted)}
 .feat .rv-st{align-self:flex-start;margin-top:6px}
 .rv-sum{display:flex;flex-wrap:wrap;gap:6px}
+.rv-rowbox{margin-top:12px;max-width:560px}
 </style>
 <div class="wrap">
   <nav class="bar" aria-label="Functionalities">
@@ -186,9 +187,9 @@ function feature(f) {
     <div class="meta"><span class="pill">Arjola Metaliaj</span><span class="pill">${f.date}</span><span class="pill">${c.c} components, ${c.n} frames</span></div>${LIVE[f.id] ? `<div class="meta" style="margin-top:12px">${srcBtn(f.id)}</div>` : ""}${RV_ON ? `<div class="rv-feat"><div class="eyebrow">Feature review</div>${rvBlock(f.id)}</div>` : ""}</header>
   ${f.path ? `<section class="path"><div class="sh"><div class="eyebrow">Start here</div><h2>Minimal path</h2><p>${esc(f.path.note)}</p></div>
     <div class="strip"><div class="states">${f.path.frames.map((fr, j) => (j ? arrow(fr.via || "") : "") + frame(f, fr, true, RV_ON)).join("")}</div></div></section>` : ""}
-  <section><div class="sh"><h2>Whole screen</h2><p>${esc(f.screen.note)}</p></div>
+  <section><div class="sh"><h2>Whole screen</h2><p>${esc(f.screen.note)}</p>${RV_ON && f.path ? `<div class="rv-rowbox">${rvBlock(f.id + "/row:screen")}</div>` : ""}</div>
     <div class="pair">${f.screen.frames.map(fr => frame(f, fr, true, RV_ON && !f.path)).join("")}</div></section>
-  ${f.components.map((cp, i) => `<section><div class="sh"><span class="n">${String(i + 1).padStart(2, "0")}</span><h2>${esc(cp.name)}</h2><p>${esc(cp.note)}</p></div>
+  ${f.components.map((cp, i) => `<section><div class="sh"><span class="n">${String(i + 1).padStart(2, "0")}</span><h2>${esc(cp.name)}</h2><p>${esc(cp.note)}</p>${RV_ON ? `<div class="rv-rowbox">${rvBlock(f.id + "/row:" + rowSlug(cp.name))}</div>` : ""}</div>
     <div class="strip"><div class="states">${cp.frames.map((fr, j) => (j ? (fr.via ? arrow(fr.via) : `<div class="gap"></div>`) : "") + frame(f, fr)).join("")}</div></div></section>`).join("")}
   ${f.rules && f.rules.length ? `<section class="col"><h2 style="margin-bottom:16px">Rules</h2><ul class="list">${f.rules.map(([t, d]) => `<li><b>${esc(t)}</b><span>${esc(d)}</span></li>`).join("")}</ul></section>` : ""}`;
 }
@@ -296,6 +297,7 @@ const RV_ON = !IN_CLAUDE;
 const RV_LABEL = { proposed: "Proposed", rejected: "Rejected", approved: "Approved", done: "Done" };
 const RV_LS = "kidocare-review";
 let RV = {}, RV_SHARED = false, RV_OPEN = null;
+const rowSlug = n => n.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 60);
 const frameKey = (f, fr) => `${f.id}/${fr.from ? fr.from + ":" : ""}${fr.img.replace(/\.jpg$/, "")}`;
 const rvGet = k => RV[k] || { status: "proposed" };
 const rvChip = k => { const s = rvGet(k).status; return `<span class="rv-st rv-${s}">${RV_LABEL[s]}</span>`; };
