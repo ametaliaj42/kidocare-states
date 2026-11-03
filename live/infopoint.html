@@ -301,7 +301,7 @@
 .sp.sgrp b{font-weight:600}
 .subs{margin-left:22px;border-left:2px solid var(--line);padding-left:6px}
 .sp.sp2{min-height:44px;font-size:15.5px}.sp.sp2 b{font-weight:400}
-.bs.std{height:400px;display:flex;flex-direction:column}
+.bs.std .grow{height:22px}
 .bs.std .stitle{margin-right:0;text-align:center}
 .bs.std .ssub{text-align:center}
 .sic{width:64px;height:64px;border-radius:32px;display:grid;place-items:center;margin:10px auto 16px}
@@ -489,7 +489,7 @@ function specSheet(open){
   return `<div class="ov2">${kurseTab()}<div class="dim"></div><div class="bs full"><div class="grab"></div><span class="xbtn">${I('x')}</span><div class="stitle">Specialiteti</div>
    <div class="srch sp-s">${I('search')}Kërkoni specialitetin</div><div class="splist">${rows}</div></div></div>`;
 }
-/* every short sheet in the app has this one height (400): icon, title, one line, buttons on the bottom edge */
+/* short sheet: icon, title, one line, then the buttons; its height follows its content */
 const stdSheet=(icon,tone,title,line,btns)=>`<div class="dim"></div><div class="bs std"><div class="grab"></div><span class="sic ${tone}">${I(icon)}</span><div class="stitle">${title}</div>${line?`<div class="ssub">${line}</div>`:''}<div class="grow"></div>${btns}</div>`;
 function leaveSheet(){
   return `<div class="ov2">${question('A')}${stdSheet('exit','pink','Të dilni nga vlerësimi?','Përgjigjet nuk ruhen.','<div class="btnb blue" style="margin-top:0">Vazhdoni vlerësimin</div><div class="btnb redo">Dilni</div>')}</div>`;

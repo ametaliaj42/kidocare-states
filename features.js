@@ -865,7 +865,7 @@ window.FEATURES = [
       ["Less text", "Every card has its title and one short line. Symbols and numbers over sentences; no explanation lines under buttons; empty states are a title and at most one button."],
       ["Blue means pressed", "Any card turns the hero blue when tapped, so courses are marked by the play button and outline instead of colour."],
       ["Credits only on courses", "CRD is the one unit everywhere, and it appears only on courses, their results, the certificate and Kurset e mia."],
-      ["Two sheet sizes", "Every short sheet is 400 pt tall: icon, title, one line, buttons on the bottom edge. Long lists (the specialty list) use the full-height sheet."],
+      ["Two sheet sizes", "Short sheets take the height of their content: icon, title, one line, then the buttons. Long lists (the specialty list) use the full-height sheet."],
       ["Palette colours only", "Pass uses the green tint, not passed the amber tint, as elsewhere in the app."]
     ]
   }

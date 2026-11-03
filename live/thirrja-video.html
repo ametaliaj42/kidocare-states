@@ -43,11 +43,11 @@
 .self.off svg{width:26px;height:26px;stroke:rgba(255,255,255,.8);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 /* notices: left column, under the header */
 .toasts{position:absolute;left:16px;right:136px;display:flex;flex-direction:column;align-items:flex-start;gap:8px}
-.toast{display:flex;align-items:center;gap:9px;padding:9px 13px 9px 10px;border-radius:16px;background:var(--glass);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);font-size:14.5px;font-weight:500;line-height:1.25}
-.toast i{width:26px;height:26px;border-radius:13px;display:grid;place-items:center;flex:none;background:rgba(255,255,255,.14)}
-.toast i svg{width:15px;height:15px}
-.toast.amb i{background:#FFF3D1;color:#94600E}
-.toast.ok i{background:#E2F5EA;color:#1A9E63}
+.ctoast{display:flex;align-items:center;gap:9px;padding:9px 13px 9px 10px;border-radius:16px;background:var(--glass);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);font-size:14.5px;font-weight:500;line-height:1.25}
+.ctoast i{width:26px;height:26px;border-radius:13px;display:grid;place-items:center;flex:none;background:rgba(255,255,255,.14)}
+.ctoast i svg{width:15px;height:15px}
+.ctoast.amb i{background:#FFF3D1;color:#94600E}
+.ctoast.ok i{background:#E2F5EA;color:#1A9E63}
 /* centre message on the feed */
 .mid{position:absolute;left:40px;right:40px;top:350px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:8px}
 .mid i{width:76px;height:76px;border-radius:38px;background:var(--glass);backdrop-filter:blur(14px);display:grid;place-items:center;margin-bottom:8px}
@@ -152,7 +152,7 @@ function bar(o={}){
    <span class="cb end">${I('hang')}</span></div>`;
 }
 const urg=(sent)=>sent?`<span class="urg sent">${I('check')}Urgjenca u dërgua</span>`:`<span class="urg">${I('tri')}Urgjencë</span>`;
-const toast=(ic,t,cls='')=>`<div class="toast ${cls}"><i>${I(ic)}</i>${t}</div>`;
+const ctoast=(ic,t,cls='')=>`<div class="ctoast ${cls}"><i>${I(ic)}</i>${t}</div>`;
 const toasts=(c,list)=>`<div class="toasts" style="top:${(c.allergies.length||(c.chronic||[]).length)?168:124}px">${list.join('')}</div>`;
 const feed=(frozen)=>`<svg class="feed ${frozen?'frozen':''}" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M0 0L100 100M100 0L0 100"/></svg>`;
 /* the whole call screen: o = {hide, muted, camOff, noted, sent, toasts:[], mid, frozen, self:false, time, queue, low} */
@@ -215,19 +215,19 @@ const F={
  'notes-limit':()=>N({hide:1,over:notesSheet(NOTES_FULL,250)}),
  /* emergency */
  'urg-sheet':()=>N({hide:1,over:urgSheet()}),
- 'urg-sent':()=>N({noted:1,toasts:[toast('check','Mesazhi i urgjencës u dërgua','ok')]}),
+ 'urg-sent':()=>N({noted:1,toasts:[ctoast('check','Mesazhi i urgjencës u dërgua','ok')]}),
  /* closing */
  'end-sheet':()=>N({hide:1,noted:1,over:endSheet()}),
  /* call states */
  'st-connecting':()=>N({noUrg:1,self:false,noFeed:1,sub:'Duke u lidhur',mid:mid('video','Duke u lidhur me Klea Leka','',1)}),
- 'st-weak-me':()=>N({toasts:[toast('wifi','Lidhja juaj është e dobët','amb')]}),
- 'st-weak-parent':()=>N({toasts:[toast('wifi','Lidhja e prindit është e dobët','amb')]}),
- 'st-battery':()=>N({low:1,toasts:[toast('batt','Bateria 12%. Lidhni karikuesin.','amb')]}),
- 'st-parent-muted':()=>N({toasts:[toast('micoff','Prindi e ka fikur zërin')]}),
+ 'st-weak-me':()=>N({toasts:[ctoast('wifi','Lidhja juaj është e dobët','amb')]}),
+ 'st-weak-parent':()=>N({toasts:[ctoast('wifi','Lidhja e prindit është e dobët','amb')]}),
+ 'st-battery':()=>N({low:1,toasts:[ctoast('batt','Bateria 12%. Lidhni karikuesin.','amb')]}),
+ 'st-parent-muted':()=>N({toasts:[ctoast('micoff','Prindi e ka fikur zërin')]}),
  'st-parent-cam':()=>N({noFeed:1,mid:mid('camoff','Kamera e prindit është e fikur','Thirrja vazhdon me zë.')}),
  'st-reconnect':()=>N({frozen:1,mid:mid('wifi','Duke u rilidhur','Thirrja vazhdon sapo të kthehet lidhja.',1)}),
  'st-parent-left':()=>N({noFeed:1,mid:mid('user','Prindi doli nga thirrja','Po presim që të kthehet. Mund ta mbyllni konsultën kur të doni.')}),
- 'st-stack':()=>N({low:1,toasts:[toast('wifi','Lidhja juaj është e dobët','amb'),toast('batt','Bateria 12%. Lidhni karikuesin.','amb')]}),
+ 'st-stack':()=>N({low:1,toasts:[ctoast('wifi','Lidhja juaj është e dobët','amb'),ctoast('batt','Bateria 12%. Lidhni karikuesin.','amb')]}),
  'st-dropped':()=>`<div class="bg">${statusBar().replace('9:41','23:41')}<div class="endp"><i>${I('hang')}</i><b>Thirrja u ndërpre</b><span>Lidhja humbi për më shumë se një minutë. Shënimet tuaja janë ruajtur.</span><div class="btnb blue" style="margin-top:0">Shkruani rezultatin</div><div class="btnb ghost" style="background:#fff">Kthehu te Turni</div></div></div>`
 };
 
