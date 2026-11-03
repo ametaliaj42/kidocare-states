@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="sq">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=393">
+<title>Infopoint frames</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="kidocare.css">
+<style>
+/* Infopoint: announcements and accreditation courses in one place */
+.scr{height:852px;overflow:hidden;position:relative;padding:0 16px}
+.ih{height:44px;display:flex;align-items:center;justify-content:space-between;margin:8px 4px 16px}
+.ih h1{font-size:30px;font-weight:600;letter-spacing:-.02em;line-height:1}
+.rbtn{width:44px;height:44px;border-radius:22px;background:#fff;display:grid;place-items:center;color:var(--blue-ink);box-shadow:0 10px 24px rgba(40,80,160,.10);flex:none}
+.rbtn svg{width:20px;height:20px}
+.srch{height:52px;border-radius:26px;background:rgba(255,255,255,.7);display:flex;align-items:center;gap:10px;padding:0 18px;color:var(--muted);font-size:16px}
+.srch svg{width:19px;height:19px}
+/* underlined tab row, scrolls sideways */
+.utabs{display:flex;gap:26px;margin:16px -16px 14px;padding:0 20px;border-bottom:1px solid rgba(160,180,215,.35);white-space:nowrap;overflow:hidden}
+.utabs span{position:relative;padding:8px 0 12px;font-size:17px;font-weight:500;color:var(--muted)}
+.utabs span.on{color:var(--ink);font-weight:600}
+.utabs span.on::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:3px;border-radius:2px;background:var(--blue)}
+/* image placeholder: wireframe only */
+.ph{background:#F6F9FE;border:1.5px solid #CCD7E8;position:relative;overflow:hidden;flex:none}
+.ph svg{position:absolute;inset:0;width:100%;height:100%;stroke:#AFC0D8;stroke-width:1.2}
+.ttl{font-size:17px;font-weight:600;line-height:1.3;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.meta{display:flex;flex-wrap:wrap;align-items:center;gap:4px 14px;font-size:14px;color:var(--muted)}
+.meta span{display:inline-flex;align-items:center;gap:5px;white-space:nowrap}
+.meta svg{width:15px;height:15px}
+.meta .soon{color:var(--amber);font-weight:600}
+.meta .crd{color:var(--blue-ink);font-weight:600}
+.meta .gone{color:var(--grey)}
+/* banner card: labels on the image, title and one line below */
+.cv{margin-bottom:14px;overflow:hidden;position:relative}
+.cv .ph{height:150px;border:0;border-bottom:1.5px solid #E1E8F4}
+.cv .lbls{position:absolute;left:12px;top:12px;display:flex;gap:6px}
+.cv .lbl{height:28px;padding:0 11px;border-radius:14px;background:rgba(255,255,255,.92);font-size:13.5px;font-weight:600;color:var(--blue-ink);display:inline-flex;align-items:center;gap:5px}
+.cv .lbl svg{width:14px;height:14px}
+.cv .lbl.newp{background:var(--blue);color:#fff;letter-spacing:.04em}
+.cv .lbl.g{color:var(--grey)}.cv .lbl.gr{color:var(--green)}
+.cv .bmc{position:absolute;right:12px;top:10px;width:38px;height:38px;border-radius:19px;background:#fff;display:grid;place-items:center;color:var(--blue-ink);box-shadow:0 6px 16px rgba(40,80,160,.12)}
+.cv .bmc svg{width:18px;height:18px}
+.cv .pbar{position:absolute;left:0;right:0;top:146px;height:5px;background:rgba(255,255,255,.8)}
+.cv .pbar b{display:block;height:100%;background:var(--blue)}
+.cv .bd{padding:13px 16px 15px;display:flex;flex-direction:column;gap:5px}
+.cv.past{background:rgba(255,255,255,.55);box-shadow:none}
+.cv.past .ttl{color:#4A5778}
+/* a course in a mixed list: play button on the image and a light blue outline */
+.cv.kurs{box-shadow:0 0 0 2px #BFD5FF,0 10px 30px rgba(40,80,160,.08)}
+.cv .play{position:absolute;left:50%;top:75px;width:58px;height:58px;margin:-29px 0 0 -29px;border-radius:29px;background:#fff;color:var(--blue-ink);display:grid;place-items:center;box-shadow:0 0 0 7px rgba(255,255,255,.45),0 8px 20px rgba(40,80,160,.18)}
+.cv .play svg{width:22px;height:22px;fill:currentColor;margin-left:3px}
+/* pressed: any card turns the hero blue for a moment before it opens */
+.cv.press{background:linear-gradient(90deg,#6AA0FF,#518BF7);box-shadow:0 12px 28px rgba(80,140,250,.30);transform:scale(.985)}
+.cv.press .ph{border-bottom:0}
+.cv.press .ttl{color:#fff}.cv.press .meta,.cv.press .meta span{color:#fff}
+/* Kurse tab: credits row and specialty picker */
+.crow{display:flex;align-items:center;gap:13px;padding:13px 14px 13px 13px;margin-bottom:14px}
+.crow .ic{width:46px;height:46px;border-radius:23px;background:var(--blue-fill);color:var(--blue-ink);display:grid;place-items:center;flex:none}
+.crow .ic svg{width:21px;height:21px}
+.crow .tx{flex:1}
+.crow .tx small{display:block;font-size:13px;color:var(--muted)}
+.crow .tx b{font-size:22px;font-weight:600;letter-spacing:-.01em}
+.crow .tx b span{font-size:15px;font-weight:500;color:var(--muted);margin-left:4px}
+.crow .go{display:flex;align-items:center;gap:2px;font-size:15px;font-weight:600;color:var(--blue-ink)}
+.crow .go svg{width:18px;height:18px;color:var(--blue-ink)}
+.spec{display:flex;align-items:center;justify-content:space-between;margin:0 2px 12px}
+.dd{height:36px;padding:0 12px 0 14px;border-radius:18px;background:#fff;color:var(--blue-ink);font-size:15px;font-weight:600;display:inline-flex;align-items:center;gap:6px;box-shadow:0 6px 16px rgba(40,80,160,.06)}
+.dd svg{width:16px;height:16px}
+.spec em{font-style:normal;font-size:14px;color:var(--muted)}
+/* Kursi */
+.kp{height:852px;overflow:hidden;position:relative}
+.kp .top{display:flex;justify-content:space-between;align-items:center;padding:0 16px;margin:8px 0 14px}
+.vid{margin:0 16px;height:206px;border-radius:24px;position:relative;overflow:hidden;background:#F6F9FE;border:1.5px solid #CCD7E8}
+.vid>svg{position:absolute;inset:0;width:100%;height:100%;stroke:#AFC0D8;stroke-width:1.2}
+.vid .play{position:absolute;left:50%;top:50%;width:62px;height:62px;margin:-31px 0 0 -31px;border-radius:31px;background:#fff;color:var(--blue-ink);display:grid;place-items:center;box-shadow:0 0 0 8px rgba(255,255,255,.45),0 8px 20px rgba(40,80,160,.18)}
+.vid .play svg{width:24px;height:24px;fill:currentColor;margin-left:3px}
+.vbar{display:flex;align-items:center;gap:10px;margin:12px 20px 0;font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums}
+.vbar .tr{flex:1;height:5px;border-radius:3px;background:#fff;position:relative}
+.vbar .tr b{position:absolute;left:0;top:0;bottom:0;background:var(--blue);border-radius:3px}
+.vbar .tr i{position:absolute;top:-3px;width:3px;height:11px;border-radius:2px;background:var(--amber-mid)}
+.note{height:32px;padding:0 12px;border-radius:16px;background:var(--blue-fill);color:var(--blue-ink);font-weight:600;font-size:14px;display:inline-flex;align-items:center;gap:5px}
+.note svg{width:15px;height:15px}
+.kt{margin:16px 20px 0}
+.kt h2{font-size:22px;font-weight:600;letter-spacing:-.01em;line-height:1.25;margin-bottom:8px}
+.tabs4{display:grid;grid-template-columns:1.3fr 1.1fr 1fr 1fr;background:rgba(255,255,255,.65);border-radius:24px;padding:4px;height:44px;margin:16px 16px 14px}
+.tabs4 span{display:flex;align-items:center;justify-content:center;gap:4px;border-radius:20px;font-size:14px;font-weight:600;color:var(--ink)}
+.tabs4 span em{font-style:normal;color:var(--muted)}
+.tabs4 span.on{background:var(--blue);color:#fff}
+.sumc{margin:0 16px;padding:18px 18px 20px}
+.sumc .lab2{font-size:13px;font-weight:600;letter-spacing:.2em;color:var(--muted);text-transform:uppercase;margin-bottom:10px}
+.sumc ul{list-style:none;display:flex;flex-direction:column;gap:9px}
+.sumc li{position:relative;padding-left:18px;font-size:16px;line-height:1.4}
+.sumc li::before{content:"";position:absolute;left:3px;top:9px;width:6px;height:6px;border-radius:3px;background:var(--blue)}
+.dock{position:absolute;left:0;right:0;bottom:0;padding:14px 16px 30px;background:linear-gradient(180deg,rgba(216,228,250,0) 0%,#D8E4FA 30%)}
+.cta{height:56px;border-radius:28px;display:flex;align-items:center;justify-content:center;gap:8px;font-size:17px;font-weight:600}
+.cta.off{background:var(--grey-fill);color:#9098AD}
+.cta.on{background:var(--blue);color:#fff;box-shadow:0 12px 26px rgba(80,140,250,.30)}
+.cta.sec{background:var(--track);color:var(--ink)}
+.cta svg{width:18px;height:18px}
+/* Vlerësimi: question */
+.qtop{display:flex;align-items:center;gap:14px;padding:0 16px;margin:8px 0 18px}
+.qseg{flex:1;display:flex;gap:6px}
+.qseg i{flex:1;height:6px;border-radius:3px;background:rgba(255,255,255,.8)}
+.qseg i.on{background:var(--blue)}
+.qn{font-size:15px;font-weight:600;color:var(--muted)}
+.case{margin:0 16px;padding:16px 18px 18px}
+.case small{display:block;font-size:13px;font-weight:600;letter-spacing:.2em;color:var(--muted);text-transform:uppercase;margin-bottom:6px}
+.case b{display:block;font-size:17px;font-weight:600;margin-bottom:6px}
+.case p{font-size:16px;line-height:1.45;color:#2B3A5C}
+.stem{font-size:20px;font-weight:600;letter-spacing:-.01em;line-height:1.3;margin:20px 20px 14px}
+.opts{margin:0 16px;display:flex;flex-direction:column;gap:10px}
+.opt{display:flex;gap:12px;align-items:flex-start;padding:14px 16px;border-radius:20px;background:#fff;font-size:16px;line-height:1.4;box-shadow:0 6px 18px rgba(40,80,160,.05)}
+.opt i{width:28px;height:28px;border-radius:14px;flex:none;display:grid;place-items:center;font-style:normal;font-size:14px;font-weight:600;background:var(--track);color:var(--muted)}
+.opt.sel{box-shadow:0 0 0 2px var(--blue),0 10px 24px rgba(80,140,250,.15)}
+.opt.sel i{background:var(--blue);color:#fff}
+/* Vlerësimi: one result layout, two outcomes */
+.fs{height:852px;position:relative;display:flex;flex-direction:column;overflow:hidden}
+.fs.tg{background:linear-gradient(180deg,#EAF8F0 0%,var(--green-fill) 100%)}
+.fs.ta{background:linear-gradient(180deg,#FFF8E3 0%,var(--amber-fill) 100%)}
+.bar{display:flex;align-items:center;gap:12px;padding:0 16px;margin:8px 0 0}
+.bar .tx{flex:1;min-width:0}
+.bar small{display:block;font-size:13px;color:var(--muted)}
+.bar b{display:block;font-size:16px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bar .rbtn{color:var(--ink)}
+.fs .mid{flex:none;text-align:center;padding:30px 20px 28px}
+.okc{width:72px;height:72px;border-radius:36px;display:grid;place-items:center;margin:0 auto 16px;color:#fff}
+.okc svg{width:34px;height:34px;stroke-width:2.4}
+.fs.tg .okc{background:var(--green);box-shadow:0 0 0 9px rgba(26,158,99,.14),0 0 0 18px rgba(26,158,99,.07)}
+.fs.ta .okc{background:var(--amber-mid);box-shadow:0 0 0 9px rgba(227,167,58,.18),0 0 0 18px rgba(227,167,58,.08)}
+.fs .mid h2{font-size:28px;font-weight:600;letter-spacing:-.02em}
+.fs.tg .mid h2{color:var(--green)}.fs.ta .mid h2{color:var(--amber)}
+.fs .mid p{font-size:16px;color:var(--muted);margin-top:4px}
+.fs .two{display:grid;grid-template-columns:1fr 1fr;margin-top:22px;background:rgba(255,255,255,.7);border-radius:22px}
+.fs .two div{padding:14px 0}
+.fs .two div+div{border-left:1px solid var(--line)}
+.fs .two small{display:block;font-size:13px;color:var(--muted)}
+.fs .two b{font-size:24px;font-weight:600}
+.fs .sh{flex:1;background:#fff;border-radius:32px 32px 0 0;padding:24px 20px 30px;display:flex;flex-direction:column}
+.fs .sh h3{font-size:20px;font-weight:600;letter-spacing:-.01em;margin-bottom:16px}
+.stars{display:flex;gap:12px;margin-bottom:18px}
+.stars svg{width:42px;height:42px;stroke-width:1.5;color:#C3CFE2}
+.stars svg.on{color:var(--blue);fill:var(--blue)}
+.field{flex:1;border-radius:18px;background:var(--track);padding:14px 16px;color:var(--muted);font-size:16px;margin-bottom:16px}
+.fs .sh .cta+.cta{margin-top:10px}
+.grow{flex:1}
+.qr{padding:14px 0}
+.qr+.qr{border-top:1px solid var(--line)}
+.qr .h{display:flex;align-items:center;gap:10px;font-size:16px}
+.qr .h i{width:26px;height:26px;border-radius:13px;display:grid;place-items:center;flex:none}
+.qr .h i svg{width:15px;height:15px;stroke-width:2.4}
+.qr .h span{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ans{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border-radius:14px;font-size:15px;line-height:1.4;margin-top:10px}
+.ans+.ans{margin-top:8px}
+.ans i{width:24px;height:24px;border-radius:12px;flex:none;display:grid;place-items:center;font-style:normal;font-size:13px;font-weight:600;color:#fff}
+.ans.no{background:var(--pink-fill)}.ans.no i{background:var(--pink)}
+.ans.yes{background:var(--green-fill)}.ans.yes i{background:var(--green)}
+/* Certifikata */
+.mil{height:852px;position:relative;overflow:hidden;display:flex;flex-direction:column}
+.mid3{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.chead{text-align:center;margin-bottom:26px}
+.chead small{display:block;font-size:13px;font-weight:600;letter-spacing:.2em;color:var(--blue-ink);text-transform:uppercase}
+.chead b{display:block;font-size:34px;font-weight:600;letter-spacing:-.02em;color:var(--green);margin-top:6px}
+.glow{position:relative}
+.glow::before{content:"";position:absolute;inset:-60px -30px;background:radial-gradient(closest-side,rgba(106,160,255,.45),rgba(106,160,255,0));z-index:0}
+.cert{position:relative;z-index:1;width:361px;height:255px;background:#fff;border-radius:14px;box-shadow:0 18px 40px rgba(40,80,160,.16);display:flex;overflow:hidden}
+.cert .l{width:74px;background:var(--blue);color:#fff;display:flex;flex-direction:column;align-items:center;padding:16px 6px 12px;text-align:center}
+.cert .l svg{width:22px;height:22px}
+.cert .l b{font-size:8.5px;font-weight:600;letter-spacing:.18em;margin-top:6px}
+.cert .l i{flex:1}
+.cert .l .qrc{width:40px;height:40px;border-radius:4px;background:#fff;position:relative;overflow:hidden}
+.cert .l .qrc svg{position:absolute;inset:0;width:100%;height:100%;stroke:#C3D3EE;stroke-width:3}
+.cert .r{flex:1;padding:18px 16px 14px;display:flex;flex-direction:column}
+.cert .r .t1{font-size:17px;font-weight:600;letter-spacing:.04em}
+.cert .r .t2{font-size:7px;font-weight:600;letter-spacing:.35em;color:var(--blue-ink);margin-top:2px}
+.cert .r .nm{font-size:19px;font-weight:500;margin-top:14px}
+.cert .r .ln{width:22px;height:2px;background:var(--blue);margin:6px 0 8px}
+.cert .r .cs{font-size:8px;line-height:1.45;color:var(--blue-ink);font-weight:600}
+.cert .r .ft{margin-top:auto;display:flex;justify-content:space-between;align-items:flex-end}
+.cert .r .ft small{display:block;font-size:5.5px;font-weight:600;letter-spacing:.08em;color:var(--muted)}
+.cert .r .ft b{font-size:12px;font-weight:600}
+.cert .r .ft span{font-size:7px;color:var(--muted)}
+.low{padding:0 16px 30px}
+.tot{display:flex;justify-content:space-between;align-items:center;padding:16px 18px;border-radius:20px;background:rgba(255,255,255,.7);margin-bottom:12px}
+.tot span{font-size:15px;color:var(--muted)}
+.tot b{font-size:20px;font-weight:600}
+.acts2{display:flex;gap:10px}
+.acts2 .cta{flex:1}
+.acts2 .sq{width:56px;height:56px;border-radius:28px;background:var(--blue-fill);color:var(--blue-ink);display:grid;place-items:center;flex:none}
+.acts2 .sq svg{width:22px;height:22px}
+/* Kurset e mia */
+.mypg{height:852px;overflow:hidden;position:relative;padding:0 16px}
+.ttl2{display:flex;align-items:center;gap:14px;margin:8px 0 18px}
+.ttl2 h1{font-size:30px;font-weight:600;letter-spacing:-.02em}
+.cplain{padding:4px 4px 20px}
+.cplain small{display:flex;align-items:center;gap:6px;font-size:15px;color:var(--muted)}
+.cplain small svg{width:17px;height:17px;color:var(--blue-ink)}
+.cplain .v{font-size:52px;font-weight:600;letter-spacing:-.03em;line-height:1.05;margin:2px 0 14px}
+.cplain .v span{font-size:20px;font-weight:500;color:var(--muted);margin-left:6px;letter-spacing:0}
+.cplain .st{display:flex}
+.cplain .st div{flex:1;padding-left:14px;border-left:2px solid rgba(91,150,255,.35)}
+.cplain .st div:first-child{padding-left:0;border-left:0}
+.cplain .st b{display:block;font-size:20px;font-weight:600}
+.cplain .st em{font-style:normal;font-size:14px;color:var(--muted)}
+.seg4{display:grid;grid-template-columns:1fr 1fr;background:rgba(255,255,255,.65);border-radius:22px;padding:4px;height:46px;margin-bottom:14px}
+.seg4 span{display:flex;align-items:center;justify-content:center;gap:6px;border-radius:18px;font-size:15.5px;font-weight:600;color:var(--ink)}
+.seg4 span em{font-style:normal;color:var(--muted)}
+.seg4 span.on{background:var(--blue);color:#fff}.seg4 span.on em{color:rgba(255,255,255,.8)}
+</style>
+</head>
+<body>
+<div id="f"></div>
+<script src="kidocare.js"></script>
+<script>
+Object.assign(P,{
+ bmark:'<path d="M17 3H7a2 2 0 0 0-2 2v16l7-4 7 4V5a2 2 0 0 0-2-2z"/>',
+ mic:'<rect x="9" y="2" width="6" height="12" rx="3"/><path d="M19 10v1a7 7 0 0 1-14 0v-1M12 18v4"/>',
+ cap:'<path d="M22 10 12 5 2 10l10 5 10-5z"/><path d="M6 12v5c0 1.5 2.7 3 6 3s6-1.5 6-3v-5"/>',
+ brief:'<rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>',
+ award:'<circle cx="12" cy="8" r="6"/><path d="M15.48 12.89 17 22l-5-3-5 3 1.52-9.11"/>',
+ play:'<path d="M6 4v16l14-8z"/>',
+ pin:'<path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/>',
+ check:'<path d="M20 6 9 17l-5-5"/>',
+ down:'<path d="m6 9 6 6 6-6"/>',
+ lock:'<rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/>',
+ star:'<path d="M12 17.75l-6.17 3.25 1.18-6.87-5-4.87 6.9-1L12 2l3.09 6.26 6.9 1-5 4.87 1.18 6.87z"/>',
+ dl:'<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5"/><path d="M12 15V3"/>',
+ share:'<circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 13.5 6.8 4M15.4 6.5l-6.8 4"/>',
+ retry:'<path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/>'
+});
+const CAT={kurs:['play','Kurs'],konf:['mic','Konferenca'],akad:['cap','Akademike'],pune:['brief','Punësim'],spec:['link','Specializim']};
+const ph=()=>`<div class="ph">${X('')}</div>`;
+const metaHtml=m=>`<div class="meta">${m.map(([ic,t,c])=>`<span${c?` class="${c}"`:''}>${I(ic)}${t}</span>`).join('')}</div>`;
+
+/* ---------- data (placeholder; course content to be confirmed by a doctor) ---------- */
+const NEWS=[
+ {c:'konf',isNew:1,t:'Kongresi Shqiptar i Pediatrisë 2026',m:[['clock','Regjistrimi deri më 20.11','soon']]},
+ {c:'kurs',isNew:1,t:'Astma te fëmijët: identifikimi dhe referimi',m:[['award','0.5 CRD','crd'],['clock','30 min']]},
+ {c:'akad',isNew:1,t:'Master në Shëndet Publik: bursa DAAD',m:[['clock','Apliko deri më 15.01.2027']]},
+ {c:'pune',t:'MedStaff Albania: pediatër për klinikë private',m:[['pin','Tiranë']]},
+ {c:'spec',t:'Udhëzuesi i specializimeve në BE',m:[['file','PDF']]},
+ {c:'akad',past:1,t:'Internship 6-mujor në neonatologji, Bolonjë',m:[['clock','Afati ka kaluar','gone']]}
+];
+const C_PROG={s:'prog',p:35,t:'Bronkioliti te foshnjat: kur shtrohet në spital',crd:'0.25',min:15};
+const C_NEW={s:'new',t:'Astma te fëmijët: identifikimi dhe referimi',crd:'0.5',min:30};
+const C_PLAIN={t:'Ethet te foshnja nën 3 muaj: vlerësimi i rrezikut',crd:'0.25',min:15};
+const C_EXP={s:'exp',t:'Vaksinimi sezonal kundër gripit te fëmijët',crd:'0.25',min:15};
+const C_DONE={s:'done',t:'Dehidratimi te gastroenteriti akut',crd:'0.5',min:30};
+const COURSES=[C_PROG,C_NEW,C_PLAIN,C_EXP,C_DONE];
+const CNAME='Bronkioliti te foshnjat: kur shtrohet në spital';
+
+/* ---------- components ---------- */
+const head=()=>`<div class="ih"><h1>Infopoint</h1><span class="rbtn">${I('bmark')}</span></div><div class="srch">${I('search')}Kërko njoftime ose kurse</div>`;
+const utabs=on=>`<div class="utabs">${['Të gjitha','Kurse','Konferenca','Akademike','Punësim','Specializim'].map((t,k)=>`<span class="${k===on?'on':''}">${t}</span>`).join('')}</div>`;
+/* one card for everything. o.lbls replaces the category labels, o.p draws the progress bar, o.press the tapped state */
+function card(n,o={}){
+  const lbls=o.lbls||[`<span class="lbl">${I(CAT[n.c][0])}${CAT[n.c][1]}</span>`,n.isNew?'<span class="lbl newp">E RE</span>':''];
+  const kurs=n.c==='kurs'&&!o.lbls;
+  return `<div class="card cv ${n.past?'past':''} ${kurs?'kurs':''} ${o.press?'press':''}">${ph()}<div class="lbls">${lbls.join('')}</div><span class="bmc">${I('bmark')}</span>
+   ${kurs?`<span class="play">${I('play')}</span>`:''}${o.p?`<div class="pbar"><b style="width:${o.p}%"></b></div>`:''}
+   <div class="bd"><div class="ttl">${n.t}</div>${metaHtml(n.m)}</div></div>`;
+}
+/* course card in the Kurse tab and Kurset e mia: the status replaces the category */
+function course(c,o={}){
+  let l=[];
+  if(c.s==='new')l=['<span class="lbl newp">E RE</span>'];
+  if(c.s==='prog')l=[`<span class="lbl">${I('play')}Në progres ${c.p}%</span>`];
+  if(c.s==='exp')l=['<span class="lbl g">Pa kredite</span>'];
+  if(c.s==='done')l=[`<span class="lbl gr">${I('check')}E përfunduar</span>`];
+  const m=c.s==='exp'?[['clock',c.min+' min']]:[['award',c.crd+' CRD','crd'],['clock',c.min+' min']];
+  return card({c:'kurs',t:c.t,m},{lbls:l,p:c.s==='prog'?c.p:0,press:o.press});
+}
+const credits=v=>`<div class="card crow"><span class="ic">${I('award')}</span><div class="tx"><small>Kreditet e 2026</small><b>${v}<span>CRD</span></b></div><span class="go">Kurset e mia${I('chev')}</span></div>`;
+const specRow=n=>`<div class="spec"><span class="dd">Pediatri${I('down')}</span><em>${n} kurse</em></div>`;
+const screen=(body,on)=>`<div class="scr bg">${statusBar()}${head()}${utabs(on)}${body}${gnav(2,{1:3})}</div>`;
+const allTab=()=>screen(NEWS.map(n=>card(n)).join(''),0);
+const kurseTab=()=>screen(credits('0.5')+specRow(COURSES.length)+COURSES.map(c=>course(c)).join(''),1);
+
+const OBJ=['Të dalloni foshnjat me bronkiolit që kanë nevojë për shtrim','Të vlerësoni shenjat e frymëmarrjes së vështirë','Të udhëzoni prindin për kujdesin në shtëpi','Të dini kur të referoni në urgjencë'];
+/* course screen: one video; the assessment unlocks in its last 30 seconds */
+function kursi(ready){
+  return `<div class="kp bg">${statusBar()}<div class="top"><span class="rbtn">${I('back')}</span><span class="rbtn">${I('bmark')}</span></div>
+  <div class="vid">${X('')}<span class="play">${I('play')}</span></div>
+  <div class="vbar"><span>${ready?'14:35':'01:53'}</span><span class="tr"><b style="width:${ready?97:13}%"></b><i style="left:6%"></i><i style="left:44%"></i></span><span>15:00</span><span class="note">${I('plus')}Shënim</span></div>
+  <div class="kt"><h2>${CNAME}</h2>${metaHtml([['award','0.25 CRD','crd'],['clock','15 min']])}</div>
+  <div class="tabs4"><span class="on">Përmbledhje</span><span>Shënime <em>2</em></span><span>Materiale</span><span>Diskutim</span></div>
+  <div class="card sumc"><div class="lab2">Objektivat</div><ul>${OBJ.map(o=>`<li>${o}</li>`).join('')}</ul></div>
+  <div class="dock">${ready?`<div class="cta on">Fillo vlerësimin${I('arrow')}</div>`:`<div class="cta off">${I('lock')}Fillo vlerësimin</div>`}</div></div>`;
+}
+const Q={case:'Foshnjë, 4 muaj',txt:'Kollë dhe rrufë prej 3 ditësh. Sot ushqehet më pak se gjysma e zakonshme dhe merr frymë shpejt, 64 herë në minutë.',
+ stem:'Cili është hapi më i përshtatshëm tani?',
+ o:[['A','Referim për shtrim në spital'],['B','Kujdes në shtëpi dhe kontroll pas 48 orësh'],['C','Antibiotik dhe kontroll pas një jave'],['D','Vetëm pastrim i hundës me serum']]};
+function question(sel){
+  return `<div class="kp bg">${statusBar()}<div class="qtop"><span class="rbtn">${I('x')}</span><div class="qseg"><i class="on"></i><i></i></div><span class="qn">1 / 2</span></div>
+  <div class="card case"><small>Rasti klinik</small><b>${Q.case}</b><p>${Q.txt}</p></div>
+  <div class="stem">${Q.stem}</div><div class="opts">${Q.o.map(([l,t])=>`<div class="opt ${sel===l?'sel':''}"><i>${l}</i>${t}</div>`).join('')}</div>
+  <div class="dock"><div class="cta ${sel?'on':'off'}">Pyetja tjetër${sel?I('arrow'):''}</div></div></div>`;
+}
+const bar=(lab,x='x')=>`<div class="bar"><span class="rbtn">${I(x)}</span><div class="tx"><small>${lab}</small><b>${CNAME}</b></div></div>`;
+/* result: same layout for both outcomes; only colour, icon, words and the sheet change */
+function result(pass,stars){
+  const t=pass?{c:'tg',ic:'check',h:'Vlerësimi u kalua',p:'+0.25 CRD u shtuan në profilin tuaj',a:'2/2',b:'0.75 CRD'}
+              :{c:'ta',ic:'retry',h:'Vlerësimi nuk u kalua',p:'Duhen 2 nga 2 përgjigje të sakta',a:'1/2',b:'0.5 CRD'};
+  const sheet=pass?`<h3>Vlerësoni kursin</h3><div class="stars">${[1,2,3,4,5].map(i=>`<svg class="i ${i<=stars?'on':''}" viewBox="0 0 24 24">${P.star}</svg>`).join('')}</div><div class="field">Koment (opsional)</div><div class="cta ${stars?'on':'off'}">Merrni certifikatën</div>`
+   :`<h3>Përgjigjet</h3><div class="qr"><div class="h"><i class="c-green">${I('check')}</i><span>${Q.stem}</span></div></div>
+     <div class="qr"><div class="h"><i class="c-pink">${I('x')}</i><span>Kur duhet riparë foshnja pas vizitës?</span></div><div class="ans no"><i>B</i>Pas një jave</div><div class="ans yes"><i>C</i>Pas 24 deri 48 orësh</div></div>
+     <div class="grow"></div><div class="cta on">Provoni përsëri</div><div class="cta sec">Rishikoni videon</div>`;
+  return `<div class="fs ${t.c}">${statusBar()}${bar('Vlerësimi')}<div class="mid"><span class="okc">${I(t.ic)}</span><h2>${t.h}</h2><p>${t.p}</p>
+   <div class="two"><div><small>Përgjigje të sakta</small><b>${t.a}</b></div><div><small>Kreditet e 2026</small><b>${t.b}</b></div></div></div><div class="sh">${sheet}</div></div>`;
+}
+const CERT=()=>`<div class="cert"><div class="l">${I('cap')}<b>KIDOCARE</b><i></i><span class="qrc">${X('')}</span></div>
+   <div class="r"><span class="t1">CERTIFIKATË</span><span class="t2">ARRITJEJE</span><span class="nm">Dr. Blerina Kola</span><span class="ln"></span><span class="cs">${CNAME}</span>
+   <div class="ft"><div><small>KREDITE</small><b>0.25 CRD</b></div><div><small>DATA</small><b>28.10.2026</b></div><span>KC-2026-123456</span></div></div></div>`;
+function certificate(){
+  return `<div class="mil bg">${statusBar()}${bar('Certifikata')}<div class="mid3"><div class="chead"><small>Kursi u përfundua</small><b>+0.25 CRD</b></div><div class="glow">${CERT()}</div></div>
+   <div class="low"><div class="tot"><span>Kreditet e 2026</span><b>0.75 CRD</b></div><div class="acts2"><div class="cta on">${I('dl')}Shkarkoni PDF</div><span class="sq">${I('share')}</span></div></div></div>`;
+}
+const myHead=()=>`<div class="cplain"><small>${I('award')}Kreditet e 2026</small><div class="v">0.75<span>CRD</span></div>
+   <div class="st"><div><b>2</b><em>Kurse</em></div><div><b>2</b><em>Certifikata</em></div><div><b>45 min</b><em>Kohë</em></div></div></div>`;
+function myCourses(done){
+  const prog=[{s:'prog',p:40,t:'Ethet te foshnja nën 3 muaj: vlerësimi i rrezikut',crd:'0.25',min:15}];
+  const fin=[{s:'done',t:CNAME,crd:'0.25',min:15},{s:'done',t:'Dehidratimi te gastroenteriti akut',crd:'0.5',min:30}];
+  return `<div class="mypg bg">${statusBar()}<div class="ttl2"><span class="rbtn">${I('back')}</span><h1>Kurset e mia</h1></div>${myHead()}
+  <div class="seg4"><span class="${done?'':'on'}">Në progres <em>1</em></span><span class="${done?'on':''}">Të përfunduara <em>2</em></span></div>
+  ${(done?fin:prog).map(c=>course(c)).join('')}</div>`;
+}
+
+const F={
+ 'path-1':allTab,
+ 'path-2':kurseTab,
+ 'path-3':()=>kursi(0),
+ 'path-4':()=>kursi(1),
+ 'path-5':()=>question(''),
+ 'path-6':()=>result(1,0),
+ 'path-7':certificate,
+ 'path-8':()=>myCourses(0),
+ 'screen-all':allTab,
+ 'screen-kurse':kurseTab,
+ 'hd':()=>crop(head()),
+ 'tabs-all':()=>crop(utabs(0)),
+ 'tabs-kurse':()=>crop(utabs(1)),
+ 'n-soon':()=>crop(card(NEWS[0])),
+ 'n-plain':()=>crop(card(NEWS[3])),
+ 'n-past':()=>crop(card(NEWS[5])),
+ 'n-press':()=>crop(card(NEWS[0],{press:1})),
+ 'k-mixed':()=>crop(card(NEWS[1])),
+ 'k-press':()=>crop(card(NEWS[1],{press:1})),
+ 'c-new':()=>crop(course(C_NEW)),
+ 'c-prog':()=>crop(course(C_PROG)),
+ 'c-plain':()=>crop(course(C_PLAIN)),
+ 'c-exp':()=>crop(course(C_EXP)),
+ 'c-done':()=>crop(course(C_DONE)),
+ 'cr-row':()=>crop(credits('0.5')+specRow(5)),
+ 'q-sel':()=>question('A'),
+ 'r-pass-0':()=>result(1,0),
+ 'r-pass-4':()=>result(1,4),
+ 'r-fail':()=>result(0),
+ 'my-prog':()=>myCourses(0),
+ 'my-done':()=>myCourses(1)
+};
+window.FRAME_IDS=Object.keys(F);
+function show(){
+  const id=location.hash.slice(1)||'path-1';
+  document.getElementById('f').innerHTML=(F[id]||F['path-1'])();
+  const post=()=>{try{parent.postMessage({liveFrame:id,h:document.getElementById('f').scrollHeight},'*')}catch(e){}};
+  requestAnimationFrame(post);document.querySelectorAll('#f img').forEach(i=>i.complete||i.addEventListener('load',post));
+}
+addEventListener('hashchange',show);show();
+document.fonts&&document.fonts.ready.then(show);
+</script>
+</body>
+</html>

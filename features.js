@@ -2,7 +2,7 @@
 // Frame: { state: min|col|exp|det|full|sys, img, title?, spec, via?, page?, from? }. "via" draws an arrow with that trigger before the frame; without it, frames sit side by side. "from" reads the image from another feature's folder.
 // "path" (optional, shown first): every screen a doctor can reach for the minimal child (Noa), in tap order, before the full screen and the components.
 // Features listed in LIVE render their frames from one HTML file instead of images: the frame's img name (without .jpg) is the frame id in that file.
-window.LIVE = { "kartela-mjekesore": "live/kartela-mjekesore.html", "rezultati": "live/rezultati.html", "profili-i-femijes": "live/profili-i-femijes.html", "profili-i-kujdestarit": "live/profili-i-kujdestarit.html", "gjendjet-e-sistemit": "live/gjendjet-e-sistemit.html", "profili-i-mjekut": "live/profili-i-mjekut.html", "turni-live": "live/turni-live.html", "thirrja-video": "live/thirrja-video.html", "konsultat": "live/konsultat.html", "biseda": "live/biseda.html" };
+window.LIVE = { "kartela-mjekesore": "live/kartela-mjekesore.html", "rezultati": "live/rezultati.html", "profili-i-femijes": "live/profili-i-femijes.html", "profili-i-kujdestarit": "live/profili-i-kujdestarit.html", "gjendjet-e-sistemit": "live/gjendjet-e-sistemit.html", "profili-i-mjekut": "live/profili-i-mjekut.html", "turni-live": "live/turni-live.html", "thirrja-video": "live/thirrja-video.html", "konsultat": "live/konsultat.html", "biseda": "live/biseda.html", "infopoint": "live/infopoint.html" };
 window.FEATURES = [
   {
     id: "turni-live",
@@ -754,6 +754,88 @@ window.FEATURES = [
     rules: [
       ["One pattern", "Loading is skeletons; no connection and errors are icon, title, one line, one button. Copy uses formal \"ju\" and never blames the doctor."],
       ["Smallest failure wins", "If one section fails, only that section shows an error. If an image fails, it falls back without a message. A full-screen error appears only when the whole screen cannot load."]
+    ]
+  },
+  {
+    id: "infopoint",
+    name: "Infopoint",
+    side: "doctor",
+    date: "03.11.2026",
+    purpose: "Announcements and the accreditation courses in one place: the doctor browses, watches a course, passes its assessment and keeps the certificate and the year's credits.",
+    path: {
+      note: "This feature is about the doctor, not a child, so Noa and Anisa do not appear. The path follows one course from the list to Kurset e mia. Course titles, the clinical case and the answers are placeholders and need a doctor to confirm them.",
+      frames: [
+        { state: "min", img: "path-1.jpg", page: true, title: "Të gjitha", spec: "Opens on Të gjitha: announcements and courses mixed, newest first, expired items last." },
+        { state: "min", img: "path-2.jpg", page: true, via: "Tap Kurse", title: "Kurse", spec: "Only courses: the year's credits with a link to Kurset e mia, the specialty (preset Pediatri), then in progress, new, the rest, credits expired, completed." },
+        { state: "min", img: "path-3.jpg", page: true, via: "Tap a course", title: "Kursi", spec: "One video. Fillo vlerësimin stays grey and locked until the last 30 seconds of the video." },
+        { state: "min", img: "path-4.jpg", page: true, via: "Watch to the last 30 seconds", title: "Assessment unlocked", spec: "The button turns blue." },
+        { state: "min", img: "path-5.jpg", page: true, via: "Tap Fillo vlerësimin", title: "Question 1 of 2", spec: "Case, question, four answers. Pyetja tjetër stays grey until an answer is picked." },
+        { state: "min", img: "path-6.jpg", page: true, via: "Answer both correctly", title: "Passed", spec: "Result and course rating on one screen. Merrni certifikatën turns on after a star; the rating is required." },
+        { state: "min", img: "path-7.jpg", page: true, via: "Rate, tap Merrni certifikatën", title: "Certifikata", spec: "Kursi u përfundua with the credits earned, the certificate, the new yearly total, download and share." },
+        { state: "min", img: "path-8.jpg", page: true, via: "Close, then Kurse, tap Kurset e mia", title: "Kurset e mia", spec: "The year's credits on the page, then Në progres and Të përfunduara." }
+      ]
+    },
+    screen: {
+      note: "Header, search, tab row and bottom bar follow the current app; the MJEK pill is removed with nothing in its place. Every item is the same banner card: labels on the image, the title and one line below.",
+      frames: [
+        { state: "full", img: "screen-all.jpg", title: "Të gjitha", spec: "Announcements and courses mixed. Courses carry a play button and a light blue outline." },
+        { state: "full", img: "screen-kurse.jpg", title: "Kurse", spec: "Courses only, with the credits row and the specialty picker on top." }
+      ]
+    },
+    components: [
+      { name: "Header and search", note: "The bookmark opens everything saved, announcements and courses together. Search covers both.", frames: [
+        { state: "col", img: "hd.jpg", title: "Header", spec: "Infopoint title, bookmark button, Kërko njoftime ose kurse." }
+      ]},
+      { name: "Tab row", note: "Të gjitha, Kurse, Konferenca, Akademike, Punësim, Specializim. The row scrolls sideways.", frames: [
+        { state: "col", img: "tabs-all.jpg", title: "Të gjitha", spec: "Default on open." },
+        { state: "col", img: "tabs-kurse.jpg", title: "Kurse", spec: "Tap shows only courses." }
+      ]},
+      { name: "Announcement card", note: "Labels on the image: category and E RE. Below: the title (two lines at most) and one line: the deadline if there is one, otherwise the place or the format. No credits on anything that is not a course.", frames: [
+        { state: "col", img: "n-soon.jpg", title: "New, deadline close", spec: "The deadline is amber when it is close." },
+        { state: "col", img: "n-plain.jpg", title: "No deadline", spec: "The place instead." },
+        { state: "col", img: "n-past.jpg", title: "Expired", spec: "Afati ka kaluar in grey, faded card, no E RE, moved to the end of the list." },
+        { state: "col", img: "n-press.jpg", title: "Pressed", spec: "Any card turns the hero blue for a moment before it opens." }
+      ]},
+      { name: "Course card in a mixed list", note: "Courses stand out among announcements through a round play button on the image and a light blue outline, not through colour, so the blue stays free for the pressed state.", frames: [
+        { state: "col", img: "k-mixed.jpg", title: "Course", spec: "Kurs and E RE on the image, play button, 0.5 CRD and 30 min." },
+        { state: "col", img: "k-press.jpg", title: "Pressed", spec: "Same pressed state as every card." }
+      ]},
+      { name: "Course card in Kurse and Kurset e mia", note: "The status replaces the category label. Order: in progress, new, the rest, credits expired, completed.", frames: [
+        { state: "col", img: "c-prog.jpg", title: "In progress", spec: "Në progres with the percentage, and a thin blue bar on the image edge." },
+        { state: "col", img: "c-new.jpg", title: "New", spec: "E RE." },
+        { state: "col", img: "c-plain.jpg", title: "Not started", spec: "No label." },
+        { state: "col", img: "c-exp.jpg", title: "Credits expired", spec: "Pa kredite in grey and no CRD: the course can still be taken but gives no credits." },
+        { state: "col", img: "c-done.jpg", title: "Completed", spec: "E përfunduar in green." }
+      ]},
+      { name: "Credits row and specialty", note: "Top of the Kurse tab. The specialty is preset to Pediatri and can be changed.", frames: [
+        { state: "col", img: "cr-row.jpg", title: "Credits and Pediatri", spec: "Kreditet e 2026 opens Kurset e mia. The dropdown changes the specialty; the count follows." }
+      ]},
+      { name: "Kursi", note: "Back and bookmark only. Timeline marks are the doctor's notes; + Shënim saves one at the current moment. Tabs: Përmbledhje, Shënime, Materiale, Diskutim.", frames: [
+        { state: "min", img: "path-3.jpg", page: true, title: "Locked", spec: "Grey button with a lock, no explanation line." },
+        { state: "exp", img: "path-4.jpg", page: true, title: "Unlocked", spec: "In the last 30 seconds the button turns blue." }
+      ]},
+      { name: "Question", note: "X to leave, progress in segments. No symptom tags, no required badge.", frames: [
+        { state: "min", img: "path-5.jpg", page: true, title: "Nothing picked", spec: "Pyetja tjetër is grey." },
+        { state: "exp", img: "q-sel.jpg", page: true, title: "Answer picked", spec: "Blue outline on the answer; the button turns blue." }
+      ]},
+      { name: "Result", note: "One layout for both outcomes, in the app's own green and amber tints: icon, title, one line, two numbers, then a white sheet to the bottom edge. Every answer must be right to pass.", frames: [
+        { state: "min", img: "r-pass-0.jpg", page: true, title: "Passed, not rated", spec: "Rating is required: Merrni certifikatën stays grey until a star is picked. The comment is optional." },
+        { state: "exp", img: "r-pass-4.jpg", page: true, title: "Passed, rated", spec: "The button turns blue." },
+        { state: "det", img: "r-fail.jpg", page: true, title: "Not passed", spec: "Amber, never red: the doctor can try again. The sheet lists the answers; the missed one shows the doctor's answer in pink and the right one in green." }
+      ]},
+      { name: "Certifikata", note: "A milestone without decoration: KURSI U PËRFUNDUA over the credits earned in green, the certificate with a soft glow, the new yearly total, Shkarkoni PDF and share.", frames: [
+        { state: "det", img: "path-7.jpg", page: true, title: "Certificate", spec: "Same page from Kurset e mia." }
+      ]},
+      { name: "Kurset e mia", note: "The year's credits sit on the page, not in a card: the total, then courses, certificates and time.", frames: [
+        { state: "col", img: "my-prog.jpg", page: true, title: "Në progres", spec: "Default tab." },
+        { state: "col", img: "my-done.jpg", page: true, title: "Të përfunduara", spec: "Tap a completed course to open its certificate." }
+      ]}
+    ],
+    rules: [
+      ["Less text", "Every card has its title and one line. No explanation lines under buttons."],
+      ["Blue means pressed", "Any card turns the hero blue when tapped, so courses are marked by the play button and outline instead of colour."],
+      ["Credits only on courses", "CRD is the one unit everywhere, and it appears only on courses, their results, the certificate and Kurset e mia."],
+      ["Palette colours only", "Pass uses the green tint, not passed the amber tint, as elsewhere in the app."]
     ]
   }
 ];
