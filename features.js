@@ -763,78 +763,109 @@ window.FEATURES = [
     date: "03.11.2026",
     purpose: "Announcements and the accreditation courses in one place: the doctor browses, watches a course, passes its assessment and keeps the certificate and the year's credits.",
     path: {
-      note: "This feature is about the doctor, not a child, so Noa and Anisa do not appear. The path follows one course from the list to Kurset e mia. Course titles, the clinical case and the answers are placeholders and need a doctor to confirm them.",
+      note: "This feature is about the doctor, not a child, so Noa and Anisa do not appear. The path follows one course from the list to Kurset e mia. Course titles, the clinical cases and the answers are placeholders and need a doctor to confirm them.",
       frames: [
-        { state: "min", img: "path-1.jpg", page: true, title: "Të gjitha", spec: "Opens on Të gjitha: announcements and courses mixed, newest first, expired items last." },
+        { state: "min", img: "path-1.jpg", page: true, title: "Të gjitha", spec: "Opens on Të gjitha: announcements and courses mixed, newest first, closed items last." },
         { state: "min", img: "path-2.jpg", page: true, via: "Tap Kurse", title: "Kurse", spec: "Only courses: the year's credits with a link to Kurset e mia, the specialty (preset Pediatri), then in progress, new, the rest, credits expired, completed." },
-        { state: "min", img: "path-3.jpg", page: true, via: "Tap a course", title: "Kursi", spec: "One video. Fillo vlerësimin stays grey and locked until the last 30 seconds of the video." },
-        { state: "min", img: "path-4.jpg", page: true, via: "Watch to the last 30 seconds", title: "Assessment unlocked", spec: "The button turns blue." },
+        { state: "min", img: "path-3.jpg", page: true, via: "Tap a course", title: "Kursi", spec: "One video with 10 s back and forward. Fillo vlerësimin stays grey and locked until the last 30 seconds; skipping to the end is allowed." },
+        { state: "min", img: "path-4.jpg", page: true, via: "Reach the last 30 seconds", title: "Assessment unlocked", spec: "The button turns blue." },
         { state: "min", img: "path-5.jpg", page: true, via: "Tap Fillo vlerësimin", title: "Question 1 of 2", spec: "Case, question, four answers. Pyetja tjetër stays grey until an answer is picked." },
-        { state: "min", img: "path-6.jpg", page: true, via: "Answer both correctly", title: "Passed", spec: "Result and course rating on one screen. Merrni certifikatën turns on after a star; the rating is required." },
-        { state: "min", img: "path-7.jpg", page: true, via: "Rate, tap Merrni certifikatën", title: "Certifikata", spec: "Kursi u përfundua with the credits earned, the certificate, the new yearly total, download and share." },
+        { state: "min", img: "q2.jpg", page: true, via: "Pick, tap Pyetja tjetër", title: "Question 2 of 2", spec: "Back arrow to question 1; the last button is Konfirmoni përgjigjet." },
+        { state: "min", img: "path-6.jpg", page: true, via: "Confirm, all answers right", title: "Passed", spec: "Result and course rating on one screen. Merrni certifikatën turns on after a star; the rating is required." },
+        { state: "min", img: "path-7.jpg", page: true, via: "Rate, tap Merrni certifikatën", title: "Certifikata", spec: "KURSI U PËRFUNDUA over the credits earned, the certificate, the new yearly total, download and share." },
         { state: "min", img: "path-8.jpg", page: true, via: "Close, then Kurse, tap Kurset e mia", title: "Kurset e mia", spec: "The year's credits on the page, then Në progres and Të përfunduara." }
       ]
     },
     screen: {
-      note: "Header, search, tab row and bottom bar follow the current app; the MJEK pill is removed with nothing in its place. Every item is the same banner card: labels on the image, the title and one line below.",
+      note: "Header, search, tab row and bottom bar follow the current app; the MJEK pill is removed with nothing in its place. Every item is the same banner card: labels on the image, the title and one short line below.",
       frames: [
         { state: "full", img: "screen-all.jpg", title: "Të gjitha", spec: "Announcements and courses mixed. Courses carry a play button and a light blue outline." },
         { state: "full", img: "screen-kurse.jpg", title: "Kurse", spec: "Courses only, with the credits row and the specialty picker on top." }
       ]
     },
     components: [
-      { name: "Header and search", note: "The bookmark opens everything saved, announcements and courses together. Search covers both.", frames: [
+      { name: "Header and search", note: "The bookmark opens Të ruajturat. Search covers announcements and courses.", frames: [
         { state: "col", img: "hd.jpg", title: "Header", spec: "Infopoint title, bookmark button, Kërko njoftime ose kurse." }
       ]},
       { name: "Tab row", note: "Të gjitha, Kurse, Konferenca, Akademike, Punësim, Specializim. The row scrolls sideways.", frames: [
         { state: "col", img: "tabs-all.jpg", title: "Të gjitha", spec: "Default on open." },
         { state: "col", img: "tabs-kurse.jpg", title: "Kurse", spec: "Tap shows only courses." }
       ]},
-      { name: "Announcement card", note: "Labels on the image: category and E RE. Below: the title (two lines at most) and one line: the deadline if there is one, otherwise the place or the format. No credits on anything that is not a course.", frames: [
-        { state: "col", img: "n-soon.jpg", title: "New, deadline close", spec: "The deadline is amber when it is close." },
-        { state: "col", img: "n-plain.jpg", title: "No deadline", spec: "The place instead." },
-        { state: "col", img: "n-past.jpg", title: "Expired", spec: "Afati ka kaluar in grey, faded card, no E RE, moved to the end of the list." },
-        { state: "col", img: "n-press.jpg", title: "Pressed", spec: "Any card turns the hero blue for a moment before it opens." }
+      { name: "Announcement card", note: "Labels on the image: category, E RE, Mbyllur. Below: the title (two lines at most) and one line built from the data format: place, then the deadline (or the date when there is no deadline). No credits on anything that is not a course.", frames: [
+        { state: "col", img: "n-soon.jpg", title: "New, deadline close", spec: "Tiranë and ⏳ 20.11; the deadline is amber when close." },
+        { state: "col", img: "n-plain.jpg", title: "Place and deadline", spec: "The deadline in normal grey." },
+        { state: "col", img: "n-past.jpg", title: "Closed", spec: "Mbyllur on the image, the deadline struck through in grey, faded card, moved to the end of the list." },
+        { state: "col", img: "n-press.jpg", title: "Pressed", spec: "Any card turns the hero blue for a moment before it opens." },
+        { state: "col", img: "long.jpg", title: "Long title", spec: "Cut after two lines." },
+        { state: "col", img: "noimg.jpg", title: "No image", spec: "The category icon on a light blue fill stands in for the photo." }
+      ]},
+      { name: "Announcement detail", note: "Photo with labels, title, organiser, the four data tiles that exist (when, where, deadline, cost, always in this order, icon instead of a label), a short description for everything else, one button. A full-height page.", frames: [
+        { state: "det", img: "det-konf.jpg", page: true, title: "Conference", spec: "All four tiles; Regjistrohuni opens the organiser's site." },
+        { state: "det", img: "det-pune.jpg", page: true, title: "Job", spec: "Place and deadline only; Dërgoni CV-në opens an email to the agency." },
+        { state: "det", img: "det-past.jpg", page: true, title: "Closed", spec: "Mbyllur on the image, the deadline struck through, the button grey and inactive." }
       ]},
       { name: "Course card in a mixed list", note: "Courses stand out among announcements through a round play button on the image and a light blue outline, not through colour, so the blue stays free for the pressed state.", frames: [
         { state: "col", img: "k-mixed.jpg", title: "Course", spec: "Kurs and E RE on the image, play button, 0.5 CRD and 30 min." },
         { state: "col", img: "k-press.jpg", title: "Pressed", spec: "Same pressed state as every card." }
       ]},
       { name: "Course card in Kurse and Kurset e mia", note: "The status replaces the category label. Order: in progress, new, the rest, credits expired, completed.", frames: [
-        { state: "col", img: "c-prog.jpg", title: "In progress", spec: "Në progres with the percentage, and a thin blue bar on the image edge." },
+        { state: "col", img: "c-prog.jpg", title: "In progress", spec: "▶ 35% on the image and a thin blue bar on its edge." },
         { state: "col", img: "c-new.jpg", title: "New", spec: "E RE." },
         { state: "col", img: "c-plain.jpg", title: "Not started", spec: "No label." },
         { state: "col", img: "c-exp.jpg", title: "Credits expired", spec: "Pa kredite in grey and no CRD: the course can still be taken but gives no credits." },
         { state: "col", img: "c-done.jpg", title: "Completed", spec: "E përfunduar in green." }
       ]},
-      { name: "Credits row and specialty", note: "Top of the Kurse tab. The specialty is preset to Pediatri and can be changed.", frames: [
-        { state: "col", img: "cr-row.jpg", title: "Credits and Pediatri", spec: "Kreditet e 2026 opens Kurset e mia. The dropdown changes the specialty; the count follows." }
+      { name: "Credits row and specialty", note: "Top of the Kurse tab. The specialty is preset to Pediatri.", frames: [
+        { state: "col", img: "cr-row.jpg", title: "Credits and Pediatri", spec: "Kreditet e 2026 opens Kurset e mia; the dropdown opens the specialty list." },
+        { state: "det", img: "spec-sheet.jpg", page: true, title: "Specialty list", spec: "Full-height sheet: search, then every specialty with its course count; the chosen one is highlighted with a check." },
+        { state: "det", img: "spec-open.jpg", page: true, title: "Group open", spec: "A group (Kirurgji) opens in place to list its sub-specialties, each with its own count." },
+        { state: "min", img: "e-kurse.jpg", page: true, title: "No courses", spec: "Nothing for the chosen specialty: one title and Ndryshoni specialitetin." }
       ]},
-      { name: "Kursi", note: "Back and bookmark only. Timeline marks are the doctor's notes; + Shënim saves one at the current moment. Tabs: Përmbledhje, Shënime, Materiale, Diskutim.", frames: [
+      { name: "Kursi", note: "Back and bookmark only. On the video: 10 s back, play, 10 s forward. Timeline marks are the doctor's notes; + Shënim saves one at the current moment.", frames: [
         { state: "min", img: "path-3.jpg", page: true, title: "Locked", spec: "Grey button with a lock, no explanation line." },
-        { state: "exp", img: "path-4.jpg", page: true, title: "Unlocked", spec: "In the last 30 seconds the button turns blue." }
+        { state: "exp", img: "path-4.jpg", page: true, title: "Unlocked", spec: "In the last 30 seconds the button turns blue." },
+        { state: "col", img: "exp-kursi.jpg", page: true, title: "Credits expired", spec: "Pa kredite in place of the CRD; everything else the same." }
+      ]},
+      { name: "Course tabs", note: "Përmbledhje, Shënime, Materiale, Diskutim, with counts.", frames: [
+        { state: "col", img: "tab-notes.jpg", page: true, title: "Shënime", spec: "Each note has a time pill; tapping it jumps the video to that moment." },
+        { state: "exp", img: "tab-note-add.jpg", page: true, title: "Adding a note", spec: "+ Shënim opens a note at the current time on top of the list, with Anulo and Ruaj." },
+        { state: "col", img: "tab-mat.jpg", page: true, title: "Materiale", spec: "Files first (open in the file overlay), then outside links (open in the browser)." },
+        { state: "col", img: "tab-disc.jpg", page: true, title: "Diskutim", spec: "Comments with the helpful count and Përgjigjuni; the comment box replaces the assessment button. To be merged with Forumi later." }
       ]},
       { name: "Question", note: "X to leave, progress in segments. No symptom tags, no required badge.", frames: [
         { state: "min", img: "path-5.jpg", page: true, title: "Nothing picked", spec: "Pyetja tjetër is grey." },
-        { state: "exp", img: "q-sel.jpg", page: true, title: "Answer picked", spec: "Blue outline on the answer; the button turns blue." }
+        { state: "exp", img: "q-sel.jpg", page: true, title: "Answer picked", spec: "Blue outline on the answer; the button turns blue." },
+        { state: "col", img: "q2.jpg", page: true, title: "Last question", spec: "Back arrow and Konfirmoni përgjigjet." },
+        { state: "det", img: "q-leave.jpg", page: true, title: "Leaving", spec: "X opens the standard sheet: Të dilni nga vlerësimi? Përgjigjet nuk ruhen. Vazhdoni vlerësimin is the main button, Dilni is outlined in red." }
       ]},
-      { name: "Result", note: "One layout for both outcomes, in the app's own green and amber tints: icon, title, one line, two numbers, then a white sheet to the bottom edge. Every answer must be right to pass.", frames: [
-        { state: "min", img: "r-pass-0.jpg", page: true, title: "Passed, not rated", spec: "Rating is required: Merrni certifikatën stays grey until a star is picked. The comment is optional." },
+      { name: "Result", note: "One layout for both outcomes, in the app's own green and amber tints: icon, title, one short line, two numbers, then a white sheet to the bottom edge. Every answer must be right to pass.", frames: [
+        { state: "min", img: "r-pass-0.jpg", page: true, title: "Passed, not rated", spec: "+0.25 CRD. Rating is required: Merrni certifikatën stays grey until a star is picked." },
         { state: "exp", img: "r-pass-4.jpg", page: true, title: "Passed, rated", spec: "The button turns blue." },
-        { state: "det", img: "r-fail.jpg", page: true, title: "Not passed", spec: "Amber, never red: the doctor can try again. The sheet lists the answers; the missed one shows the doctor's answer in pink and the right one in green." }
+        { state: "det", img: "r-fail.jpg", page: true, title: "Not passed", spec: "Amber, never red. Duhen 2/2. The missed answer in pink, the right one in green; Provoni përsëri and Rishikoni videon." },
+        { state: "col", img: "exp-result.jpg", page: true, title: "Passed, credits expired", spec: "Pa kredite and the yearly total unchanged. Open question: does this still give a certificate?" }
       ]},
       { name: "Certifikata", note: "A milestone without decoration: KURSI U PËRFUNDUA over the credits earned in green, the certificate with a soft glow, the new yearly total, Shkarkoni PDF and share.", frames: [
         { state: "det", img: "path-7.jpg", page: true, title: "Certificate", spec: "Same page from Kurset e mia." }
       ]},
       { name: "Kurset e mia", note: "The year's credits sit on the page, not in a card: the total, then courses, certificates and time.", frames: [
         { state: "col", img: "my-prog.jpg", page: true, title: "Në progres", spec: "Default tab." },
-        { state: "col", img: "my-done.jpg", page: true, title: "Të përfunduara", spec: "Tap a completed course to open its certificate." }
+        { state: "col", img: "my-done.jpg", page: true, title: "Të përfunduara", spec: "Tap a completed course to open its certificate." },
+        { state: "min", img: "e-my.jpg", page: true, title: "Empty", spec: "0 CRD, Ende pa kurse and Shfletoni kurset." }
+      ]},
+      { name: "Të ruajturat and search", note: "Both reuse the same cards.", frames: [
+        { state: "col", img: "saved.jpg", page: true, title: "Të ruajturat", spec: "Announcements and courses together, each with a filled bookmark." },
+        { state: "min", img: "saved-empty.jpg", page: true, title: "Nothing saved", spec: "One title." },
+        { state: "col", img: "search.jpg", page: true, title: "Search", spec: "Results split into Kurse and Njoftime; Anulo closes search." },
+        { state: "min", img: "search-none.jpg", page: true, title: "No results", spec: "One title." },
+        { state: "min", img: "e-cat.jpg", page: true, title: "Empty category", spec: "A category tab with nothing in it: one title." }
       ]}
     ],
     rules: [
-      ["Less text", "Every card has its title and one line. No explanation lines under buttons."],
+      ["One data format", "Every announcement uses the same four fields, always in this order and marked by icons: when (calendar), where (pin), deadline (hourglass), cost (tag). Dates dd.mm this year, with the year otherwise; ranges with a dash and no spaces (05–07.12, 10.2027–09.2029). A missing field is not shown. Anything else goes into the short description."],
+      ["Less text", "Every card has its title and one short line. Symbols and numbers over sentences; no explanation lines under buttons; empty states are a title and at most one button."],
       ["Blue means pressed", "Any card turns the hero blue when tapped, so courses are marked by the play button and outline instead of colour."],
       ["Credits only on courses", "CRD is the one unit everywhere, and it appears only on courses, their results, the certificate and Kurset e mia."],
+      ["Two sheet sizes", "Every short sheet is 400 pt tall: icon, title, one line, buttons on the bottom edge. Long lists (the specialty list) use the full-height sheet."],
       ["Palette colours only", "Pass uses the green tint, not passed the amber tint, as elsewhere in the app."]
     ]
   }

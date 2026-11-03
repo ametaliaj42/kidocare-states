@@ -207,6 +207,107 @@
 .seg4 span{display:flex;align-items:center;justify-content:center;gap:6px;border-radius:18px;font-size:15.5px;font-weight:600;color:var(--ink)}
 .seg4 span em{font-style:normal;color:var(--muted)}
 .seg4 span.on{background:var(--blue);color:#fff}.seg4 span.on em{color:rgba(255,255,255,.8)}
+/* ---------- added 03.11: detail, saved, search, course tabs, sheets, empty states ---------- */
+.vid .skip{position:absolute;top:50%;width:46px;height:46px;margin-top:-23px;border-radius:23px;background:rgba(255,255,255,.85);color:var(--blue-ink);display:grid;place-items:center;font-size:11px;font-weight:600}
+.vid .skip svg{width:20px;height:20px;position:absolute}
+.vid .skip span{position:relative;top:1px}
+.vid .skip.b{left:calc(50% - 98px)}.vid .skip.f{left:calc(50% + 52px)}
+/* detail page */
+.dp{height:852px;overflow:hidden;position:relative}
+.dimg{margin:0 16px;height:206px;border-radius:24px;position:relative;overflow:hidden}
+.dimg .ph{position:absolute;inset:0;border-radius:24px}
+.dimg .lbls{position:absolute;left:12px;top:12px;display:flex;gap:6px}
+.lbl{height:28px;padding:0 11px;border-radius:14px;background:rgba(255,255,255,.92);font-size:13.5px;font-weight:600;color:var(--blue-ink);display:inline-flex;align-items:center;gap:5px}
+.lbl svg{width:14px;height:14px}.lbl.newp{background:var(--blue);color:#fff;letter-spacing:.04em}
+.dt{margin:18px 20px 0}
+.dt h2{font-size:24px;font-weight:600;letter-spacing:-.01em;line-height:1.25}
+.dt .org{font-size:15px;color:var(--muted);margin-top:4px}
+.facts{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:16px 16px 0}
+.fact{background:#fff;border-radius:20px;padding:12px 14px;box-shadow:0 6px 18px rgba(40,80,160,.05)}
+.fact{display:flex;align-items:center;gap:10px}
+.fact i{width:34px;height:34px;border-radius:17px;background:var(--blue-fill);color:var(--blue-ink);display:grid;place-items:center;flex:none}
+.fact i svg{width:17px;height:17px}
+.fact b{font-size:16px;font-weight:600;line-height:1.25}
+.fact b.soon{color:var(--amber)}.fact b.gone{color:var(--grey);text-decoration:line-through}
+.desc{margin:16px 20px 0;font-size:16px;line-height:1.5;color:#2B3A5C}
+/* page header with back and title */
+.ph2{display:flex;align-items:center;gap:14px;margin:8px 0 18px}
+.ph2 h1{font-size:30px;font-weight:600;letter-spacing:-.02em}
+.slab{font-size:14px;font-weight:600;color:var(--muted);margin:4px 4px 10px}
+/* search active */
+.srch.on{background:#fff;color:var(--ink);box-shadow:0 0 0 2px var(--blue)}
+.srch .xc{margin-left:auto;width:20px;height:20px;border-radius:10px;background:#C3CFE2;color:#fff;display:grid;place-items:center}
+.srch .xc svg{width:12px;height:12px;stroke-width:2.6}
+.cancel{font-size:16px;font-weight:600;color:var(--blue-ink);flex:none}
+.srow{display:flex;align-items:center;gap:12px;margin:8px 0 18px}
+.srow .srch{flex:1}
+/* empty */
+.empty3{display:flex;flex-direction:column;align-items:center;text-align:center;gap:8px;color:var(--muted);font-size:15px;padding:0 30px}
+.empty3 i{width:58px;height:58px;border-radius:29px;background:#fff;display:grid;place-items:center;color:var(--soft);margin-bottom:6px}
+.empty3 i svg{width:24px;height:24px}
+.empty3 b{font-size:17px;font-weight:600;color:var(--ink)}
+.empty3 .cta{height:46px;padding:0 20px;margin-top:10px;font-size:16px}
+/* course tabs */
+.ncard{background:#fff;border-radius:20px;padding:14px 16px;margin:0 16px 10px;box-shadow:0 6px 18px rgba(40,80,160,.05)}
+.tpill{height:28px;padding:0 10px 0 8px;border-radius:14px;background:var(--blue-fill);color:var(--blue-ink);font-size:13px;font-weight:600;display:inline-flex;align-items:center;gap:5px;font-variant-numeric:tabular-nums}
+.tpill svg{width:12px;height:12px;fill:currentColor}
+.ncard p{font-size:16px;line-height:1.45;margin-top:8px}
+.ncard.edit{box-shadow:0 0 0 2px var(--blue),0 10px 24px rgba(80,140,250,.15)}
+.ncard .ta{min-height:76px;font-size:16px;line-height:1.45;margin-top:8px;color:var(--ink)}
+.ncard .ta i{display:inline-block;width:2px;height:19px;background:var(--blue);vertical-align:-4px}
+.ncard .acts3{display:flex;justify-content:flex-end;gap:8px;margin-top:6px}
+.ncard .acts3 span{height:40px;padding:0 18px;border-radius:20px;display:grid;place-items:center;font-size:15px;font-weight:600}
+.mrow{display:flex;align-items:center;gap:14px;background:#fff;border-radius:20px;padding:12px 14px;margin:0 16px 10px;box-shadow:0 6px 18px rgba(40,80,160,.05)}
+.mrow .tx{flex:1;min-width:0}
+.mrow .tx b{display:block;font-size:16px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mrow .tx span{display:block;font-size:14px;color:var(--muted)}
+.mrow .chev{width:18px;height:18px}
+.cm{display:flex;gap:12px;margin:0 20px 18px}
+.cm .av2{width:38px;height:38px;border-radius:19px;background:#fff;color:var(--blue-ink);display:grid;place-items:center;font-weight:600;font-size:15px;flex:none}
+.cm .tx{flex:1;min-width:0}
+.cm .tx b{font-size:15px;font-weight:600}.cm .tx em{font-style:normal;font-size:13px;color:var(--muted);margin-left:6px}
+.cm .tx p{font-size:15.5px;line-height:1.45;margin-top:2px}
+.cm .ac{display:flex;gap:16px;margin-top:6px;font-size:13.5px;font-weight:600;color:var(--muted)}
+.cm .ac span{display:inline-flex;align-items:center;gap:5px}.cm .ac svg{width:15px;height:15px}
+.composer{height:52px;border-radius:26px;background:#fff;display:flex;align-items:center;padding:0 6px 0 18px;color:var(--muted);font-size:16px;box-shadow:0 10px 30px rgba(40,80,160,.10)}
+.composer .snd{margin-left:auto;width:40px;height:40px;border-radius:20px;background:var(--grey-fill);color:#9098AD;display:grid;place-items:center}
+.composer .snd svg{width:18px;height:18px}
+/* sheets */
+.ov2{position:relative;height:852px;overflow:hidden}
+.ov2 .dim{z-index:2}.ov2 .bs{z-index:3}
+.opt2{display:flex;align-items:center;gap:12px;padding:14px 0;border-top:1px solid var(--line);font-size:17px}
+.opt2:first-of-type{border-top:0}
+.opt2 b{flex:1;font-weight:500}.opt2 em{font-style:normal;font-size:14px;color:var(--muted)}
+.opt2 .rd{width:22px;height:22px;border-radius:11px;border:2px solid #C3CFE2;flex:none}
+.opt2.on b{font-weight:600}.opt2.on .rd{border:6px solid var(--blue)}
+.qbtns{display:flex;gap:10px}
+.qbtns .rb2{width:56px;height:56px;border-radius:28px;background:#fff;color:var(--ink);display:grid;place-items:center;flex:none;box-shadow:0 10px 24px rgba(40,80,160,.10)}
+.qbtns .rb2 svg{width:20px;height:20px}.qbtns .cta{flex:1}
+/* no image: the category icon stands in */
+.cv .ph.noimg{background:var(--blue-fill);border:0;display:grid;place-items:center}
+.cv .ph.noimg svg{position:static;width:40px;height:40px;stroke:var(--blue-ink);stroke-width:1.5;opacity:.6}
+.nogain{color:var(--grey)}
+/* full-height sheet (lists with many options) and the standard short sheet */
+.bs.full{top:56px;display:flex;flex-direction:column;padding-bottom:0}
+.bs.full .stitle{margin-bottom:14px}
+.sp-s{background:var(--track);height:48px;margin-bottom:8px}
+.splist{flex:1;overflow:hidden;margin:0 -8px}
+.sp{display:flex;align-items:center;gap:10px;min-height:50px;padding:0 12px;border-radius:16px;font-size:16.5px}
+.sp b{flex:1;font-weight:500}
+.sp em{font-style:normal;font-size:14px;color:var(--muted)}
+.sp em.n2{min-width:26px;height:24px;border-radius:12px;background:var(--track);display:grid;place-items:center;font-size:13px;font-weight:600}
+.sp .chv{width:18px;height:18px;color:var(--soft)}
+.sp.on{background:var(--blue-fill);color:var(--blue-ink)}.sp.on b{font-weight:600}.sp.on svg{width:20px;height:20px;stroke-width:2.4}
+.sp.sgrp b{font-weight:600}
+.subs{margin-left:22px;border-left:2px solid var(--line);padding-left:6px}
+.sp.sp2{min-height:44px;font-size:15.5px}.sp.sp2 b{font-weight:400}
+.bs.std{height:400px;display:flex;flex-direction:column}
+.bs.std .stitle{margin-right:0;text-align:center}
+.bs.std .ssub{text-align:center}
+.sic{width:64px;height:64px;border-radius:32px;display:grid;place-items:center;margin:10px auto 16px}
+.sic svg{width:28px;height:28px}
+.sic.pink{background:var(--pink-fill);color:var(--pink)}
+.sic.blue{background:var(--blue-fill);color:var(--blue-ink)}
 </style>
 </head>
 <body>
@@ -223,10 +324,20 @@ Object.assign(P,{
  pin:'<path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/>',
  check:'<path d="M20 6 9 17l-5-5"/>',
  down:'<path d="m6 9 6 6 6-6"/>',
+ up:'<path d="m18 15-6-6-6 6"/>',
  lock:'<rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/>',
  star:'<path d="M12 17.75l-6.17 3.25 1.18-6.87-5-4.87 6.9-1L12 2l3.09 6.26 6.9 1-5 4.87 1.18 6.87z"/>',
  dl:'<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5"/><path d="M12 15V3"/>',
  share:'<circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 13.5 6.8 4M15.4 6.5l-6.8 4"/>',
+ back10:'<path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/>',
+ fwd10:'<path d="M21 12a9 9 0 1 1-3-6.7L21 8"/><path d="M21 3v5h-5"/>',
+ send:'<path d="M12 19V5"/><path d="m5 12 7-7 7 7"/>',
+ thumb:'<path d="M7 10v12"/><path d="M15 5.88 14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2a3.13 3.13 0 0 1 3 3.88Z"/>',
+ reply:'<path d="M9 17 4 12l5-5"/><path d="M20 18v-2a4 4 0 0 0-4-4H4"/>',
+ cal:'<rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/>',
+ hg:'<path d="M5 22h14M5 2h14"/><path d="M17 22v-4.17a2 2 0 0 0-.59-1.42L12 12l-4.41 4.41A2 2 0 0 0 7 17.83V22"/><path d="M7 2v4.17a2 2 0 0 0 .59 1.42L12 12l4.41-4.41A2 2 0 0 0 17 6.17V2"/>',
+ tag:'<path d="M12.59 2.59A2 2 0 0 0 11.17 2H4a2 2 0 0 0-2 2v7.17a2 2 0 0 0 .59 1.42l8.7 8.7a2.43 2.43 0 0 0 3.42 0l6.58-6.58a2.43 2.43 0 0 0 0-3.42z"/><circle cx="7.5" cy="7.5" r="1.5" fill="currentColor"/>',
+ exit:'<path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5"/><path d="M21 12H9"/>',
  retry:'<path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/>'
 });
 const CAT={kurs:['play','Kurs'],konf:['mic','Konferenca'],akad:['cap','Akademike'],pune:['brief','Punësim'],spec:['link','Specializim']};
@@ -234,14 +345,18 @@ const ph=()=>`<div class="ph">${X('')}</div>`;
 const metaHtml=m=>`<div class="meta">${m.map(([ic,t,c])=>`<span${c?` class="${c}"`:''}>${I(ic)}${t}</span>`).join('')}</div>`;
 
 /* ---------- data (placeholder; course content to be confirmed by a doctor) ---------- */
+/* one schema for every announcement: when (date or range), where, until (deadline), cost. Missing fields are simply not shown.
+   Dates: dd.mm this year, dd.mm.yyyy or mm.yyyy otherwise; ranges with an en dash, no spaces. */
 const NEWS=[
- {c:'konf',isNew:1,t:'Kongresi Shqiptar i Pediatrisë 2026',m:[['clock','Regjistrimi deri më 20.11','soon']]},
+ {c:'konf',isNew:1,t:'Kongresi Shqiptar i Pediatrisë 2026',when:'05–07.12',where:'Tiranë',until:'20.11',soon:1,cost:'€80'},
  {c:'kurs',isNew:1,t:'Astma te fëmijët: identifikimi dhe referimi',m:[['award','0.5 CRD','crd'],['clock','30 min']]},
- {c:'akad',isNew:1,t:'Master në Shëndet Publik: bursa DAAD',m:[['clock','Apliko deri më 15.01.2027']]},
- {c:'pune',t:'MedStaff Albania: pediatër për klinikë private',m:[['pin','Tiranë']]},
- {c:'spec',t:'Udhëzuesi i specializimeve në BE',m:[['file','PDF']]},
- {c:'akad',past:1,t:'Internship 6-mujor në neonatologji, Bolonjë',m:[['clock','Afati ka kaluar','gone']]}
+ {c:'akad',isNew:1,t:'Master në Shëndet Publik: bursa DAAD',when:'10.2027–09.2029',where:'Heidelberg',until:'15.01.2027',cost:'Falas'},
+ {c:'pune',t:'MedStaff Albania: pediatër për klinikë private',where:'Tiranë',until:'30.11'},
+ {c:'spec',t:'Udhëzuesi i specializimeve në BE',where:'Online'},
+ {c:'akad',past:1,t:'Internship 6-mujor në neonatologji, Bolonjë',when:'01–06.2027',where:'Bolonjë',until:'20.09',cost:'Falas'}
 ];
+/* card line: place, then the deadline (or the date when there is no deadline) */
+const metaOf=n=>n.m||[n.where&&['pin',n.where],n.until?['hg',n.until,n.past?'gone':n.soon?'soon':'']:n.when&&['cal',n.when]].filter(Boolean);
 const C_PROG={s:'prog',p:35,t:'Bronkioliti te foshnjat: kur shtrohet në spital',crd:'0.25',min:15};
 const C_NEW={s:'new',t:'Astma te fëmijët: identifikimi dhe referimi',crd:'0.5',min:30};
 const C_PLAIN={t:'Ethet te foshnja nën 3 muaj: vlerësimi i rrezikut',crd:'0.25',min:15};
@@ -255,17 +370,17 @@ const head=()=>`<div class="ih"><h1>Infopoint</h1><span class="rbtn">${I('bmark'
 const utabs=on=>`<div class="utabs">${['Të gjitha','Kurse','Konferenca','Akademike','Punësim','Specializim'].map((t,k)=>`<span class="${k===on?'on':''}">${t}</span>`).join('')}</div>`;
 /* one card for everything. o.lbls replaces the category labels, o.p draws the progress bar, o.press the tapped state */
 function card(n,o={}){
-  const lbls=o.lbls||[`<span class="lbl">${I(CAT[n.c][0])}${CAT[n.c][1]}</span>`,n.isNew?'<span class="lbl newp">E RE</span>':''];
+  const lbls=o.lbls||[`<span class="lbl">${I(CAT[n.c][0])}${CAT[n.c][1]}</span>`,n.isNew?'<span class="lbl newp">E RE</span>':'',n.past?'<span class="lbl g">Mbyllur</span>':''];
   const kurs=n.c==='kurs'&&!o.lbls;
-  return `<div class="card cv ${n.past?'past':''} ${kurs?'kurs':''} ${o.press?'press':''}">${ph()}<div class="lbls">${lbls.join('')}</div><span class="bmc">${I('bmark')}</span>
+  return `<div class="card cv ${n.past?'past':''} ${kurs?'kurs':''} ${o.press?'press':''}">${o.noimg?`<div class="ph noimg">${I(CAT[n.c][0])}</div>`:ph()}<div class="lbls">${lbls.join('')}</div><span class="bmc">${o.saved?`<svg class="i" viewBox="0 0 24 24" style="fill:currentColor">${P.bmark}</svg>`:I('bmark')}</span>
    ${kurs?`<span class="play">${I('play')}</span>`:''}${o.p?`<div class="pbar"><b style="width:${o.p}%"></b></div>`:''}
-   <div class="bd"><div class="ttl">${n.t}</div>${metaHtml(n.m)}</div></div>`;
+   <div class="bd"><div class="ttl">${n.t}</div>${metaHtml(metaOf(n))}</div></div>`;
 }
 /* course card in the Kurse tab and Kurset e mia: the status replaces the category */
 function course(c,o={}){
   let l=[];
   if(c.s==='new')l=['<span class="lbl newp">E RE</span>'];
-  if(c.s==='prog')l=[`<span class="lbl">${I('play')}Në progres ${c.p}%</span>`];
+  if(c.s==='prog')l=[`<span class="lbl">${I('play')}${c.p}%</span>`];
   if(c.s==='exp')l=['<span class="lbl g">Pa kredite</span>'];
   if(c.s==='done')l=[`<span class="lbl gr">${I('check')}E përfunduar</span>`];
   const m=c.s==='exp'?[['clock',c.min+' min']]:[['award',c.crd+' CRD','crd'],['clock',c.min+' min']];
@@ -279,29 +394,32 @@ const kurseTab=()=>screen(credits('0.5')+specRow(COURSES.length)+COURSES.map(c=>
 
 const OBJ=['Të dalloni foshnjat me bronkiolit që kanë nevojë për shtrim','Të vlerësoni shenjat e frymëmarrjes së vështirë','Të udhëzoni prindin për kujdesin në shtëpi','Të dini kur të referoni në urgjencë'];
 /* course screen: one video; the assessment unlocks in its last 30 seconds */
-function kursi(ready){
+function kursi(ready,o={}){
   return `<div class="kp bg">${statusBar()}<div class="top"><span class="rbtn">${I('back')}</span><span class="rbtn">${I('bmark')}</span></div>
-  <div class="vid">${X('')}<span class="play">${I('play')}</span></div>
+  <div class="vid">${X('')}<span class="skip b">${I('back10')}<span>10</span></span><span class="play">${I('play')}</span><span class="skip f">${I('fwd10')}<span>10</span></span></div>
   <div class="vbar"><span>${ready?'14:35':'01:53'}</span><span class="tr"><b style="width:${ready?97:13}%"></b><i style="left:6%"></i><i style="left:44%"></i></span><span>15:00</span><span class="note">${I('plus')}Shënim</span></div>
-  <div class="kt"><h2>${CNAME}</h2>${metaHtml([['award','0.25 CRD','crd'],['clock','15 min']])}</div>
-  <div class="tabs4"><span class="on">Përmbledhje</span><span>Shënime <em>2</em></span><span>Materiale</span><span>Diskutim</span></div>
-  <div class="card sumc"><div class="lab2">Objektivat</div><ul>${OBJ.map(o=>`<li>${o}</li>`).join('')}</ul></div>
-  <div class="dock">${ready?`<div class="cta on">Fillo vlerësimin${I('arrow')}</div>`:`<div class="cta off">${I('lock')}Fillo vlerësimin</div>`}</div></div>`;
+  <div class="kt"><h2>${o.title||CNAME}</h2>${metaHtml(o.expired?[['award','Pa kredite','gone'],['clock','15 min']]:[['award','0.25 CRD','crd'],['clock','15 min']])}</div>
+  <div class="tabs4">${['Përmbledhje',`Shënime <em>${o.notes===undefined?2:o.notes}</em>`,'Materiale',`Diskutim <em>3</em>`].map((t,k)=>`<span class="${(o.tab||0)===k?'on':''}">${t}</span>`).join('')}</div>
+  ${o.body||`<div class="card sumc"><div class="lab2">Objektivat</div><ul>${OBJ.map(x=>`<li>${x}</li>`).join('')}</ul></div>`}
+  ${o.noDock?(o.dock||''):`<div class="dock">${ready?`<div class="cta on">Fillo vlerësimin${I('arrow')}</div>`:`<div class="cta off">${I('lock')}Fillo vlerësimin</div>`}</div>`}</div>`;
 }
 const Q={case:'Foshnjë, 4 muaj',txt:'Kollë dhe rrufë prej 3 ditësh. Sot ushqehet më pak se gjysma e zakonshme dhe merr frymë shpejt, 64 herë në minutë.',
  stem:'Cili është hapi më i përshtatshëm tani?',
  o:[['A','Referim për shtrim në spital'],['B','Kujdes në shtëpi dhe kontroll pas 48 orësh'],['C','Antibiotik dhe kontroll pas një jave'],['D','Vetëm pastrim i hundës me serum']]};
-function question(sel){
-  return `<div class="kp bg">${statusBar()}<div class="qtop"><span class="rbtn">${I('x')}</span><div class="qseg"><i class="on"></i><i></i></div><span class="qn">1 / 2</span></div>
-  <div class="card case"><small>Rasti klinik</small><b>${Q.case}</b><p>${Q.txt}</p></div>
-  <div class="stem">${Q.stem}</div><div class="opts">${Q.o.map(([l,t])=>`<div class="opt ${sel===l?'sel':''}"><i>${l}</i>${t}</div>`).join('')}</div>
-  <div class="dock"><div class="cta ${sel?'on':'off'}">Pyetja tjetër${sel?I('arrow'):''}</div></div></div>`;
+const Q2={case:'E njëjta foshnjë, pas 2 ditësh',txt:'Prindërit zgjodhën kujdesin në shtëpi. Foshnja ushqehet më mirë dhe frymëmarrja është më e qetë.',
+ stem:'Kur duhet riparë foshnja pas vizitës?',
+ o:[['A','Vetëm nëse ka temperaturë'],['B','Pas një jave'],['C','Pas 24 deri 48 orësh'],['D','Nuk ka nevojë']]};
+function question(sel,step=1){
+  return `<div class="kp bg">${statusBar()}<div class="qtop"><span class="rbtn">${I('x')}</span><div class="qseg"><i class="on"></i><i class="${step>1?'on':''}"></i></div><span class="qn">${step} / 2</span></div>
+  ${(()=>{const q=step>1?Q2:Q;return `<div class="card case"><small>Rasti klinik</small><b>${q.case}</b><p>${q.txt}</p></div>
+  <div class="stem">${q.stem}</div><div class="opts">${q.o.map(([l,t])=>`<div class="opt ${sel===l?'sel':''}"><i>${l}</i>${t}</div>`).join('')}</div>`})()}
+  <div class="dock">${step>1?`<div class="qbtns"><span class="rb2">${I('back')}</span><div class="cta ${sel?'on':'off'}">Konfirmoni përgjigjet</div></div>`:`<div class="cta ${sel?'on':'off'}">Pyetja tjetër${sel?I('arrow'):''}</div>`}</div></div>`;
 }
 const bar=(lab,x='x')=>`<div class="bar"><span class="rbtn">${I(x)}</span><div class="tx"><small>${lab}</small><b>${CNAME}</b></div></div>`;
 /* result: same layout for both outcomes; only colour, icon, words and the sheet change */
-function result(pass,stars){
-  const t=pass?{c:'tg',ic:'check',h:'Vlerësimi u kalua',p:'+0.25 CRD u shtuan në profilin tuaj',a:'2/2',b:'0.75 CRD'}
-              :{c:'ta',ic:'retry',h:'Vlerësimi nuk u kalua',p:'Duhen 2 nga 2 përgjigje të sakta',a:'1/2',b:'0.5 CRD'};
+function result(pass,stars,noCred){
+  const t=noCred?{c:'tg',ic:'check',h:'Vlerësimi u kalua',p:'Pa kredite',a:'2/2',b:'0.75 CRD'}:pass?{c:'tg',ic:'check',h:'Vlerësimi u kalua',p:'+0.25 CRD',a:'2/2',b:'0.75 CRD'}
+              :{c:'ta',ic:'retry',h:'Vlerësimi nuk u kalua',p:'Duhen 2/2',a:'1/2',b:'0.5 CRD'};
   const sheet=pass?`<h3>Vlerësoni kursin</h3><div class="stars">${[1,2,3,4,5].map(i=>`<svg class="i ${i<=stars?'on':''}" viewBox="0 0 24 24">${P.star}</svg>`).join('')}</div><div class="field">Koment (opsional)</div><div class="cta ${stars?'on':'off'}">Merrni certifikatën</div>`
    :`<h3>Përgjigjet</h3><div class="qr"><div class="h"><i class="c-green">${I('check')}</i><span>${Q.stem}</span></div></div>
      <div class="qr"><div class="h"><i class="c-pink">${I('x')}</i><span>Kur duhet riparë foshnja pas vizitës?</span></div><div class="ans no"><i>B</i>Pas një jave</div><div class="ans yes"><i>C</i>Pas 24 deri 48 orësh</div></div>
@@ -326,7 +444,86 @@ function myCourses(done){
   ${(done?fin:prog).map(c=>course(c)).join('')}</div>`;
 }
 
+/* ---------- added screens ---------- */
+const backHead=t=>`<div class="ph2"><span class="rbtn">${I('back')}</span><h1>${t}</h1></div>`;
+const empty3=(icon,t,p,btn)=>`<div class="empty3"><i>${I(icon)}</i><b>${t}</b>${p?`<span>${p}</span>`:''}${btn?`<div class="cta on">${btn}</div>`:''}</div>`;
+const DET={
+ konf:{n:NEWS[0],org:'Shoqata Shqiptare e Pediatrisë',d:'Kongresi vjetor kombëtar: infeksionet respiratore, neonatologjia dhe telemjekësia pediatrike. Rezidentët marrin pjesë falas.',cta:['ext','Regjistrohuni']},
+ pune:{n:NEWS[3],org:'MedStaff Albania',d:'Pediatër me kohë të pjesshme për turne pasdite në një klinikë private. Paga sipas përvojës.',cta:['send','Dërgoni CV-në']},
+ past:{n:NEWS[5],org:'Policlinico di Sant’Orsola',d:'Internship klinik në repartin e neonatologjisë, në italisht ose anglisht.',off:'Mbyllur'}
+};
+const FACTS=[['when','cal'],['where','pin'],['until','hg'],['cost','tag']];
+function detail(k){
+  const x=DET[k],n=x.n;
+  const f=FACTS.filter(([key])=>n[key]).map(([key,ic])=>`<div class="fact"><i>${I(ic)}</i><b class="${key==='until'?(n.past?'gone':n.soon?'soon':''):''}">${n[key]}</b></div>`).join('');
+  return `<div class="dp bg">${statusBar()}<div class="kp" style="height:auto"><div class="top"><span class="rbtn">${I('back')}</span><span class="rbtn">${I('bmark')}</span></div></div>
+  <div class="dimg">${ph()}<div class="lbls"><span class="lbl">${I(CAT[n.c][0])}${CAT[n.c][1]}</span>${n.isNew?'<span class="lbl newp">E RE</span>':''}${n.past?'<span class="lbl g">Mbyllur</span>':''}</div></div>
+  <div class="dt"><h2>${n.t}</h2><div class="org">${x.org}</div></div>
+  <div class="facts">${f}</div>
+  <div class="desc">${x.d}</div>
+  <div class="dock">${x.off?`<div class="cta off">${x.off}</div>`:`<div class="cta on">${I(x.cta[0])}${x.cta[1]}</div>`}</div></div>`;
+}
+const savedList=()=>`<div class="mypg bg">${statusBar()}${backHead('Të ruajturat')}${[card(NEWS[0],{saved:1}),course(C_PROG,{}).replace(P.bmark+'</svg></span>',P.bmark+'</svg></span>'),card(NEWS[3],{saved:1})].join('')}</div>`;
+const savedFix=h=>h.replace(/<span class="bmc"><svg class="i " viewBox="0 0 24 24">/g,'<span class="bmc"><svg class="i" viewBox="0 0 24 24" style="fill:currentColor">');
+const savedEmpty=()=>`<div class="mypg bg" style="display:flex;flex-direction:column">${statusBar()}${backHead('Të ruajturat')}<div style="flex:1;display:flex;align-items:center;justify-content:center;margin-bottom:60px">${empty3('bmark','Ende pa të ruajtura','')}</div></div>`;
+const sbar=q=>`<div class="srow"><div class="srch on">${I('search')}${q}<span style="width:2px;height:20px;background:var(--blue);margin-left:-6px"></span><span class="xc">${I('x')}</span></div><span class="cancel">Anulo</span></div>`;
+const searchRes=()=>`<div class="scr bg">${statusBar()}${sbar('astma')}<div class="slab">Kurse</div>${card(NEWS[1])}<div class="slab">Njoftime</div>${card({c:'konf',t:'Konferenca: astma dhe alergjitë te fëmijët',where:'Tiranë',until:'05.12',soon:1})}</div>`;
+const searchNone=()=>`<div class="scr bg" style="display:flex;flex-direction:column">${statusBar()}${sbar('dermatologji')}<div style="flex:1;display:flex;align-items:center;justify-content:center;margin-bottom:60px">${empty3('search','Asnjë rezultat','')}</div></div>`;
+const NOTES=[['00:58','Shenjat e frymëmarrjes së vështirë: tërheqje e brinjëve, frymëmarrje mbi 60 në minutë.'],['06:40','Shtrim kur ushqehet më pak se gjysma e zakonshme ose ka apne.']];
+const notesBody=edit=>`${edit?`<div class="ncard edit"><span class="tpill">${I('play')}01:53</span><div class="ta">Saturimi nën 92% është arsye për shtrim<i></i></div><div class="acts3"><span style="color:var(--muted)">Anulo</span><span style="background:var(--blue);color:#fff">Ruaj</span></div></div>`:''}${NOTES.map(([t,x])=>`<div class="ncard"><span class="tpill">${I('play')}${t}</span><p>${x}</p></div>`).join('')}`;
+const fileTile=k=>`<div class="file">${X()}<b>${k}</b></div>`;
+const linkTile=()=>`<div class="file lnk">${I('link')}<b>Lidhje</b></div>`;
+const matBody=()=>`<div class="slab" style="margin-left:20px">Skedarë</div><div class="mrow">${fileTile('PDF')}<div class="tx"><b>Prezantimi i kursit</b><span>PDF · 18 faqe</span></div>${I('chev','chev')}</div>
+ <div class="slab" style="margin-left:20px;margin-top:8px">Burime</div><div class="mrow">${linkTile()}<div class="tx"><b>Udhëzuesi për bronkiolitin</b><span>who.int</span></div>${I('ext','chev')}</div><div class="mrow">${linkTile()}<div class="tx"><b>Saturimi i oksigjenit te foshnjat</b><span>aap.org</span></div>${I('ext','chev')}</div>`;
+const CM=[['E','Dr. Elira Hoxha','2 ditë','Kriteret për shtrim janë shumë praktike për turnet e natës.',12],['A','Dr. Arben Kola','1 ditë','A vlen e njëjta prag saturimi edhe për foshnjat e lindura para kohe?',4],['I','Dr. Ina Shehu','5 orë','Do të ishte e dobishme një tabelë përmbledhëse në materiale.',1]];
+const discBody=()=>CM.map(([i,n,t,x,h])=>`<div class="cm"><span class="av2">${i}</span><div class="tx"><b>${n}</b><em>${t}</em><p>${x}</p><div class="ac"><span>${I('thumb')}${h}</span><span>${I('reply')}Përgjigjuni</span></div></div></div>`).join('');
+const composer=()=>`<div class="dock"><div class="composer">Shkruani një koment<span class="snd">${I('send')}</span></div></div>`;
+const SPEC=[['Mjekësi e përgjithshme',12],['Mjekësi familje',8],['Mjekësi interne',null,['Mjekësi interne','Kardiologji','Endokrinologji','Gastroenterologji','Nefrologji','Pneumologji','Hematologji','Reumatologji','Alergologji','Sëmundje infektive']],['Neurologji dhe shëndet mendor',null,['Neurologji','Psikiatri','Psikiatri e fëmijëve']],['Pediatri',5],['Kirurgji',null,['Kirurgji e përgjithshme','Ortopedi','Urologji','Neurokirurgji','Kardiokirurgji','Kirurgji pediatrike','Kirurgji plastike','Kirurgji vaskulare']],['Oftalmologji',3],['ORL',4],['Dermatologji',6],['Onkologji',5],['Diagnostikë',null,['Radiologji','Laborator klinik','Mikrobiologji','Anatomi patologjike']],['Urgjencë dhe kujdes intensiv',null,['Mjekësi urgjence','Anestezi','Terapi intensive','Terapi intensive pediatrike']],['Shëndet publik',2]];
+function specSheet(open){
+  const rows=SPEC.map(([t,n,subs])=>{
+    const on=t==='Pediatri';
+    if(!subs) return `<div class="sp ${on?'on':''}"><b>${t}</b>${on?I('check'):`<em>${n}</em>`}</div>`;
+    const op=open===t;
+    return `<div class="sp sgrp"><b>${t}</b><em class="n2">${subs.length}</em>${I(op?'up':'down','chv')}</div>${op?`<div class="subs">${subs.map((x,k)=>`<div class="sp sp2"><b>${x}</b><em>${[4,2,3,1,2,6,1,2,3,2][k]||1}</em></div>`).join('')}</div>`:''}`;
+  }).join('');
+  return `<div class="ov2">${kurseTab()}<div class="dim"></div><div class="bs full"><div class="grab"></div><span class="xbtn">${I('x')}</span><div class="stitle">Specialiteti</div>
+   <div class="srch sp-s">${I('search')}Kërkoni specialitetin</div><div class="splist">${rows}</div></div></div>`;
+}
+/* every short sheet in the app has this one height (400): icon, title, one line, buttons on the bottom edge */
+const stdSheet=(icon,tone,title,line,btns)=>`<div class="dim"></div><div class="bs std"><div class="grab"></div><span class="sic ${tone}">${I(icon)}</span><div class="stitle">${title}</div>${line?`<div class="ssub">${line}</div>`:''}<div class="grow"></div>${btns}</div>`;
+function leaveSheet(){
+  return `<div class="ov2">${question('A')}${stdSheet('exit','pink','Të dilni nga vlerësimi?','Përgjigjet nuk ruhen.','<div class="btnb blue" style="margin-top:0">Vazhdoni vlerësimin</div><div class="btnb redo">Dilni</div>')}</div>`;
+}
+const kurseEmpty=()=>`<div class="scr bg">${statusBar()}${head()}${utabs(1)}${credits('0.5')}<div class="spec"><span class="dd">Alergologji${I('down')}</span><em>0 kurse</em></div><div style="margin-top:90px">${empty3('play','Asnjë kurs për Alergologji','','Ndryshoni specialitetin')}</div>${gnav(2,{1:3})}</div>`;
+const catEmpty=()=>`<div class="scr bg">${statusBar()}${head()}${utabs(5)}<div style="margin-top:160px">${empty3('link','Ende pa njoftime','')}</div>${gnav(2,{1:3})}</div>`;
+const myEmpty=()=>`<div class="mypg bg" style="display:flex;flex-direction:column">${statusBar()}${backHead('Kurset e mia')}<div class="cplain"><small>${I('award')}Kreditet e 2026</small><div class="v">0<span>CRD</span></div>
+   <div class="st"><div><b>0</b><em>Kurse</em></div><div><b>0</b><em>Certifikata</em></div><div><b>0 min</b><em>Kohë</em></div></div></div>
+   <div style="flex:1;display:flex;align-items:center;justify-content:center;margin-top:-60px">${empty3('play','Ende pa kurse','','Shfletoni kurset')}</div></div>`;
+const LONG={c:'konf',isNew:1,t:'Konferenca Ndërkombëtare e Mjekësisë Pediatrike dhe Neonatale të Ballkanit Perëndimor 2027',where:'Shkup',until:'15.01.2027'};
+
 const F={
+ 'det-konf':()=>detail('konf'),
+ 'det-pune':()=>detail('pune'),
+ 'det-past':()=>detail('past'),
+ 'saved':()=>savedFix(savedList()),
+ 'saved-empty':savedEmpty,
+ 'search':searchRes,
+ 'search-none':searchNone,
+ 'tab-notes':()=>kursi(0,{tab:1,body:notesBody(0)}),
+ 'tab-note-add':()=>kursi(0,{tab:1,notes:2,body:notesBody(1),noDock:1}),
+ 'tab-mat':()=>kursi(0,{tab:2,body:matBody()}),
+ 'tab-disc':()=>kursi(0,{tab:3,body:discBody(),noDock:1,dock:composer()}),
+ 'spec-sheet':()=>specSheet(),
+ 'spec-open':()=>specSheet('Kirurgji'),
+ 'q2':()=>question('C',2),
+ 'q-leave':leaveSheet,
+ 'exp-kursi':()=>kursi(0,{expired:1,title:'Vaksinimi sezonal kundër gripit te fëmijët'}),
+ 'exp-result':()=>result(1,4,1),
+ 'e-kurse':kurseEmpty,
+ 'e-cat':catEmpty,
+ 'e-my':myEmpty,
+ 'long':()=>crop(card(LONG)),
+ 'noimg':()=>crop(card(NEWS[3],{noimg:1})),
  'path-1':allTab,
  'path-2':kurseTab,
  'path-3':()=>kursi(0),
