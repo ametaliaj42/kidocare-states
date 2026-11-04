@@ -2,7 +2,7 @@
 // Frame: { state: min|col|exp|det|full|sys, img, title?, spec, via?, page?, from? }. "via" draws an arrow with that trigger before the frame; without it, frames sit side by side. "from" reads the image from another feature's folder.
 // "path" (optional, shown first): every screen a doctor can reach for the minimal child (Noa), in tap order, before the full screen and the components.
 // Features listed in LIVE render their frames from one HTML file instead of images: the frame's img name (without .jpg) is the frame id in that file.
-window.LIVE = { "kartela-mjekesore": "live/kartela-mjekesore.html", "rezultati": "live/rezultati.html", "profili-i-femijes": "live/profili-i-femijes.html", "profili-i-kujdestarit": "live/profili-i-kujdestarit.html", "gjendjet-e-sistemit": "live/gjendjet-e-sistemit.html", "profili-i-mjekut": "live/profili-i-mjekut.html", "turni-live": "live/turni-live.html", "thirrja-video": "live/thirrja-video.html", "konsultat": "live/konsultat.html", "biseda": "live/biseda.html", "infopoint": "live/infopoint.html" };
+window.LIVE = { "kartela-mjekesore": "live/kartela-mjekesore.html", "rezultati": "live/rezultati.html", "profili-i-femijes": "live/profili-i-femijes.html", "profili-i-kujdestarit": "live/profili-i-kujdestarit.html", "gjendjet-e-sistemit": "live/gjendjet-e-sistemit.html", "profili-i-mjekut": "live/profili-i-mjekut.html", "turni-live": "live/turni-live.html", "turni-agjenda": "live/turni-agjenda.html", "thirrja-video": "live/thirrja-video.html", "konsultat": "live/konsultat.html", "biseda": "live/biseda.html", "infopoint": "live/infopoint.html" };
 window.FEATURES = [
   {
     id: "turni-live",
@@ -57,6 +57,93 @@ window.FEATURES = [
     rules: [
       ["Open card shows only what helps before accepting", "Parent note, Pesha, Mosha, then Alergjitë and Sëmundje kronike only if the child has any. No measurement dates, no \"Asnjë\". Everything else lives in the Kartela."],
       ["Two tones", "Allergies are pink with the warning icon; chronic illnesses are amber with the repeat icon, everywhere in the app."]
+    ]
+  },
+  {
+    id: "turni-agjenda",
+    name: "Turni: Agjenda",
+    side: "doctor",
+    date: "04.11.2026",
+    purpose: "The doctor's day while offline: calendar, summary and today's consultations. Only the consultation cards are new: they take the Live card style, show the diagnosis once a consultation is done, and open in place with a way to the result.",
+    path: {
+      note: "Rea's consultation is done but the result is not written yet. The form and the result page are the existing Rezultati designs, shown with their own sample child.",
+      frames: [
+        { state: "min", img: "path-1.jpg", page: true, title: "Agjenda", spec: "Opens offline: Turni card, calendar on today, Përmbledhje. Unchanged from the current app." },
+        { state: "col", img: "path-2.jpg", page: true, via: "Scroll", title: "Konsultat", spec: "Today's five consultations in time order. Rea's is done with the amber Pa rezultat tag." },
+        { state: "exp", img: "path-3.jpg", page: true, via: "Tap Rea's card", title: "Rea open", spec: "Opens in place: Pesha, Mosha, Konsultat e fundit, Profili i plotë and the amber Plotësoni rezultatin button." },
+        { state: "det", img: "path-1.jpg", from: "rezultati", page: true, via: "Tap Plotësoni rezultatin", title: "Rezultati", spec: "Opens the result form for that consultation." }
+      ]
+    },
+    screen: {
+      note: "Header with MJEK, offline Turni card, Agjenda calendar, Përmbledhje, search and bottom bar are the current app's; only the cards changed. The next consultation keeps the full blue card.",
+      frames: [
+        { state: "full", img: "screen-full.jpg", title: "Five today", spec: "Done with diagnosis, cancelled, next (blue), upcoming, waiting for the parent." },
+        { state: "full", img: "screen-nores.jpg", title: "Result missing", spec: "Same day, but Rea's result is not written yet: amber Pa rezultat in place of the diagnosis." }
+      ]
+    },
+    components: [
+      { name: "Consultation card", note: "Closed: time block coloured by status, name, age with one status tag, the open indicator, and the action or status on the right. Same size and shape as the Live cards.", frames: [
+        { state: "col", img: "c-done.jpg", title: "Done, result sent", spec: "Green time block and check. The tag is the diagnosis from the result." },
+        { state: "col", img: "c-nores.jpg", title: "Done, no result", spec: "Amber Pa rezultat tag until the doctor sends the result." },
+        { state: "col", img: "c-cx.jpg", title: "Cancelled", spec: "Faded card with the name in grey, Anuluar nga prindi tag. No strike-through." },
+        { state: "col", img: "c-next.jpg", title: "Next", spec: "The full blue card with the pas 34 min pill; its video button is the only active one. Only one per list." },
+        { state: "col", img: "c-up.jpg", title: "Upcoming", spec: "Blue time block; video button inactive until its time." },
+        { state: "col", img: "c-pend.jpg", title: "Waiting for parent", spec: "Pink block with the old time struck above the new one, Në pritje tag." }
+      ]},
+      { name: "Consultation card, open", note: "Tap the card to open it in place. As in Live, the tiles are Pesha and Mosha (months on the same line), so the age leaves the line under the name; status tags stay. Done cards add the result button at the bottom.", frames: [
+        { state: "exp", img: "o-done.jpg", title: "Done, result sent", spec: "Light green Shikoni rezultatin." },
+        { state: "det", img: "k-dx.jpg", from: "rezultati", page: true, via: "Tap Shikoni rezultatin", title: "Result", spec: "The consultation page with the result, the same one the parent sees." },
+        { state: "exp", img: "o-nores.jpg", title: "Done, no result", spec: "Amber Plotësoni rezultatin." },
+        { state: "det", img: "path-1.jpg", from: "rezultati", page: true, via: "Tap Plotësoni rezultatin", title: "Rezultati form", spec: "Opens the form for that consultation." },
+        { state: "exp", img: "o-cx.jpg", title: "Cancelled", spec: "Pesha, Mosha, chronic illness and medicine. No actions." },
+        { state: "exp", img: "o-next.jpg", title: "Next", spec: "White panel inside the blue card: note, measurements, allergy, last consultations, Profili i plotë, Riplanifikoni and Anuloni." },
+        { state: "exp", img: "o-up.jpg", title: "Upcoming, minimal", spec: "Pesha, Mosha, Riplanifikoni and Anuloni." },
+        { state: "exp", img: "o-pend.jpg", title: "Waiting for parent", spec: "Note, measurements, allergy, last consultations, Profili i plotë and both actions." }
+      ]},
+      { name: "Open cards in the screen", note: "Each card opened in place, as the doctor sees it after scrolling to Konsultat.", frames: [
+        { state: "exp", img: "s-rea.jpg", page: true, title: "Rea, result sent", spec: "Shikoni rezultatin at the bottom of the card." },
+        { state: "exp", img: "s-rea-nores.jpg", page: true, title: "Rea, no result", spec: "Plotësoni rezultatin at the bottom of the card." },
+        { state: "exp", img: "s-drin.jpg", page: true, title: "Drin, cancelled", spec: "Opens with the rest of the list pushed down." },
+        { state: "exp", img: "s-luan.jpg", page: true, title: "Luan, next", spec: "The blue card grows around its white panel." },
+        { state: "exp", img: "s-mila.jpg", page: true, title: "Mila, upcoming", spec: "Minimal open card." },
+        { state: "exp", img: "s-ana.jpg", page: true, title: "Ana, waiting for parent", spec: "Last card; the page scrolls under the bottom bar." }
+      ]},
+      { name: "Actions from an open card", note: "Riplanifikoni and Anuloni open the current app's sheets, unchanged. After either one, the card updates in place.", frames: [
+        { state: "det", img: "a-resch.jpg", page: true, via: "Tap Riplanifikoni", title: "Riplanifikoni", spec: "Current time, the shift hours and the rule, the next 7 days and the free times. Dërgoni propozimin stays grey until a time is picked." },
+        { state: "det", img: "a-resch-pick.jpg", page: true, via: "Pick a time", title: "Time picked", spec: "The time turns blue and Dërgoni propozimin turns on." },
+        { state: "col", img: "a-resch-done.jpg", page: true, via: "Tap Dërgoni propozimin", title: "Waiting for the parent", spec: "Mila's card turns pink: old time struck above the new one, Në pritje tag, like Ana's." },
+        { state: "det", img: "a-cancel.jpg", page: true, via: "Tap Anuloni", title: "Anuloni", spec: "Confirmation with the child and the time. The parent is notified and refunded." },
+        { state: "col", img: "a-cancel-done.jpg", page: true, via: "Tap Anuloni konsultën", title: "Cancelled by you", spec: "Faded card with the name in grey, Anuluar nga ju tag; Përmbledhje counts update." },
+        { state: "col", img: "c-mila-pend.jpg", title: "Card: proposal sent", spec: "Pink block with 10:30 struck above 19:00." },
+        { state: "col", img: "c-mila-cx.jpg", title: "Card: cancelled by you", spec: "Anuluar nga ju instead of Anuluar nga prindi." }
+      ]},
+      { name: "Leaving Agjenda", note: "Screens designed in other features.", frames: [
+        { state: "det", img: "pf-screen-min.jpg", from: "profili-i-femijes", page: true, via: "Tap Profili i plotë", title: "Profili i fëmijës", spec: "The child's profile. Back returns to Agjenda with the card still open." },
+        { state: "det", img: "path-call.jpg", from: "thirrja-video", page: true, via: "Tap the video button on the next card", title: "Thirrja video", spec: "Starts the call. The button is active only on the next consultation." },
+        { state: "det", img: "path-1.jpg", from: "turni-live", page: true, via: "Turn the Turni switch on", title: "Turni: Live", spec: "Going online opens Live." }
+      ]},
+      { name: "List states", note: "Search, the filter and a day with nothing booked.", frames: [
+        { state: "min", img: "l-empty.jpg", page: true, via: "Tap a free day", title: "Free day", spec: "Counts at 0 and one quiet card: Nuk keni konsulta këtë ditë." },
+        { state: "exp", img: "l-search.jpg", page: true, via: "Type in search", title: "Searching", spec: "The list filters as the doctor types; the x clears it." },
+        { state: "min", img: "l-search-none.jpg", page: true, title: "No match", spec: "Nuk u gjet asnjë fëmijë." },
+        { state: "exp", img: "l-filter.jpg", page: true, via: "Tap Të gjitha 5", title: "Filter open", spec: "The same four groups as Përmbledhje, each with its count." },
+        { state: "col", img: "l-filtered.jpg", page: true, via: "Pick Të mbetura", title: "Filtered", spec: "Only the remaining consultations; the chip shows the choice and count." }
+      ]},
+      { name: "Loading and failures", note: "The Gjendjet e sistemit pattern: grey shapes where data is coming, and if one part fails only that part shows a row with Provoni përsëri. Titles, calendar grid, search and bottom bar never wait.", frames: [
+        { state: "sys", img: "ld-screen.jpg", page: true, title: "Opening Turni", spec: "The Turni card, Përmbledhje numbers and the cards are grey shapes; the calendar shows without dots and Agjenda without its count." },
+        { state: "sys", img: "ld-day.jpg", page: true, via: "Tap another day", title: "Changing day", spec: "The new day is selected at once; only Përmbledhje, the filter and the cards reload." },
+        { state: "sys", img: "ld-cards.jpg", title: "Cards loading", spec: "Three shapes in the card size: time block, two lines, action slot." },
+        { state: "sys", img: "ld-card.jpg", title: "Card opening", spec: "The header stays; the open part shows shapes until the child's details arrive." },
+        { state: "sys", img: "err-list.jpg", page: true, title: "Konsultat failed", spec: "The rest of the screen loaded. One row replaces the list: Konsultat nuk u ngarkuan, Provoni përsëri." },
+        { state: "sys", img: "err-card.jpg", title: "Card details failed", spec: "Only the open part shows Të dhënat nuk u ngarkuan with Provoni përsëri; the card header and its video button stay." },
+        { state: "sys", img: "sys-offline.jpg", from: "gjendjet-e-sistemit", page: true, title: "No connection", spec: "The shared full-screen state with Turni as the title." }
+      ]}
+    ],
+    rules: [
+      ["Done cards carry the result", "The diagnosis replaces Përfunduar as a green tag. Without a result the tag is amber Pa rezultat, same word and colour as in Konsultat."],
+      ["Result buttons", "Open done cards end with one button: light green Shikoni rezultatin when the result exists, amber Plotësoni rezultatin when it does not."],
+      ["Cancelled cards", "Faded with the name in grey; never struck through. The only strike-through left is the old time on a card waiting for the parent, so the doctor sees both times."],
+      ["Only the cards changed", "Everything else on the Agjenda screen stays as in the current app."]
     ]
   },
   {
