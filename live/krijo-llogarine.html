@@ -26,21 +26,6 @@ function form(o={}){
    ${auCta('Krijo llogarinë',{link:['Kam llogari?','Hyr'],...(o.cta||{})})}`);
 }
 const filled={name:auField('Emri i plotë',{v:KLEA.name}),phone:auPhone({v:KLEA.phone,st:'ok'}),email:auField('Email (opsionale)',{v:KLEA.email}),pass:auPass({v:'kidocare26',hst:'ok'}),terms:auTerms('on')};
-/* doctor application */
-function pedForm(o={}){
-  return `<div class="au bg" style="padding-bottom:34px">${statusBar()}${auTop()}<h1>Krijo llogarinë</h1>${auSeg('ped')}
-   ${o.name||auField('Emri i plotë')}
-   ${o.phone||auPhone()}
-   ${o.email||auField('Email')}
-   ${o.lic||auField('Numri i licencës',{ph:'Urdhri i Mjekut, nr.'})}
-   <div class="au-f"><label>Foto e licencës</label>${o.up||`<div class="au-up">${I('cam')}Fotografoni ose ngarkoni licencën</div>`}</div>
-   ${o.pass||auPass()}
-   ${o.terms||auTerms()}
-   <div class="au-cta flow">${o.err?`<div class="au-ferr">${o.err}</div>`:''}<div class="au-btn">Dërgo aplikimin</div><div class="au-link">Kam llogari? <b>Hyr</b></div></div></div>`;
-}
-const upDone=`<div class="au-upd"><span class="th"></span><div><b>Licenca.jpg</b><small>Foto, 1.8 MB</small></div><span class="rm">${I('x')}</span></div>`;
-const upBusy=`<div class="au-upd"><span class="th"></span><div style="flex:1"><b>Licenca.jpg</b><small>Duke ngarkuar</small><div class="bar"><i></i></div></div></div>`;
-const pedFilled={name:auField('Emri i plotë',{v:'Blerina Kola'}),phone:auPhone({v:'68 220 4519',st:'ok'}),email:auField('Email',{v:'blerina.kola@gmail.com'}),lic:auField('Numri i licencës',{v:'1937'}),up:upDone,pass:auPass({v:'pediatri2026',hst:'ok'}),terms:auTerms('on')};
 const countrySheet=()=>`<div style="position:relative">${form()}${bsheet(`<div class="stitle">Zgjidhni shtetin</div><div class="au-search">${I('search')}Kërkoni shtetin</div>
   <div class="au-cl">${[['al','Shqipëri','+355',1],['xk','Kosovë','+383'],['mk','Maqedoni e Veriut','+389'],['me','Mal i Zi','+382'],['it','Itali','+39'],['gr','Greqi','+30'],['de','Gjermani','+49'],['gb','Mbretëri e Bashkuar','+44']]
    .map(([f,n,cc,on])=>`<div class="${on?'on':''}"><span class="au-flag ${f}"></span>${n}<em>${cc}</em></div>`).join('')}</div>`)}</div>`;
@@ -48,8 +33,6 @@ const F={
  /* minimal path */
  'path-1':()=>form(),
  'path-2':()=>form(filled),
- 'path-3':()=>auCodePage(),
- 'path-4':()=>auDone('check','g','Mirë se erdhët, Klea','Llogaria u krijua. Shtoni fëmijën tuaj për të filluar.','Shto fëmijën'),
  /* whole screen */
  'screen-min':()=>form(),
  'screen-full':()=>form(filled),
@@ -91,24 +74,6 @@ const F={
  'cta-err':()=>c(auCta('Krijo llogarinë',{err:ERR_REQ,link:['Kam llogari?','Hyr']})),
  'cta-busy':()=>c(auCta('',{busy:'Duke krijuar llogarinë',link:['Kam llogari?','Hyr']})),
  'cta-net':()=>c(auCta('Krijo llogarinë',{err:'Pa lidhje me internetin. Provoni përsëri.',link:['Kam llogari?','Hyr']})),
- /* SMS */
- 'code-empty':()=>auCodePage(),
- 'code-typing':()=>auCodePage({d:'482'}),
- 'code-busy':()=>auCodePage({d:'482915',busy:1}),
- 'code-err':()=>auCodePage({d:'482916',st:'err'}),
- 'code-expired':()=>auCodePage({d:'482915',st:'err',errText:'Kodi ka skaduar.',resend:'<b>Dërgo kodin përsëri</b>'}),
- 'code-resend':()=>auCodePage({resend:'Nuk ju erdhi? <b>Dërgo kodin përsëri</b>'}),
- /* done */
- 'done':()=>auDone('check','g','Mirë se erdhët, Klea','Llogaria u krijua. Shtoni fëmijën tuaj për të filluar.','Shto fëmijën'),
- /* doctor application */
- 'ped-empty':()=>pedForm(),
- 'ped-full':()=>pedForm(pedFilled),
- 'ped-err':()=>pedForm({name:auField('Emri i plotë',{v:'Blerina Kola'}),phone:auPhone({st:'err'}),email:auField('Email',{st:'err'}),lic:auField('Numri i licencës',{st:'err',ph:'Urdhri i Mjekut, nr.'}),up:`<div class="au-up err">${I('cam')}Fotografoni ose ngarkoni licencën</div>`,terms:auTerms('err'),err:ERR_REQ}),
- 'up-empty':()=>c(`<div class="au-f"><label>Foto e licencës</label><div class="au-up">${I('cam')}Fotografoni ose ngarkoni licencën</div></div>`),
- 'up-busy':()=>c(`<div class="au-f"><label>Foto e licencës</label>${upBusy}</div>`),
- 'up-done':()=>c(`<div class="au-f"><label>Foto e licencës</label>${upDone}</div>`),
- 'up-fail':()=>c(`<div class="au-f"><label>Foto e licencës</label><div class="au-up err">${I('cam')}Fotografoni ose ngarkoni licencën</div><div class="au-help err">Foto nuk u ngarkua. Provoni përsëri.</div></div>`),
- 'ped-sent':()=>auDone('mailsent','b','Aplikimi u dërgua','Do ta verifikojmë licencën tuaj dhe do t\'ju njoftojmë me SMS te +355 68 220 4519.','Kthehu në fillim'),
 };
 window.FRAME_IDS=Object.keys(F);
 function show(){
