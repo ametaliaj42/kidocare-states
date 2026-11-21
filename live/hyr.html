@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="sq">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=393">
+<title>Hyr frames</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="kidocare.css">
+</head>
+<body>
+<div id="f"></div>
+<script src="kidocare.js"></script>
+<script>
+const c=h=>`<div class="crop au-c bg">${h}</div>`;
+const ERR_REQ='Plotësoni fushat e detyrueshme për të vazhduar.';
+const LBL='Numri i telefonit ose email-i';
+/* login: one account field (phone or email), password, forgot link */
+function login(o={}){
+  return auPage(`${auTop()}<h1>Mirë se u kthyet</h1>
+   ${o.id||auField(LBL)}
+   ${o.pass||auPass({help:false})}
+   <div class="au-forgot">Harruat fjalëkalimin?</div>
+   ${auCta('Hyr',{link:['S\'keni llogari?','Krijo llogari'],...(o.cta||{})})}`);
+}
+const filled={id:auField(LBL,{v:'069 412 3087'}),pass:auPass({v:'kidocare26',help:false})};
+/* reset: number, code, new password, done */
+function resetNum(o={}){
+  return auPage(`${auTop()}<h1>Rivendosni fjalëkalimin</h1><p class="lead">Shkruani numrin e llogarisë. Do t'ju dërgojmë një kod me SMS.</p>
+   ${o.phone||auPhone()}
+   ${auCta('Dërgo kodin',o.cta||{})}`);
+}
+function newPass(o={}){
+  return auPage(`${auTop()}<h1>Fjalëkalimi i ri</h1><p class="lead">Zgjidhni një fjalëkalim që nuk e keni përdorur më parë.</p>
+   ${o.pass||auPass({label:'Fjalëkalimi i ri'})}
+   ${auCta('Ruaj fjalëkalimin',o.cta||{})}`);
+}
+const F={
+ /* minimal path */
+ 'path-1':()=>login(),
+ 'path-2':()=>login(filled),
+ 'path-3':()=>resetNum({phone:auPhone({v:KLEA.phone,st:'ok'})}),
+ 'path-4':()=>auCodePage({title:'Shkruani kodin'}),
+ 'path-5':()=>newPass({pass:auPass({label:'Fjalëkalimi i ri',v:'kidocare27',hst:'ok'})}),
+ 'path-6':()=>auDone('lock','g','Fjalëkalimi u ndryshua','Tani jeni brenda llogarisë suaj.','Vazhdo'),
+ /* whole screen */
+ 'screen-min':()=>login(),
+ 'screen-full':()=>login(filled),
+ /* account field */
+ 'id-empty':()=>c(auField(LBL)),
+ 'id-phone':()=>c(auField(LBL,{v:'069 412 3087'})),
+ 'id-intl':()=>c(auField(LBL,{v:'+355 69 412 3087'})),
+ 'id-email':()=>c(auField(LBL,{v:KLEA.email})),
+ 'id-err':()=>c(auField(LBL,{st:'err'})),
+ 'id-bad':()=>c(auField(LBL,{v:'69 412',st:'err',help:['Shkruani një numër ose email të saktë.','err']})),
+ /* password */
+ 'pw-empty':()=>c(auPass({help:false})+`<div class="au-forgot">Harruat fjalëkalimin?</div>`),
+ 'pw-hidden':()=>c(auPass({v:'kidocare26',help:false})+`<div class="au-forgot">Harruat fjalëkalimin?</div>`),
+ 'pw-shown':()=>c(auPass({v:'kidocare26',shown:1,help:false})+`<div class="au-forgot">Harruat fjalëkalimin?</div>`),
+ 'pw-err':()=>c(auPass({st:'err',help:false})+`<div class="au-forgot">Harruat fjalëkalimin?</div>`),
+ /* button and messages */
+ 'cta-default':()=>c(auCta('Hyr',{link:['S\'keni llogari?','Krijo llogari']})),
+ 'cta-req':()=>c(auCta('Hyr',{err:ERR_REQ,link:['S\'keni llogari?','Krijo llogari']})),
+ 'cta-wrong':()=>c(auCta('Hyr',{err:'Numri ose fjalëkalimi nuk është i saktë.',link:['S\'keni llogari?','Krijo llogari']})),
+ 'cta-none':()=>c(auCta('Hyr',{err:'Nuk ka llogari me këtë numër.',link:['S\'keni llogari?','Krijo llogari']})),
+ 'cta-locked':()=>c(auCta('Hyr',{err:'Shumë përpjekje. Provoni përsëri pas 5 minutash.',link:['S\'keni llogari?','Krijo llogari']})),
+ 'cta-busy':()=>c(auCta('',{busy:'Duke hyrë',link:['S\'keni llogari?','Krijo llogari']})),
+ 'cta-net':()=>c(auCta('Hyr',{err:'Pa lidhje me internetin. Provoni përsëri.',link:['S\'keni llogari?','Krijo llogari']})),
+ 'screen-wrong':()=>login({id:auField(LBL,{v:'069 412 3087',st:'err'}),pass:auPass({v:'kidocare2',st:'err',help:false}),cta:{err:'Numri ose fjalëkalimi nuk është i saktë.'}}),
+ /* reset */
+ 'r-num-empty':()=>resetNum(),
+ 'r-num-err':()=>resetNum({phone:auPhone({v:'69 412',st:'err',help:['Numri duhet të ketë 9 shifra.','err']})}),
+ 'r-num-none':()=>resetNum({phone:auPhone({v:'69 555 0101',st:'err',help:['Nuk ka llogari me këtë numër. <b>Krijo llogari</b>','err']})}),
+ 'r-num-busy':()=>resetNum({phone:auPhone({v:KLEA.phone,st:'ok'}),cta:{busy:'Duke dërguar'}}),
+ 'r-code-err':()=>auCodePage({title:'Shkruani kodin',d:'482916',st:'err'}),
+ 'r-pw-short':()=>newPass({pass:auPass({label:'Fjalëkalimi i ri',v:'kido2',st:'err',hst:'err'})}),
+ 'r-pw-same':()=>newPass({pass:auPass({label:'Fjalëkalimi i ri',v:'kidocare26',st:'err',hst:'err',htxt:'Ky është fjalëkalimi i vjetër.'})}),
+};
+window.FRAME_IDS=Object.keys(F);
+function show(){
+  const id=location.hash.slice(1)||'path-1';
+  document.getElementById('f').innerHTML=(F[id]||F['path-1'])();
+  const post=()=>{try{parent.postMessage({liveFrame:id,h:document.getElementById('f').scrollHeight},'*')}catch(e){}};
+  requestAnimationFrame(post);document.querySelectorAll('#f img').forEach(i=>i.complete||i.addEventListener('load',post));
+}
+addEventListener('hashchange',show);show();
+document.fonts&&document.fonts.ready.then(show);
+</script>
+</body>
+</html>

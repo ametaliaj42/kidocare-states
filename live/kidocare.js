@@ -225,3 +225,58 @@ const urgSheet=(after='Thirrja vazhdon.')=>bsheet(`<div class="stitle">Të kësh
    <div class="msg">${I('tri')}<span>Kjo mund të jetë urgjencë. Telefononi 112 tani ose shkoni te urgjenca më e afërt.</span></div>
    <div class="ssub" style="margin:0">Nuk mund të zhbëhet. ${after}</div>
    <div class="btnb red">Po, dërgoje</div><div class="btnb ghost">Anulo</div>`,false);
+
+/* ---------- Parent side: sign-up and login (au). Shared by Mirë se vini, Krijo llogarinë and Hyr. ---------- */
+P.eyeoff=P.eyeoff||'<path d="M3 3l18 18"/><path d="M10.6 5.6A10.8 10.8 0 0 1 12 5.5C18.4 5.5 22 12 22 12a17.6 17.6 0 0 1-3.2 4"/><path d="M6.6 6.6C3.7 8.4 2 12 2 12s3.6 6.5 10 6.5a9.8 9.8 0 0 0 5.3-1.6"/><path d="M9.9 9.9a3 3 0 0 0 4.2 4.2"/>';
+P.check=P.check||'<path d="M5 12.5l4.5 4.5L19 7"/>';
+P.caret=P.caret||'<path d="M6 9l6 6 6-6"/>';
+P.parents=P.parents||'<circle cx="9" cy="8" r="3.2"/><circle cx="17" cy="10" r="2.4"/><path d="M3.5 19a5.5 5.5 0 0 1 11 0M14 19a3.5 3.5 0 0 1 7 0"/>';
+P.sms=P.sms||'<path d="M4 5h16v11H9l-5 4z"/><path d="M8 9.5h8M8 12.5h5"/>';
+P.cam=P.cam||'<path d="M4 8h3l2-2.5h6L17 8h3v11H4z"/><circle cx="12" cy="13" r="3.4"/>';
+P.lock=P.lock||'<rect x="5" y="10.5" width="14" height="10" rx="2.5"/><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5"/>';
+P.mailsent=P.mailsent||'<path d="M3 6h18v12H3z"/><path d="M3 7l9 6 9-6"/>';
+const KLEA={name:'Klea Leka',phone:'69 412 3087',email:'klea.leka@gmail.com',pass:'••••••••••'};
+const auLogo=()=>`<span class="lgtxt">Kido<span>Care</span></span>`;
+const auTop=(back=true)=>`<div class="au-top">${back?`<span class="back">${I('back')}</span>`:''}<img class="lg" src="img/logo-kidocare.png" alt="KidoCare"></div>`;
+const auPage=inner=>`<div class="au bg">${statusBar()}${inner}</div>`;
+/* one text field; st: '', 'focus', 'err', 'ok'. help: [text, 'err'|'ok'|''] */
+function auField(label,o={}){
+  const val=o.v?`<span class="v">${o.v}${o.caret?'<span class="caret"></span>':''}</span>`:o.caret?`<span class="v"><span class="caret"></span></span>`:`<span class="ph">${o.ph||''}</span>`;
+  const right=o.right||(o.st==='ok'?`<span class="ok">${I('check')}</span>`:'');
+  const help=o.help?`<div class="au-help ${o.help[1]||''}">${o.help[1]==='ok'?I('check'):''}${o.help[0]}</div>`:'';
+  return `<div class="au-f"${o.style?` style="${o.style}"`:''}><label>${label}</label><div class="au-in ${o.st||''}">${val}${right}</div>${help}</div>`;
+}
+const AUCC={al:['al','+355','6X XXX XXXX'],xk:['xk','+383','4X XXX XXX']};
+function auPhone(o={}){
+  const c=AUCC[o.cc||'al'];
+  const val=o.v?`<span class="v">${o.v}${o.caret?'<span class="caret"></span>':''}</span>`:o.caret?`<span class="v"><span class="caret"></span></span>`:`<span class="ph">${c[2]}</span>`;
+  const right=o.st==='ok'?`<span class="ok">${I('check')}</span>`:'';
+  const help=o.help?`<div class="au-help ${o.help[1]||''}">${o.help[0]}</div>`:'';
+  return `<div class="au-f"><label>${o.label||'Numri i telefonit'}</label><div class="au-phone"><div class="au-in au-cc${o.ccfocus?' focus':''}"><span class="au-flag ${c[0]}"></span>${c[1]}${I('caret')}</div><div class="au-in ${o.st||''}" style="flex:1">${val}${right}</div></div>${help}</div>`;
+}
+function auPass(o={}){
+  const shown=o.shown;
+  const v=o.v?(shown?o.v:'•'.repeat(o.v.length)):'';
+  const help=o.help===false?'':`<div class="au-help ${o.hst||''}">${o.hst==='ok'?I('check'):''}${o.htxt||'Të paktën 8 karaktere'}</div>`;
+  return `<div class="au-f"><label>${o.label||'Fjalëkalimi'}</label><div class="au-in pw ${o.st||''}">${v?`<span class="v" style="${shown?'':'letter-spacing:2px'}">${v}${o.caret?'<span class="caret"></span>':''}</span>`:`<span class="ph"></span>`}${I(shown?'eyeoff':'eye')}</div>${help}</div>`;
+}
+const auTerms=(st='')=>`<div class="au-terms ${st}"><span class="au-box">${I('check')}</span><div>Pranoj <u>Kushtet e përdorimit</u> dhe <u>Politikën e privatësisë</u></div></div>`;
+const auSeg=(on='prind')=>`<div class="au-seg"><b class="${on==='prind'?'on':''}">${I('parents')}Prind</b><b class="${on==='ped'?'on':''}">${I('steth')}Pediatër</b></div>`;
+/* bottom block: o.err (line above), o.busy (spinner), o.link [muted, bold] */
+function auCta(label,o={}){
+  return `<div class="au-cta">${o.err?`<div class="au-ferr">${o.err}</div>`:''}<div class="au-btn${o.busy?' busy':''}">${o.busy?`<span class="au-spin"></span>${o.busy}`:label}</div>${o.sec?`<div class="au-btn sec" style="margin-top:12px">${o.sec}</div>`:''}${o.link?`<div class="au-link">${o.link[0]} <b>${o.link[1]}</b></div>`:''}</div>`;
+}
+/* SMS code boxes: digits string, st '', 'err', 'ok' */
+function auCode(d='',st=''){
+  const cells=[0,1,2,3,4,5].map(i=>`<span class="${!st&&i===d.length?'focus':''}">${d[i]||''}</span>`).join('');
+  return `<div class="au-code ${st}">${cells}</div>`;
+}
+function auCodePage(o={}){
+  return auPage(`${auTop()}<h1>${o.title||'Verifikoni numrin'}</h1><p class="lead">Ju dërguam një kod me 6 shifra te <b>+355 ${KLEA.phone}</b></p>
+   ${auCode(o.d||'',o.st||'')}
+   ${o.st==='err'?`<div class="au-help err" style="margin-top:10px">${o.errText||'Kodi nuk është i saktë.'}</div>`:''}
+   <div class="au-resend">${o.resend||'Dërgo kodin përsëri pas <b style="color:var(--ink)">0:42</b>'}</div>
+   <div class="au-resend" style="margin-top:10px"><b>Ndrysho numrin</b></div>
+   ${o.busy?auCta('',{busy:'Duke verifikuar'}):''}`);
+}
+const auDone=(icon,cls,t,p,btn,o={})=>auPage(`${o.top===false?'':auTop(false)}<div class="au-done"><i class="${cls}">${I(icon)}</i><b>${t}</b><p>${p}</p></div>${auCta(btn)}`);

@@ -957,3 +957,183 @@ window.FEATURES = [
     ]
   }
 ];
+
+// Parent side: entry, sign-up and login (added 21.11.2026)
+Object.assign(window.LIVE, { "mire-se-vini": "live/mire-se-vini.html", "krijo-llogarine": "live/krijo-llogarine.html", "hyr": "live/hyr.html" });
+window.FEATURES.push(
+{
+  id: "mire-se-vini", name: "Mirë se vini", side: "parent", date: "21.11.2026",
+  purpose: "The first screen a parent sees: a slow wall of real Kidocare moments shows the strengths, then one headline and two buttons, Krijo llogari and Hyr. Doctors use the same two buttons.",
+  path: { note: "Two exits only. There is no separate doctor link: doctors sign up through Krijo llogarinë > Pediatër and log in through Hyr; the account decides which side opens.", frames: [
+    { state: "min", img: "path-1.jpg", page: true, title: "Mirë se vini", spec: "The wall drifts slowly; headline and buttons stay still." },
+    { state: "min", img: "path-1.jpg", from: "krijo-llogarine", page: true, via: "Tap Krijo llogari", title: "Krijo llogarinë", spec: "Opens the sign-up form with Prind selected." },
+    { state: "min", img: "path-1.jpg", from: "hyr", page: true, via: "Back, tap Hyr", title: "Hyr", spec: "Opens the login form." }
+  ]},
+  screen: { note: "The wall has three columns drifting in opposite directions (46 to 52 s per loop, the middle one downwards). Nothing in it is tappable. On phones with reduced motion it stands still.", frames: [
+    { state: "min", img: "screen-min.jpg", page: true, title: "Animated", spec: "Opens with a 1.6 s settle-in, then drifts forever." },
+    { state: "full", img: "screen-still.jpg", page: true, title: "Reduced motion", spec: "Same screen with the wall at rest; headline and buttons have no entrance." }
+  ]},
+  components: [
+    { name: "The wall", note: "Real pieces of the app, one strength each: the video call (child's photo, the doctor only in the small window), the chat, evening hours, price, licensed pediatricians, 120+ pediatricians, the result and the Albanian greeting. Cards never cross into the next column. Photos are stock placeholders until real pediatricians give consent; the 120+ count is to confirm.", frames: [
+      { state: "col", img: "wall-anim.jpg", title: "Drifting", spec: "Three columns, each a repeated set, sliding on the GPU with CSS; top and bottom fade into the background." },
+      { state: "col", img: "wall-still.jpg", title: "At rest", spec: "prefers-reduced-motion: the columns do not move." }
+    ]},
+    { name: "Language switch", note: "AL by default. Switching changes every text on the screen, the wall included.", frames: [
+      { state: "col", img: "lang-sq.jpg", title: "AL", spec: "Default." },
+      { state: "col", img: "lang-en.jpg", title: "EN", spec: "Tap EN." },
+      { state: "full", img: "screen-en.jpg", page: true, title: "In English", spec: "The whole screen, wall included, in English." }
+    ]},
+    { name: "Headline and buttons", note: "One blue primary and one white secondary button, no sublinks.", frames: [
+      { state: "col", img: "cta-sq.jpg", title: "Shqip", spec: "Krijo llogari opens sign-up, Hyr opens login." },
+      { state: "col", img: "cta-en.jpg", title: "English", spec: "Create account and Log in." }
+    ]}
+  ],
+  rules: [
+    ["No sublinks", "The landing has exactly two ways forward. Doctors are not sent anywhere separate."],
+    ["Motion without interaction", "Nothing in the moving wall looks or acts tappable; the only tappable things are the buttons and the language switch."]
+  ]
+},
+{
+  id: "krijo-llogarine", name: "Krijo llogarinë", side: "parent", date: "21.11.2026",
+  purpose: "Sign-up for parents and the application for pediatricians on one screen, chosen with the Prind / Pediatër switch. The phone number is confirmed with a 6-digit SMS code.",
+  path: { note: "Klea Leka, Noa's mother, signs up as a parent. Email is optional for parents. After the code the next step is adding the child (Shto fëmijë, designed separately).", frames: [
+    { state: "min", img: "path-1.jpg", page: true, title: "Empty form", spec: "Prind selected. Fields: Emri i plotë, Numri i telefonit, Email (opsionale), Fjalëkalimi, then the terms checkbox." },
+    { state: "min", img: "path-2.jpg", page: true, via: "Fill in, tick the terms", title: "Filled", spec: "A valid number shows a green check; the password hint turns green at 8 characters; the ticked box is green." },
+    { state: "min", img: "path-3.jpg", page: true, via: "Tap Krijo llogarinë", title: "Verifikoni numrin", spec: "A 6-digit code goes to the number by SMS. The keyboard opens on the first box; the code fills in from the SMS on its own where the phone allows." },
+    { state: "min", img: "path-4.jpg", page: true, via: "Enter the code", title: "Account created", spec: "Greets the parent by first name; the only button leads to adding the child." }
+  ]},
+  screen: { note: "The button stays enabled. Tapping it with something missing marks the fields in red and shows one short line above the button; nothing else.", frames: [
+    { state: "min", img: "screen-min.jpg", page: true, title: "Empty", spec: "On open." },
+    { state: "full", img: "screen-full.jpg", page: true, title: "Filled", spec: "Ready to send." },
+    { state: "sys", img: "screen-err.jpg", page: true, title: "Sent with gaps", spec: "Empty name, short number, short password and unticked terms all turn red at once; one line above the button." }
+  ]},
+  components: [
+    { name: "Prind / Pediatër", note: "Raised white pill on a blue-grey track, so only the main button is blue.", frames: [
+      { state: "col", img: "role-prind.jpg", title: "Prind", spec: "Default." },
+      { state: "col", img: "role-ped.jpg", title: "Pediatër", spec: "Tap switches the form to the doctor application below." }
+    ]},
+    { name: "Emri i plotë", note: "One field for the full name. Required.", frames: [
+      { state: "min", img: "name-empty.jpg", title: "Empty", spec: "No placeholder example." },
+      { state: "col", img: "name-focus.jpg", title: "Typing", spec: "Blue ring while focused; words capitalised." },
+      { state: "col", img: "name-filled.jpg", title: "Filled", spec: "Plain text, no check." },
+      { state: "col", img: "name-long.jpg", title: "Long name", spec: "Cut with an ellipsis in the field; the full name is saved." },
+      { state: "sys", img: "name-err.jpg", title: "Missing", spec: "Red outline only; the line above the button says what to do." }
+    ]},
+    { name: "Numri i telefonit", note: "Country code plus number. Albanian mobile numbers have 9 digits and start with 6; a leading 0 (069...) is removed automatically. Digits are spaced as typed. Checked when the field is left and again on send.", frames: [
+      { state: "min", img: "ph-empty.jpg", title: "Empty", spec: "Format hint only." },
+      { state: "col", img: "ph-typing.jpg", title: "Typing", spec: "Spaces added as the digits come." },
+      { state: "col", img: "ph-ok.jpg", title: "Valid", spec: "Green check once 9 digits starting with 6." },
+      { state: "sys", img: "ph-short.jpg", title: "Too short", spec: "Red with one line: the number needs 9 digits." },
+      { state: "sys", img: "ph-wrong.jpg", title: "Not a mobile", spec: "Red with one line: mobile numbers start with 6." },
+      { state: "sys", img: "ph-taken.jpg", title: "Already registered", spec: "Checked on send. Hyr in the line opens login with the number filled in." },
+      { state: "det", img: "ph-sheet.jpg", page: true, title: "Country code", spec: "Tap +355: sheet with search; Albania first, then the region and the main diaspora countries." },
+      { state: "col", img: "ph-xk.jpg", title: "Kosovë", spec: "The hint changes to that country's format and the checks follow its rules." }
+    ]},
+    { name: "Email (opsionale)", note: "Optional for parents, so an empty field is never an error.", frames: [
+      { state: "min", img: "em-empty.jpg", title: "Empty", spec: "Fine to leave." },
+      { state: "col", img: "em-ok.jpg", title: "Filled", spec: "Email keyboard, no capitals." },
+      { state: "sys", img: "em-err.jpg", title: "Not an email", spec: "Only when something was typed and it is not an email." }
+    ]},
+    { name: "Fjalëkalimi", note: "At least 8 characters. The hint is always visible and changes colour instead of adding new text.", frames: [
+      { state: "min", img: "pw-empty.jpg", title: "Empty", spec: "Grey hint under the field." },
+      { state: "col", img: "pw-typing.jpg", title: "Typing", spec: "Hint stays grey until 8 characters." },
+      { state: "col", img: "pw-ok.jpg", title: "Long enough", spec: "Hint turns green with a check." },
+      { state: "col", img: "pw-shown.jpg", title: "Shown", spec: "Tap the eye to show the password; the icon crosses out." },
+      { state: "sys", img: "pw-err.jpg", title: "Too short", spec: "On send: red field and red hint." }
+    ]},
+    { name: "Kushtet", note: "Quiet grey line; the two documents are dark, underlined links. Ticked turns green.", frames: [
+      { state: "min", img: "t-off.jpg", title: "Not ticked", spec: "Default." },
+      { state: "col", img: "t-on.jpg", title: "Ticked", spec: "Green box." },
+      { state: "sys", img: "t-err.jpg", title: "Missing", spec: "Red box only; the message is the line above the button." }
+    ]},
+    { name: "Krijo llogarinë", note: "One line above the button carries every form-level message, in small red text; the button never moves.", frames: [
+      { state: "min", img: "cta-default.jpg", title: "Default", spec: "Enabled from the start." },
+      { state: "sys", img: "cta-err.jpg", title: "Fields missing", spec: "Plotësoni fushat e detyrueshme për të vazhduar." },
+      { state: "col", img: "cta-busy.jpg", title: "Sending", spec: "Spinner and text; taps are ignored." },
+      { state: "sys", img: "cta-net.jpg", title: "No connection", spec: "Nothing is lost; tapping again retries." }
+    ]},
+    { name: "Verifikoni numrin", note: "6 boxes, filled from the SMS where the phone allows. Resend unlocks after 60 seconds; Ndrysho numrin returns to the form.", frames: [
+      { state: "min", img: "code-empty.jpg", page: true, title: "Waiting", spec: "Countdown to resend." },
+      { state: "col", img: "code-typing.jpg", page: true, title: "Typing", spec: "Focus moves to the next box." },
+      { state: "col", img: "code-busy.jpg", page: true, title: "Checking", spec: "Sent automatically at the 6th digit." },
+      { state: "sys", img: "code-err.jpg", page: true, title: "Wrong code", spec: "Boxes turn red; typing again clears them." },
+      { state: "sys", img: "code-expired.jpg", page: true, title: "Expired", spec: "After 10 minutes; resend is offered straight away." },
+      { state: "col", img: "code-resend.jpg", page: true, title: "Resend ready", spec: "After the countdown." }
+    ]},
+    { name: "Llogaria u krijua", note: "Shown once.", frames: [
+      { state: "det", img: "done.jpg", page: true, title: "Welcome", spec: "First name only; one button to add the child." }
+    ]},
+    { name: "Pediatër: application", note: "Assumed process, to confirm with Ador: doctors cannot use the app until Kidocare has checked the licence. Email is required for doctors. After sending, the doctor logs in through Hyr once approved.", frames: [
+      { state: "min", img: "ped-empty.jpg", page: true, title: "Empty", spec: "Emri, telefoni, email, numri i licencës, foto e licencës, fjalëkalimi, kushtet." },
+      { state: "full", img: "ped-full.jpg", page: true, title: "Filled", spec: "Ready to send." },
+      { state: "sys", img: "ped-err.jpg", page: true, title: "Sent with gaps", spec: "Same rule as parents: red fields and one line above the button." },
+      { state: "det", img: "ped-sent.jpg", page: true, title: "Application sent", spec: "Says how the doctor will hear back (SMS); one button back to the start." }
+    ]},
+    { name: "Foto e licencës", note: "Camera or gallery. One photo.", frames: [
+      { state: "min", img: "up-empty.jpg", title: "Empty", spec: "Dashed box." },
+      { state: "col", img: "up-busy.jpg", title: "Uploading", spec: "Thumbnail and progress bar." },
+      { state: "col", img: "up-done.jpg", title: "Uploaded", spec: "Name and size; x removes it." },
+      { state: "sys", img: "up-fail.jpg", title: "Failed", spec: "Red dashed box and one line; tap to try again." }
+    ]}
+  ],
+  rules: [
+    ["One message line", "Form-level messages sit in one small red line above the main button. Fields only turn red, except where the fix is not obvious (phone format, email, password length, number taken)."],
+    ["Button always enabled", "Never grey out the main button; tapping it is how the parent finds out what is missing."],
+    ["Selection is not blue", "The selected role is a raised white pill. Blue is reserved for the main button, green for an accepted checkbox."]
+  ]
+},
+{
+  id: "hyr", name: "Hyr", side: "parent", date: "21.11.2026",
+  purpose: "Login for parents and doctors with one field for the phone number or email, the password, and a reset by SMS code.",
+  path: { note: "Klea logs in, then forgets her password: the reset uses the same SMS code screen as sign-up.", frames: [
+    { state: "min", img: "path-1.jpg", page: true, title: "Empty", spec: "Numri i telefonit ose email-i, Fjalëkalimi, Harruat fjalëkalimin?" },
+    { state: "min", img: "path-2.jpg", page: true, via: "Fill in", title: "Filled", spec: "Tap Hyr: a parent goes to Kreu, a doctor to Turni." },
+    { state: "min", img: "path-3.jpg", page: true, via: "Tap Harruat fjalëkalimin?", title: "Rivendosni fjalëkalimin", spec: "The number from the login field is filled in if it was a number." },
+    { state: "min", img: "path-4.jpg", page: true, via: "Tap Dërgo kodin", title: "Shkruani kodin", spec: "Same code component as sign-up." },
+    { state: "min", img: "path-5.jpg", page: true, via: "Enter the code", title: "Fjalëkalimi i ri", spec: "Same password field and rule as sign-up." },
+    { state: "min", img: "path-6.jpg", page: true, via: "Tap Ruaj fjalëkalimin", title: "Changed", spec: "The parent is already logged in; Vazhdo goes to Kreu." }
+  ]},
+  screen: { note: "S'keni llogari? Krijo llogari is the only link under the button; Harruat fjalëkalimin? sits under the password, where it is needed.", frames: [
+    { state: "min", img: "screen-min.jpg", page: true, title: "Empty", spec: "On open." },
+    { state: "full", img: "screen-full.jpg", page: true, title: "Filled", spec: "Ready." },
+    { state: "sys", img: "screen-wrong.jpg", page: true, title: "Wrong details", spec: "Both fields red, one line above the button; the password is kept so it can be shown and checked." }
+  ]},
+  components: [
+    { name: "Numri i telefonit ose email-i", note: "One field for both. 069..., 69... and +355 69... all work; anything with @ is treated as an email.", frames: [
+      { state: "min", img: "id-empty.jpg", title: "Empty", spec: "No example." },
+      { state: "col", img: "id-phone.jpg", title: "Number", spec: "Local form." },
+      { state: "col", img: "id-intl.jpg", title: "With +355", spec: "Same account." },
+      { state: "col", img: "id-email.jpg", title: "Email", spec: "Only for accounts that added one." },
+      { state: "sys", img: "id-err.jpg", title: "Missing", spec: "Red outline only." },
+      { state: "sys", img: "id-bad.jpg", title: "Neither", spec: "Not a full number and not an email." }
+    ]},
+    { name: "Fjalëkalimi", note: "No length hint at login.", frames: [
+      { state: "min", img: "pw-empty.jpg", title: "Empty", spec: "With Harruat fjalëkalimin? under it." },
+      { state: "col", img: "pw-hidden.jpg", title: "Hidden", spec: "Default." },
+      { state: "col", img: "pw-shown.jpg", title: "Shown", spec: "Tap the eye." },
+      { state: "sys", img: "pw-err.jpg", title: "Missing", spec: "Red outline only." }
+    ]},
+    { name: "Hyr", note: "Same one-line message rule as sign-up.", frames: [
+      { state: "min", img: "cta-default.jpg", title: "Default", spec: "Always enabled." },
+      { state: "sys", img: "cta-req.jpg", title: "Fields missing", spec: "Plotësoni fushat e detyrueshme për të vazhduar." },
+      { state: "sys", img: "cta-wrong.jpg", title: "Wrong details", spec: "Does not say which of the two is wrong." },
+      { state: "sys", img: "cta-none.jpg", title: "No account", spec: "The number has no account; Krijo llogari is right below." },
+      { state: "sys", img: "cta-locked.jpg", title: "Too many tries", spec: "After 5 wrong tries, 5 minutes' wait; Harruat fjalëkalimin? still works." },
+      { state: "col", img: "cta-busy.jpg", title: "Logging in", spec: "Spinner and text." },
+      { state: "sys", img: "cta-net.jpg", title: "No connection", spec: "Tap again to retry." }
+    ]},
+    { name: "Rivendosni fjalëkalimin", note: "Number, code, new password. The code screen is the one from Krijo llogarinë.", frames: [
+      { state: "min", img: "r-num-empty.jpg", page: true, title: "Empty", spec: "When login was done with an email, the parent types the number here." },
+      { state: "sys", img: "r-num-err.jpg", page: true, title: "Too short", spec: "Same phone rules as sign-up." },
+      { state: "sys", img: "r-num-none.jpg", page: true, title: "No account", spec: "Krijo llogari in the line opens sign-up with the number filled in." },
+      { state: "col", img: "r-num-busy.jpg", page: true, title: "Sending", spec: "Spinner on the button." },
+      { state: "sys", img: "r-code-err.jpg", page: true, title: "Wrong code", spec: "See Krijo llogarinë for the other code states." },
+      { state: "sys", img: "r-pw-short.jpg", page: true, title: "Too short", spec: "Red field and red hint." },
+      { state: "sys", img: "r-pw-same.jpg", page: true, title: "Same as before", spec: "The hint says it is the old password." }
+    ]}
+  ],
+  rules: [
+    ["One login for everyone", "Parents and doctors log in on the same screen; the account decides whether Kreu or Turni opens."]
+  ]
+}
+);
