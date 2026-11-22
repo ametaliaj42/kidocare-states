@@ -17,6 +17,10 @@
 .zc{display:flex;align-items:center;gap:14px;padding:16px;border-radius:24px;background:#fff;box-shadow:0 10px 30px rgba(40,80,160,.08)}
 .dav{width:62px;height:62px;border-radius:31px;background:var(--blue-fill);color:var(--blue-ink);display:grid;place-items:center;flex:none;position:relative;overflow:hidden}
 .dav svg.i{width:28px;height:28px}
+.dav.ini{font-size:21px;font-weight:600}
+.prow .dav.ini{font-size:24px}
+.peer .dav.ini{font-size:26px}
+.big .in.ini{font-size:38px;font-weight:600}
 .dav.ph{background:#F4F7FC;border:1.5px solid #B9C8DD}
 .dav.ph svg.x{width:100%;height:100%;stroke:#B9C8DD;stroke-width:3}
 .zc .tx{flex:1;min-width:0}
@@ -252,7 +256,7 @@ const REVIEWS=[[5,'22.10','Shumë e kujdesshme me Anisën. Na shpjegoi qartë si
 
 /* ---------- Zyra ---------- */
 function zcard(d,o={}){
-  const av=d.photo?`<span class="dav ph">${X('x')}</span>`:`<span class="dav">${I('user')}</span>`;
+  const av=d.photo?`<span class="dav ph">${X('x')}</span>`:`<span class="dav ini" style="${avBg(d.name)}">${avIni(d.name)}</span>`;
   const st=o.pend?`<span class="pend">${I('clock')}Në verifikim</span>`:`<span class="st"><span class="dot ${o.off?'off':''}"></span>${o.off?'Jo aktive':'Aktive'}${d.reviews>=3?`<span class="rate"><svg viewBox="0 0 24 24">${P.star}</svg>${d.avg}</span>`:''}</span>`;
   return `<div class="zc">${av}<div class="tx"><b>${d.name}${o.pend?'':BADGE}</b>${st}</div><span class="cb">${I('chev')}</span></div>`;
 }
@@ -298,7 +302,7 @@ function hero(d,o={}){
   const ring=o.up?`<svg class="ring" viewBox="0 0 132 132"><circle cx="66" cy="66" r="62" fill="none" stroke="#E3EBF8" stroke-width="5"/><circle cx="66" cy="66" r="62" fill="none" stroke="#5B96FF" stroke-width="5" stroke-linecap="round" stroke-dasharray="234 390" transform="rotate(-90 66 66)"/></svg>`:'';
   const name=o.long?'Dr. Anastasia Kristofori-Papadhimitri':d.name;
   const rl=o.pend?`<span class="pend">${I('clock')}Në verifikim</span>`:d.reviews>=3?`<div class="rl"><svg viewBox="0 0 24 24">${P.star}</svg>${d.avg} · ${d.reviews} vlerësime</div>`:d.reviews?`<div class="rl">${d.reviews} vlerësim${d.reviews>1?'e':''}</div>`:'';
-  return `<div class="hero"><div class="big"><div class="in ${ph?'ph':''}">${ph?X('x'):I('user')}</div>${o.self===false||o.up?'':`<span class="cam">${I('cam')}</span>`}${ring}</div><h2>${name}${o.pend?'':BADGE}</h2>${rl}</div>`;
+  return `<div class="hero"><div class="big"><div class="in ${ph?'ph':'ini'}" style="${ph?'':avBg(d.name)}">${ph?X('x'):avIni(d.name)}</div>${o.self===false||o.up?'':`<span class="cam">${I('cam')}</span>`}${ring}</div><h2>${name}${o.pend?'':BADGE}</h2>${rl}</div>`;
 }
 const ptabs=(d,on)=>`<div class="ptabs"><span class="${on===0?'on':''}">${I('user')}Profili</span><span class="${on===1?'on':''} ${d.reviews?'':'zero'}">${I('star')}Vlerësimet <b>${d.reviews}</b></span></div>`;
 const ar=(ic,lab,val,sub,extra)=>`<div class="ar"><i>${I(ic)}</i><div><small>${lab}</small><b>${val}</b>${sub?`<span>${sub}</span>`:''}${extra||''}</div></div>`;
@@ -334,7 +338,7 @@ function editPage(d,o={}){
   const bio=o.bioOver?BLERINA.bio+' Punoj edhe me fëmijë me dermatit atopik dhe alergji ushqimore, dhe ndjek nga afër rritjen dhe ushqyerjen e fëmijëve nga lindja deri në 5 vjeç, bashkë me prindërit.':d.bio;
   const photoTx=o.up?`<b>Fotoja e profilit</b><span class="m">Duke ngarkuar, 60%</span>`:o.photoFail?`<b>Fotoja e profilit</b><span class="warnl">${I('tri')}Fotoja nuk u ngarkua</span><span>Provoni përsëri</span>`:`<b>Fotoja e profilit</b><span>${d.photo?'Ndryshoni foton':'Shtoni foto'}</span>`;
   const av=o.up?`<span class="dav ph" style="position:relative">${X('x')}<svg viewBox="0 0 80 80" style="position:absolute;inset:0;width:100%;height:100%"><circle cx="40" cy="40" r="36" fill="none" stroke="#5B96FF" stroke-width="4" stroke-linecap="round" stroke-dasharray="140 240" transform="rotate(-90 40 40)"/></svg></span>`
-    :d.photo?`<span class="dav ph" style="position:relative">${X('x')}</span>`:`<span class="dav">${I('user')}</span>`;
+    :d.photo?`<span class="dav ph" style="position:relative">${X('x')}</span>`:`<span class="dav ini" style="${avBg(d.name)}">${avIni(d.name)}</span>`;
   const btn=o.saving?`<div class="b go"><span class="spin"></span>Duke ruajtur</div>`:`<div class="b ${o.dirty?'on':'off'}">Ruaj ndryshimet</div>`;
   return `<div class="page bg ep" style="height:852px;overflow:hidden">${statusBar()}<div class="hd"><span class="back">${I('back')}</span><h1>Ndrysho profilin</h1></div>
    <div class="ecard"><div class="prow">${av}<div>${photoTx}</div></div></div>
@@ -359,12 +363,14 @@ const PEERS={
 function peer(p,o={}){
   if(o.gone) return sheetOn(consultPage({...RES_OTHER}),`<div class="peer"><span class="dav" style="background:var(--grey-fill);color:var(--soft)">${I('user')}</span><h3 style="font-size:20px">Ky profil nuk është më i disponueshëm</h3><p class="bio2" style="color:var(--muted)">Mjeku nuk është më në Kidocare. Konsultat që ka bërë mbeten në kartelë.</p></div>`);
   const bio=p.bio?`<p class="bio2 ${o.cut?'cut':''}">${o.cut?p.bio+" Më parë kam punuar në Athinë. Më intereson veçanërisht edukimi i prindërve për përdorimin e inhalatorëve dhe parandalimin e krizave.":p.bio}</p>${o.cut?'<div class="more" style="margin-bottom:16px">Më shumë</div>':''}`:'<div style="height:14px"></div>';
-  return sheetOn(consultPage({...RES_OTHER}),`<div class="peer"><span class="dav">${I('user')}</span><h3>${p.name}${BADGE}</h3>${bio}${about(p,{peer:1})}</div>`);
+  return sheetOn(consultPage({...RES_OTHER}),`<div class="peer"><span class="dav ini" style="${avBg(p.name)}">${avIni(p.name)}</span><h3>${p.name}${BADGE}</h3>${bio}${about(p,{peer:1})}</div>`);
 }
 const RES_OTHER={title:'Astmë bronkiale',chips:chipKron,who:'Valbona Xhaferraj, nëna',note:'Kollitet natën prej disa javësh dhe i merret fryma kur vrapon. Babai ka astmë.',assess:'Astmë bronkiale e lehtë persistente.',steps:['Pompa vetëm kur kollitet'],warn:['Buzët marrin ngjyrë blu'],date:'16.09.2021, 18:45',type:'Video, 15 min',doc:'Dr. Erion Dervishi',nr:'1408'};
 
 /* ---------- frames ---------- */
+const avPal=()=>`<div class="crop bg"><div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px 10px">${AVC.map((c,k)=>`<div style="display:flex;flex-direction:column;align-items:center;gap:6px;font-size:13px;color:var(--muted)"><span class="dav ini" style="background:linear-gradient(135deg,${c[0]},${c[1]});color:#fff">AB</span>${['Blu','Indigo','Vjollcë','Bruz','Gurkali','Gri blu'][k]}</div>`).join('')}</div></div>`;
 const F={
+ 'av-colors':()=>avPal(),
  'path-1':()=>zyra(ARBEN),
  'path-2':()=>prof(ARBEN),
  'path-3':()=>editPage(ARBEN),

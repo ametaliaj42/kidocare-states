@@ -280,3 +280,8 @@ function auCodePage(o={}){
    ${o.busy?auCta('',{busy:'Duke verifikuar'}):''}`);
 }
 const auDone=(icon,cls,t,p,btn,o={})=>auPage(`${o.top===false?'':auTop(false)}<div class="au-done"><i class="${cls}">${I(icon)}</i><b>${t}</b><p>${p}</p></div>${auCta(btn)}`);
+
+/* Doctor initials (22.11.2026): no photo shows the initials on one of six gradients, picked from the name so a doctor always keeps the same colour */
+const AVC=[['#6AA0FF','#3F7BEF'],['#8B90F5','#5D62E2'],['#B08AF2','#8558E0'],['#4CC3D6','#1E98B0'],['#46C2A8','#1E9C86'],['#8EA0C2','#61759C']];
+const avIni=n=>n.replace(/^Dr\.\s*/,'').split(/[\s-]+/).filter(Boolean).slice(0,2).map(w=>w[0].toUpperCase()).join('');
+const avBg=n=>{let h=0;for(const ch of n.replace(/^Dr\.\s*/,''))h=(h*31+ch.charCodeAt(0))>>>0;const c=AVC[h%AVC.length];return `background:linear-gradient(135deg,${c[0]},${c[1]});color:#fff`;};

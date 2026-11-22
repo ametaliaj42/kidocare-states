@@ -607,8 +607,11 @@ window.FEATURES = [
       ]
     },
     components: [
+      { name: "Initials", note: "Added 22.11.2026. A doctor without a photo shows their initials (first letters of the first and last name, without Dr.) in white on one of six gradients. The colour is picked from the name, so the same doctor always has the same colour everywhere. Confirmed with the team; pink, amber and red are left out because they carry meaning in the app.", frames: [
+        { state: "min", img: "av-colors.jpg", spec: "Blu, Indigo, Vjollcë, Bruz, Gurkali, Gri blu." }
+      ]},
       { name: "Profile card in Zyra", note: "The entry point. Same content as the app now: photo, name, verified badge, Aktive, rating.", frames: [
-        { state: "min", img: "z-card-min.jpg", spec: "No photo: the profile icon. No reviews yet, so no star." },
+        { state: "min", img: "z-card-min.jpg", spec: "No photo: the initials on their colour. No reviews yet, so no star." },
         { state: "col", img: "z-card-full.jpg", via: "Photo and reviews", spec: "Photo and the average rating next to Aktive. Tap opens the profile." },
         { state: "col", img: "z-card-off.jpg", spec: "Out of shift (Turni off): grey dot, \"Jo aktive\"." },
         { state: "col", img: "z-card-pend.jpg", spec: "Licence still being checked: no verified badge, grey \"Në verifikim\" in place of the status." }
@@ -621,10 +624,10 @@ window.FEATURES = [
         { state: "det", img: "docs-gone.jpg", page: true, title: "Licence expired", spec: "Ka skaduar in red." }
       ]},
       { name: "Profile header", note: "Centred, as in the app. On the doctor's own profile the camera badge opens the photo sheet.", frames: [
-        { state: "min", img: "id-min.jpg", spec: "No photo: the profile icon. No reviews: no rating line (the tab already says 0)." },
+        { state: "min", img: "id-min.jpg", spec: "No photo: the initials on their colour. No reviews: no rating line (the tab already says 0)." },
         { state: "col", img: "id-full.jpg", via: "Photo and reviews", spec: "Uploaded photo (placeholder here) and \"4.8 · 32 vlerësime\"." },
         { state: "col", img: "id-long.jpg", spec: "A long name wraps; the verified badge stays at the end of the last line." },
-        { state: "sys", img: "id-fail.jpg", spec: "Photo failed to load: the profile icon shows, no message." },
+        { state: "sys", img: "id-fail.jpg", spec: "Photo failed to load: the initials show, no message." },
         { state: "col", img: "photo-up-head.jpg", spec: "New photo uploading: a blue progress ring on the avatar; the camera badge hides until it finishes." },
         { state: "col", img: "id-few.jpg", spec: "One or two reviews: only the count, no average yet." },
         { state: "col", img: "id-pend.jpg", spec: "Licence still being checked: no badge, grey \"Në verifikim\" under the name." }
@@ -670,7 +673,7 @@ window.FEATURES = [
       ]},
       { name: "Fotoja e profilit", note: "New. Bottom sheet from the camera badge on the profile or the photo row on the edit page.", frames: [
         { state: "min", img: "path-4.jpg", page: true, spec: "No photo: camera and gallery only." },
-        { state: "det", img: "photo-has.jpg", page: true, spec: "Has a photo: Hiqni foton added in pink. Removing it brings back the profile icon." },
+        { state: "det", img: "photo-has.jpg", page: true, spec: "Has a photo: Hiqni foton added in pink. Removing it brings back the initials." },
         { state: "det", img: "photo-remove.jpg", page: true, via: "Tap Hiqni foton", title: "Confirm removal", spec: "One question before the photo goes: Hiqni foton (pink) or Anuloni." },
         { state: "det", img: "photo-up.jpg", page: true, title: "Uploading", spec: "After choosing a photo: progress ring on the avatar and \"Duke ngarkuar, 60%\". The doctor can keep editing." },
         { state: "sys", img: "photo-fail.jpg", spec: "Upload failed: amber line and Provoni përsëri. The old photo (or icon) stays." }
@@ -1144,12 +1147,21 @@ window.FEATURES.push({
       { state: "sys", from: "turni-live", img: "lk-tap2.jpg", page: true, title: "Toggle tapped", spec: "Plotësoni profilin për të hyrë në linjë." },
       { state: "det", from: "turni-live", img: "n-done.jpg", page: true, title: "Unlocked", spec: "Profile complete: no card, no lock." }
     ]},
-    { name: "Plotësoni profilin card", note: "Reworked 22.11.2026: no ring and no steps. The doctor's initials in the blue gradient, the title and one grey line, Foto dhe biografia. Same card while pending and after approval; it opens the Plotësoni profilin page.", frames: [
+    { name: "Plotësoni profilin card", note: "Reworked 22.11.2026: no ring and no steps. The doctor's initials on their colour, the title and one grey line, Foto dhe biografia. Same card while pending and after approval; it opens the Plotësoni profilin page.", frames: [
       { state: "min", from: "turni-live", img: "n-card0.jpg", title: "Card", spec: "Tap opens Plotësoni profilin." }
     ]},
     { name: "Plotësoni profilin page", note: "One page, no steps. The photo and the biography are both optional: what is required is the decision. By default parents see the initials, the name and the specialty with the workplace; an empty biography is simply not shown. Më vonë keeps what is missing and lets the doctor in; both can be added later from Zyra.", frames: [
       { state: "min", img: "pp-min.jpg", page: true, title: "Opened", spec: "Initials on a blue gradient with a camera badge; Biografia empty, 0/300." },
-      { state: "full", img: "pp-full.jpg", page: true, title: "Photo and biography added", spec: "The photo replaces the initials and the badge becomes a pencil; the biography is typed in place." }
+      { state: "full", img: "pp-full.jpg", page: true, title: "Photo and biography added", spec: "The photo replaces the initials and the badge becomes a pencil; the biography is typed in place." },
+      { state: "det", img: "pp-sheet.jpg", page: true, title: "Tap the camera badge", spec: "Bëni një foto or Zgjidhni nga galeria." },
+      { state: "col", img: "pp-up.jpg", page: true, title: "Uploading", spec: "Blue ring around the avatar; the badge hides until it finishes." },
+      { state: "sys", img: "pp-fail.jpg", page: true, title: "Upload failed", spec: "The initials stay; one red line under the specialty." },
+      { state: "col", img: "pp-photo.jpg", page: true, title: "Something added", spec: "Once anything is added, Më vonë goes and Përfundo fills the width; whatever is left empty stays empty." },
+      { state: "sys", img: "pp-over.jpg", page: true, title: "Biography over 300", spec: "Red outline and red counter, as in Ndrysho profilin." },
+      { state: "col", img: "pp-busy.jpg", page: true, title: "Saving", spec: "Duke ruajtur with a spinner." },
+      { state: "sys", img: "pp-err.jpg", page: true, title: "Save failed", spec: "One red line above the button; everything stays filled in." },
+      { state: "det", img: "pp-leave.jpg", page: true, title: "Back with changes", spec: "Të dilni pa ruajtur? Vazhdoni plotësimin or Dilni pa ruajtur." },
+      { state: "det", img: "pp-sheet2.jpg", page: true, title: "Badge with a photo", spec: "The sheet adds Hiqni foton; removing it brings back the initials." }
     ]},
     { name: "Aplikimi in Zyra", note: "The status lives in Zyra, not on Turni. While pending or rejected the row under Puna is Aplikimi with a chip; once approved it becomes Dokumentet (see Profili i mjekut). The page lists the three documents; only the latest rejection is shown, with its reason, a centred line and Apliko përsëri.", frames: [
       { state: "min", from: "profili-i-mjekut", img: "zyra-pend.jpg", page: true, title: "Zyra, pending", spec: "No verified badge, Në verifikim on the card and the row." },

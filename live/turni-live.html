@@ -284,7 +284,7 @@ P.bio='<path d="M5 4h14v16H5z"/><path d="M8.5 9h7M8.5 12.5h7M8.5 16h4"/>';
 P.bell2='<path d="M6 16V11a6 6 0 0 1 12 0v5l1.5 2h-15z"/><path d="M10 20.5a2 2 0 0 0 4 0"/>';
 P.lock2='<rect x="5" y="10.5" width="14" height="10" rx="2.5"/><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5"/>';
 /* Plotësoni profilin card (22.11.2026): no steps, no ring. The doctor's initials as they will look, one line, opens the single Plotësoni profilin page */
-const setup=()=>`<div class="setup2"><span class="spini">BK</span><div class="tx"><b>Plotësoni profilin</b><span style="color:var(--muted)">Foto dhe biografia</span></div><em>${I('chev')}</em></div>`;
+const setup=()=>`<div class="setup2"><span class="spini" style="${avBg('Dr. Blerina Kola')}">${avIni('Dr. Blerina Kola')}</span><div class="tx"><b>Plotësoni profilin</b><span style="color:var(--muted)">Foto dhe biografia</span></div><em>${I('chev')}</em></div>`;
 const offShift=(lock,line)=>`<div class="card shift2"><div class="r"><div class="tx"><small><span class="gd off"></span>Jashtë linje</small><b>Pa orar</b></div><span class="pen2">${I('pen')}</span><span class="tog2 off ${lock?'lock':''}">${lock?I('lock2'):''}</span></div>${line?`<span class="lockline">${I('lock2')}${line}</span>`:''}</div>`;
 const segAg=()=>`<div class="seg2"><div class="t">${I('zap')}Live <b>0</b></div><div class="t on">${I('cal')}Agjenda <b>0</b></div></div>`;
 const emptyAg=()=>`<div class="empty2"><i>${I('cal')}</i><b>Nuk keni konsulta ende</b><span>Konsultat e rezervuara shfaqen këtu.</span></div>`;
