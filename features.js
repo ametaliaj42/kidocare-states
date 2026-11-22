@@ -52,17 +52,7 @@ window.FEATURES = [
       ]},
       { name: "Empty", note: "Online with nobody waiting.", frames: [
         { state: "min", img: "screen-empty.jpg", page: true, title: "Askush nuk po pret", spec: "Quiet empty card in place of the list." }
-      ]},
-    { name: "New doctor", note: "After Llogaria u aktivizua. Offline, so Turni opens on Agjenda, empty. One compact card above the shift card: the doctor's avatar inside a ring that fills with each step, Plotësoni profilin, and only the next step (photo, biography, languages). The card opens the edit profile at that step and disappears when done. The online toggle is locked until then; tapping it shows one amber line. Notifications are asked by the phone the first time the toggle is turned on.", frames: [
-      { state: "min", img: "n-0.jpg", page: true, title: "First open", spec: "Shtoni një foto profili." },
-      { state: "col", img: "n-1.jpg", page: true, title: "Photo added", spec: "Shkruani biografinë; the ring fills a third." },
-      { state: "col", img: "n-2.jpg", page: true, title: "Biography added", spec: "Zgjidhni gjuhët që flisni." },
-      { state: "sys", img: "n-lock.jpg", page: true, title: "Toggle tapped", spec: "Plotësoni profilin për të hyrë në linjë." },
-      { state: "det", img: "n-done.jpg", page: true, title: "Profile complete", spec: "Card gone; the toggle works." },
-      { state: "col", img: "n-card0.jpg", title: "Card, step 1", spec: "Camera icon until the photo is added." },
-      { state: "col", img: "n-card1.jpg", title: "Card, step 2", spec: "The photo shows inside the ring." },
-      { state: "col", img: "n-card2.jpg", title: "Card, step 3", spec: "Two thirds of the ring." }
-    ]}
+      ]}
   ],
     rules: [
       ["Open card shows only what helps before accepting", "Parent note, Pesha, Mosha, then Alergjitë and Sëmundje kronike only if the child has any. No measurement dates, no \"Asnjë\". Everything else lives in the Kartela."],
@@ -1004,7 +994,7 @@ window.FEATURES.push(
 },
 {
   id: "krijo-llogarine", name: "Krijo llogarinë", side: "parent", date: "21.11.2026",
-  purpose: "Sign-up for parents and pediatricians on one screen, chosen with the Prind / Pediatër switch. Parents confirm their number by SMS; pediatricians apply and wait for verification on their account.",
+  purpose: "Sign-up for parents, with their number confirmed by SMS. The Prind / Pediatër switch sends doctors to their own sign-up (Regjistrimi i pediatrit, doctor side).",
   path: { note: "Klea Leka, Noa's mother, signs up as a parent. Email is optional for parents. After the number is confirmed the parent lands on Kreu, where the child is added.", frames: [
     { state: "min", img: "path-1.jpg", page: true, title: "Empty form", spec: "Prind selected. Fields: Emri i plotë, Numri i telefonit, Email (opsionale), Fjalëkalimi, then the terms checkbox." },
     { state: "min", img: "path-2.jpg", page: true, via: "Fill in, tick the terms", title: "Filled", spec: "A valid number shows a green check; the password hint turns green at 8 characters; the ticked box is green." },
@@ -1018,7 +1008,7 @@ window.FEATURES.push(
   components: [
     { name: "Prind / Pediatër", note: "Raised white pill on a blue-grey track, so only the main button is blue.", frames: [
       { state: "col", img: "role-prind.jpg", title: "Prind", spec: "Default." },
-      { state: "col", img: "role-ped.jpg", title: "Pediatër", spec: "Tap swaps the fields to the pediatrician form." }
+      { state: "col", img: "role-ped.jpg", title: "Pediatër", spec: "Tap swaps the fields to the pediatrician form; see Regjistrimi i pediatrit on the doctor side." }
     ]},
     { name: "Emri i plotë", note: "One field for the full name. Required.", frames: [
       { state: "min", img: "name-empty.jpg", title: "Empty", spec: "No placeholder example." },
@@ -1068,7 +1058,34 @@ window.FEATURES.push(
       { state: "sys", img: "code-expired.jpg", page: true, title: "Expired", spec: "Red line; resend is right below." },
       { state: "col", img: "code-sent.jpg", page: true, title: "New code sent", spec: "Green line and a fresh timer." },
       { state: "det", img: "code-ok.jpg", page: true, title: "Confirmed", spec: "Green boxes, then Kreu." }
-    ]},
+    ]}
+  ],
+  rules: [
+    ["One message line", "Form-level messages sit in one small red line above the main button. Fields only turn red, except where the fix is not obvious (phone format, email, password length, number taken)."],
+    ["Button always enabled", "Never grey out the main button; tapping it is how the parent finds out what is missing."],
+    ["One signal per problem", "A missing or wrong item gets one red signal only: a red outline, a red line or a red Ngarko, never several."],
+    ["Selection is not blue", "The selected role is a raised white pill. Blue is reserved for the main button, green for an accepted checkbox."]
+  ]
+}
+);
+
+window.LIVE["regjistrimi-pediatrit"]="live/regjistrimi-pediatrit.html";
+window.FEATURES.push({
+  id: "regjistrimi-pediatrit", name: "Regjistrimi i pediatrit", side: "doctor", date: "22.11.2026",
+  purpose: "A pediatrician signs up from Krijo llogarinë with Pediatër selected, sends the application with three documents, waits on the pending account while Kidocare verifies with institutions, then completes the profile on Turni before going online.",
+  path: { note: "Dr. Blerina Kola, from the empty form to her first online-ready Turni.", frames: [
+    { state: "min", img: "ped-empty.jpg", page: true, title: "Pediatër form", spec: "Opened from the Prind / Pediatër switch on Krijo llogarinë." },
+    { state: "min", img: "ped-full.jpg", page: true, via: "Fill in, upload the documents", title: "Filled", spec: "All three documents required." },
+    { state: "min", img: "p-wait.jpg", page: true, via: "Tap Dërgo aplikimin", title: "Në proces verifikimi", spec: "The account is created; this is what she sees on every login until approved." },
+    { state: "min", img: "p-ok.jpg", page: true, via: "All three verified", title: "Llogaria u aktivizua", spec: "Vazhdo." },
+    { state: "min", from: "turni-live", img: "n-0.jpg", page: true, via: "Tap Vazhdo", title: "Turni, first open", spec: "Offline, on Agjenda, with Plotësoni profilin on top; the toggle is locked." },
+    { state: "min", from: "turni-live", img: "n-done.jpg", page: true, via: "Photo, biography, languages", title: "Ready to go online", spec: "The card disappears and the toggle unlocks." }
+  ]},
+  screen: { note: "The form shares its fields and error rule with the parent sign-up.", frames: [
+    { state: "min", img: "ped-empty.jpg", page: true, title: "Empty", spec: "On open." },
+    { state: "full", img: "ped-full.jpg", page: true, title: "Filled", spec: "Ready to send." }
+  ]},
+  components: [
     { name: "Pediatër: form", note: "Same screen with Pediatër selected. Email is required and specialty is one choice from the profile's list. All three documents are required. Same error rule as parents.", frames: [
       { state: "min", img: "ped-empty.jpg", page: true, title: "Empty", spec: "Emri i plotë, Numri i licencës, Specialiteti, telefoni, Email, Fjalëkalimi, Dokumentet, kushtet." },
       { state: "full", img: "ped-full.jpg", page: true, title: "Filled", spec: "Ready to send." },
@@ -1082,14 +1099,17 @@ window.FEATURES.push(
       { state: "col", img: "p-part.jpg", page: true, title: "Partly verified", spec: "Each turns Verifikuar as Kidocare confirms it." },
       { state: "sys", img: "p-rej.jpg", page: true, title: "Not approved", spec: "Refuzuar with the reason under the document; Apliko përsëri." },
       { state: "det", img: "p-re.jpg", page: true, title: "Apliko përsëri", spec: "Prefilled with the same details; verified documents kept, only the rejected one is empty; no password." },
-      { state: "det", img: "p-ok.jpg", page: true, title: "Llogaria u aktivizua", spec: "Vazhdo opens Turni with the setup card (see Turni: Live)." }
+      { state: "det", img: "p-ok.jpg", page: true, title: "Llogaria u aktivizua", spec: "Vazhdo opens Turni with the setup card (next section)." }
+    ]},
+    { name: "Onboarding: Plotësoni profilin", note: "After Llogaria u aktivizua. Offline, so Turni opens on Agjenda, empty. One compact card above the shift card: the doctor's avatar inside a ring that fills with each step, Plotësoni profilin, and only the next step (photo, biography, languages). The card opens the edit profile at that step and disappears when done. The online toggle is locked until then; tapping it shows one amber line. Notifications are asked by the phone the first time the toggle is turned on.", frames: [
+      { state: "min", from: "turni-live", img: "n-0.jpg", page: true, title: "First open", spec: "Shtoni një foto profili." },
+      { state: "col", from: "turni-live", img: "n-1.jpg", page: true, title: "Photo added", spec: "Shkruani biografinë; the ring fills a third." },
+      { state: "col", from: "turni-live", img: "n-2.jpg", page: true, title: "Biography added", spec: "Zgjidhni gjuhët që flisni." },
+      { state: "sys", from: "turni-live", img: "n-lock.jpg", page: true, title: "Toggle tapped", spec: "Plotësoni profilin për të hyrë në linjë." },
+      { state: "det", from: "turni-live", img: "n-done.jpg", page: true, title: "Profile complete", spec: "Card gone; the toggle works." },
+      { state: "col", from: "turni-live", img: "n-card0.jpg", title: "Card, step 1", spec: "Camera icon until the photo is added." },
+      { state: "col", from: "turni-live", img: "n-card1.jpg", title: "Card, step 2", spec: "The photo shows inside the ring." },
+      { state: "col", from: "turni-live", img: "n-card2.jpg", title: "Card, step 3", spec: "Two thirds of the ring." }
     ]}
-  ],
-  rules: [
-    ["One message line", "Form-level messages sit in one small red line above the main button. Fields only turn red, except where the fix is not obvious (phone format, email, password length, number taken)."],
-    ["Button always enabled", "Never grey out the main button; tapping it is how the parent finds out what is missing."],
-    ["One signal per problem", "A missing or wrong item gets one red signal only: a red outline, a red line or a red Ngarko, never several."],
-    ["Selection is not blue", "The selected role is a raised white pill. Blue is reserved for the main button, green for an accepted checkbox."]
   ]
-}
-);
+});

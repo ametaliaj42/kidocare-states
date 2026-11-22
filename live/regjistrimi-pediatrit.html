@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="sq">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=393">
+<title>Regjistrimi i pediatrit frames</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="kidocare.css">
+<style>
+/* Pediatër form, pending account, confirm number */
+
+.au-in .chev{margin-left:auto;color:var(--muted)}
+.pd-docs{background:#fff;border-radius:20px;box-shadow:0 4px 12px rgba(40,80,160,.05);overflow:hidden}
+.pd-row{display:flex;align-items:center;gap:12px;padding:14px 16px;border-bottom:1px solid var(--line)}
+.pd-row:last-child{border:0}
+.pd-row .ic{width:38px;height:38px;border-radius:19px;background:var(--blue-fill);color:var(--blue-ink);display:grid;place-items:center;flex:none}
+.pd-row .ic svg{width:18px;height:18px}
+.pd-row .tx{flex:1;min-width:0}
+.pd-row .tx b{display:block;font-size:15.5px;font-weight:600}
+.pd-row .tx small{display:block;font-size:13px;color:var(--muted);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pd-row .act{font-size:15px;font-weight:600;color:var(--blue-ink)}
+.pd-row .x{color:var(--muted)}
+.pd-row.ok .ic{background:var(--green-fill);color:var(--green)}
+.pd-row.err .act{color:var(--red)}
+.pd-row.err .tx small{color:var(--red)}
+.pd-row .bar{height:5px;border-radius:3px;background:var(--track);margin-top:7px;overflow:hidden}.pd-row .bar i{display:block;height:100%;width:55%;background:var(--blue);border-radius:3px}
+.pd-docs.err{box-shadow:0 0 0 1.6px var(--red)}
+.pd-vlist{margin:6px 0 22px}
+.pd-vrow{display:flex;gap:12px;align-items:center;padding:11px 0;border-bottom:1px solid var(--line);font-size:15.5px}
+.pd-vrow:last-child{border:0}
+.pd-vrow i{width:36px;height:36px;border-radius:18px;background:var(--blue-fill);color:var(--blue-ink);display:grid;place-items:center;flex:none}
+.pd-vrow i svg{width:18px;height:18px}
+.bs .au-btn{margin-top:4px}
+.sico{width:56px;height:56px;border-radius:28px;background:var(--green-fill);color:var(--green);display:grid;place-items:center;margin:6px 0 14px}
+.sico svg{width:26px;height:26px;stroke-width:2.2}
+.pend{padding-top:8px}
+.pend{margin:auto 0;padding:0;text-align:center}
+.pend h1{margin:0 0 22px;text-align:left}
+.pend .lead{margin:18px 8px 0}
+.pend .pcard{text-align:left}
+.ptitle{font-size:14px;color:var(--muted);margin:0 0 8px}
+.prow span small{display:block;font-size:13px;color:var(--red);font-weight:400;margin-top:2px}
+.prow em.r{color:var(--red);background:#FDE8EC}
+.prow i.ok{background:var(--green-fill);color:var(--green)}
+.prow i.no{background:#FDE8EC;color:var(--red)}
+.prow{display:flex;align-items:center;gap:12px;padding:14px 16px;border-bottom:1px solid var(--line)}
+.prow:last-child{border:0}
+.prow i{width:38px;height:38px;border-radius:19px;background:var(--blue-fill);color:var(--blue-ink);display:grid;place-items:center;flex:none}
+.prow i svg{width:18px;height:18px}
+.prow span{flex:1;font-size:15.5px;font-weight:500}
+.prow em{font-style:normal;font-size:13px;font-weight:600;color:var(--amber);background:var(--amber-fill);border-radius:10px;padding:4px 10px}
+.prow em.g{color:var(--green);background:var(--green-fill)}
+.pcard{background:#fff;border-radius:20px;box-shadow:0 4px 12px rgba(40,80,160,.05);overflow:hidden}
+.sub2{font-size:14.5px;color:var(--muted);margin-top:16px;line-height:1.4}
+.ps{margin-top:92px;padding:0 10px;text-align:center;height:166px;display:flex;flex-direction:column;align-items:center}
+.ps-ic{flex:none;width:64px;height:64px;border-radius:32px;display:grid;place-items:center}
+.ps-ic svg{width:26px;height:26px;stroke-width:2}
+.ps h2{font-size:26px;font-weight:600;letter-spacing:-.01em;margin-top:14px}
+.ps p{font-size:16px;color:var(--muted);line-height:1.4;margin-top:6px;max-width:290px}
+.ps{background:none}.ps.w .ps-ic{background:var(--amber-fill);color:var(--amber)}
+.ps.r .ps-ic{background:#FDE8EC;color:var(--red)}
+.ps.g .ps-ic{background:var(--green-fill);color:var(--green)}
+.ptitle2{font-size:14px;color:var(--muted);margin:24px 0 8px}
+.au-btn.ghost{visibility:hidden}
+
+
+
+.cv{min-height:852px;display:flex;flex-direction:column;padding:0 20px;position:relative}
+.cv .sb{margin:0 -20px}
+.cv h1{font-size:30px;font-weight:600;letter-spacing:-.02em;margin:22px 0 0}
+.cn-num{display:flex;align-items:center;gap:6px;margin-top:14px;font-size:17px}
+.cn-num b{color:var(--ink);font-weight:600}
+.cn-num .ed{color:var(--muted);display:grid;place-items:center}
+.cn-num .ed svg{width:17px;height:17px;stroke-width:1.9}
+.cn-boxes{display:flex;gap:9px;margin-top:30px}
+.cn-boxes span{flex:1;height:62px;border-radius:16px;background:#fff;display:grid;place-items:center;font-size:27px;font-weight:600;box-shadow:0 4px 12px rgba(40,80,160,.05)}
+.cn-boxes span.f{box-shadow:0 0 0 1.6px var(--blue),0 0 0 5px rgba(91,150,255,.15)}
+.cn-boxes span.f::after{content:"";width:1.6px;height:26px;background:var(--blue)}
+.cn-boxes.ok span{box-shadow:0 0 0 1.6px var(--green);color:var(--green)}
+.cn-boxes.busy span{color:var(--muted)}
+.cn-msg{font-size:14px;margin-top:14px;min-height:20px;color:var(--muted);display:flex;align-items:center;gap:7px}
+.cn-msg.err{color:var(--red)}
+.cn-msg b{color:var(--blue-ink);font-weight:600}
+.cn-msg .sp{width:15px;height:15px;border-radius:50%;border:2px solid #C9D6EE;border-top-color:var(--blue)}
+.cn-msg svg{width:15px;height:15px}
+.cn-ch{height:34px;padding:0 14px;border-radius:17px;background:#fff;color:var(--blue-ink);font-size:14.5px;font-weight:600;display:grid;place-items:center;box-shadow:0 4px 12px rgba(40,80,160,.06)}
+.cn-rs{height:52px;border-radius:16px;background:rgba(255,255,255,.55);color:var(--muted);font-size:16px;font-weight:500;display:flex;align-items:center;justify-content:center;gap:6px;margin-top:6px}
+.cn-rs b{font-size:18px;font-weight:600;color:var(--ink);font-variant-numeric:tabular-nums;min-width:40px}
+.cn-rs.on{background:#fff;color:var(--blue-ink);font-weight:600;box-shadow:0 8px 20px rgba(40,80,160,.08)}
+
+.cn-msg b.tm{color:var(--ink);font-size:15px;font-variant-numeric:tabular-nums}
+
+</style>
+</head>
+<body>
+<div id="f"></div>
+<script src="kidocare.js"></script>
+<script>
+const c=h=>`<div class="crop au-c bg">${h}</div>`;
+const ERR_REQ='Plotësoni fushat e detyrueshme për të vazhduar.';
+/* the parent form; o lets every field take any state */
+function form(o={}){
+  return auPage(`${auTop()}<h1>Krijo llogarinë</h1>${auSeg('prind')}
+   ${o.name||auField('Emri i plotë')}
+   ${o.phone||auPhone()}
+   ${o.email||auField('Email (opsionale)')}
+   ${o.pass||auPass()}
+   ${o.terms||auTerms()}
+   ${auCta('Krijo llogarinë',{link:['Kam llogari?','Hyr'],...(o.cta||{})})}`);
+}
+const filled={name:auField('Emri i plotë',{v:KLEA.name}),phone:auPhone({v:KLEA.phone,st:'ok'}),email:auField('Email (opsionale)',{v:KLEA.email}),pass:auPass({v:'kidocare26',hst:'ok'}),terms:auTerms('on')};
+const countrySheet=()=>`<div style="position:relative">${form()}${bsheet(`<div class="stitle">Zgjidhni shtetin</div><div class="au-search">${I('search')}Kërkoni shtetin</div>
+  <div class="au-cl">${[['al','Shqipëri','+355',1],['xk','Kosovë','+383'],['mk','Maqedoni e Veriut','+389'],['me','Mal i Zi','+382'],['it','Itali','+39'],['gr','Greqi','+30'],['de','Gjermani','+49'],['gb','Mbretëri e Bashkuar','+44']]
+   .map(([f,n,cc,on])=>`<div class="${on?'on':''}"><span class="au-flag ${f}"></span>${n}<em>${cc}</em></div>`).join('')}</div>`)}</div>`;
+/* ---- Pediatër ---- */
+
+P.upload='<path d="M12 16V4M7 9l5-5 5 5"/><path d="M4 15v4h16v-4"/>';
+P.shield='<path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/><path d="M9 12l2 2 4-4"/>';
+P.hosp='<path d="M4 21V7l8-4 8 4v14"/><path d="M12 9v6M9 12h6"/>';
+P.badge='<rect x="4" y="3" width="16" height="18" rx="3"/><circle cx="12" cy="10" r="3"/><path d="M8 17h8"/>';
+const DOCS=['Licenca','Karta e identitetit','Sigurimi profesional'];
+function pdoc(n,st='',file=''){
+  const ic=st==='ok'?I('check'):I('upload');
+  const sub=st==='ok'?`<small>${file}</small>`:st==='busy'?`<div class="bar"><i></i></div>`:st==='err'?`<small>${file||'Nuk u ngarkua. Provoni përsëri.'}</small>`:'';
+  const act=st==='miss'?`<span class="act" style="color:var(--red)">Ngarko</span>`:st==='ok'?`<span class="x">${I('x')}</span>`:st==='busy'?'':`<span class="act">Ngarko</span>`;
+  return `<div class="pd-row ${st}"><span class="ic">${ic}</span><div class="tx"><b>${n}</b>${sub}</div>${act}</div>`;
+}
+const pdocs=(rows,err)=>`<div class="au-f"><label>Dokumentet</label><div class="pd-docs${err?' err':''}">${rows.join('')}</div></div>`;
+const spec=(v,st)=>`<div class="au-f"><label>Specialiteti</label><div class="au-in ${st||''}">${v?`<span class="v">${v}</span>`:'<span class="ph">Zgjidhni specialitetin</span>'}<span class="chev">${I('caret')}</span></div></div>`;
+function pform(o={}){
+  return `<div class="au bg">${statusBar()}${auTop()}<h1>Krijo llogarinë</h1>${auSeg('ped')}
+  ${o.name||auField('Emri i plotë')}
+  ${o.lic||auField('Numri i licencës (Urdhri i Mjekut)')}
+  ${o.spec||spec()}
+  ${o.phone||auPhone()}
+  ${o.email||auField('Email')}
+  ${o.pass||auPass()}
+  ${o.docs||pdocs(DOCS.map(n=>pdoc(n)))}
+  ${o.terms||auTerms()}
+  ${auCta('Dërgo aplikimin',{link:['Kam llogari?','Hyr'],err:o.err})}</div>`;
+}
+const pfilled={name:auField('Emri i plotë',{v:'Blerina Kola'}),lic:auField('Numri i licencës (Urdhri i Mjekut)',{v:'1937'}),spec:spec('Pediatri e përgjithshme'),
+ phone:auPhone({v:'68 220 4519',st:'ok'}),email:auField('Email',{v:'blerina.kola@gmail.com'}),pass:auPass({v:'pediatri2026',hst:'ok'}),
+ docs:pdocs([pdoc('Licenca','ok','licenca-urdhri.pdf, 1.2 MB'),pdoc('Karta e identitetit','ok','karta-id.jpg, 2.4 MB'),pdoc('Sigurimi profesional','ok','sigurimi-2026.pdf, 0.8 MB')]),terms:auTerms('on')};
+const sent=()=>`<div style="position:relative">${ppform(pfilled)}${bsheet(`<div class="sico">${I('check')}</div><div class="stitle">Aplikimi u dërgua</div>
+  <div class="ssub">Para se llogaria të aktivizohet, kontaktojmë institucionet për të verifikuar:</div>
+  <div class="pd-vlist"><div class="pd-vrow"><i>${I('badge')}</i>Licencën te Urdhri i Mjekut</div><div class="pd-vrow"><i>${I('hosp')}</i>Miratimin klinik</div><div class="pd-vrow"><i>${I('shield')}</i>Sigurimin profesional</div></div>
+  <div class="ssub">Do t'ju njoftojmë sapo llogaria të jetë aktive.</div><div class="au-btn">Në rregull</div>`,false)}</div>`;
+
+
+const ST={wait:['Në pritje',''],ok:['Verifikuar','g'],no:['Refuzuar','r']};
+const prow=(ic,t,st='wait',why='')=>`<div class="prow"><i class="${st}">${I(ic)}</i><span>${t}${why?`<small>${why}</small>`:''}</span><em class="${ST[st][1]}">${ST[st][0]}</em></div>`;
+P.hourglass='<path d="M6 3h12M6 21h12M7 3v3a5 5 0 0 0 10 0V3M7 21v-3a5 5 0 0 1 10 0v3"/>';
+function pstate(o){
+  return `<div class="au bg">${statusBar()}<div class="au-top"><img class="lg" src="img/logo-kidocare.png"></div>
+  <div class="ps ${o.k}"><span class="ps-ic">${I(o.ic)}</span><h2>${o.t}</h2>${o.p?`<p>${o.p}</p>`:''}</div>
+  <div class="ptitle2">Dokumentet</div>
+  <div class="pcard">${prow('badge','Licenca',o.r[0][0],o.r[0][1])}${prow('hosp','Miratimi klinik',o.r[1][0],o.r[1][1])}${prow('shield','Sigurimi profesional',o.r[2][0],o.r[2][1])}</div>
+  <div class="au-cta"><div class="au-btn${o.btn?'':' ghost'}">${o.btn||''}</div><div class="au-link"><b>Dil nga llogaria</b></div></div></div>`;
+}
+const PEND={k:'w',ic:'hourglass',t:'Në proces verifikimi'};
+const PF={
+ 'p-wait':()=>pstate({...PEND,r:[['wait'],['wait'],['wait']]}),
+ 'p-part':()=>pstate({...PEND,r:[['ok'],['wait'],['wait']]}),
+ 'p-rej':()=>pstate({k:'r',ic:'alert',t:'Aplikimi nuk u miratua',p:'Një dokument nuk u verifikua. Aplikoni përsëri me të njëjtat të dhëna.',r:[['ok'],['ok'],['no','Sigurimi ka skaduar']],btn:'Apliko përsëri'}),
+ 'p-re':()=>pform({name:auField('Emri i plotë',{v:'Blerina Kola'}),lic:auField('Numri i licencës (Urdhri i Mjekut)',{v:'1937'}),spec:spec('Pediatri e përgjithshme'),
+   phone:auPhone({v:'68 220 4519',st:'ok'}),email:auField('Email',{v:'blerina.kola@gmail.com'}),pass:' ',
+   docs:pdocs([pdoc('Licenca','ok','licenca-urdhri.pdf, 1.2 MB'),pdoc('Karta e identitetit','ok','karta-id.jpg, 2.4 MB'),pdoc('Sigurimi profesional')]),terms:auTerms('on')}).replace('<h1>Krijo llogarinë</h1>','<h1>Apliko përsëri</h1>').replace(/<div class="au-link">Kam llogari\? <b>Hyr<\/b><\/div>/,'').replace(/<div class="au-seg">[\s\S]*?<\/div>/,''),
+ 'p-ok':()=>pstate({k:'g',ic:'check',t:'Llogaria u aktivizua',r:[['ok'],['ok'],['ok']],btn:'Vazhdo'}),
+};
+
+
+const PF2={
+ err:()=>pform({name:auField('Emri i plotë',{v:'Blerina Kola'}),lic:auField('Numri i licencës (Urdhri i Mjekut)',{st:'err'}),spec:spec('','err'),phone:auPhone({st:'err'}),email:auField('Email',{st:'err'}),pass:auPass({st:'err',hst:'err'}),
+   docs:pdocs([pdoc('Licenca','ok','licenca-urdhri.pdf, 1.2 MB'),pdoc('Karta e identitetit','miss'),pdoc('Sigurimi profesional','miss')]),terms:auTerms('err'),err:'Plotësoni fushat e detyrueshme për të vazhduar.'}),
+ docstates:()=>c(pdocs([pdoc('Licenca'),pdoc('Karta e identitetit','busy'),pdoc('Sigurimi profesional','ok','sigurimi-2026.pdf, 0.8 MB')])+`<div style="height:12px"></div>`+pdocs([pdoc('Licenca','miss')])),
+};
+/* ---- Konfirmoni numrin ---- */
+
+P.pen2='<path d="M4 20h4L19 9l-4-4L4 16z"/>';
+P.del='<path d="M21 6H9l-6 6 6 6h12z"/><path d="M17 10l-4 4M13 10l4 4"/>';
+function codeScr(o={}){
+  const d=o.d||'';const cells=[0,1,2,3,4,5].map(i=>`<span class="${!o.st&&i===d.length?'f':''}">${d[i]||''}</span>`).join('');
+  const rs=`<div class="cn-rs on">Dërgo kodin përsëri</div>`;
+  return `<div class="cv bg">${statusBar()}<div class="au-top"><span class="back">${I('back')}</span><img class="lg" src="img/logo-kidocare.png"></div>
+   <h1>Konfirmoni numrin</h1>
+   <div class="cn-num"><b>+355 69 412 3087</b><span class="ed">${I('pen2')}</span></div>
+   <div class="cn-boxes ${o.st||''}">${cells}</div>
+   <div class="cn-msg ${o.mc||''}">${o.msg===undefined?'Kodi skadon pas <b class="tm">0:42</b>':o.msg}</div>
+   ${o.st==='ok'||o.st==='busy'?'':rs}</div>`;
+}
+const CF={
+ wait:()=>codeScr(),
+ typing:()=>codeScr({d:'482'}),
+ busy:()=>codeScr({d:'482915',st:'busy',msg:'<span class="sp"></span>Duke konfirmuar'}),
+ wrong:()=>codeScr({d:'',msg:'Kodi nuk është i saktë.',mc:'err'}),
+ expired:()=>codeScr({d:'',msg:'Kodi ka skaduar.',mc:'err',ready:1}),
+ sent:()=>codeScr({msg:`<span style="color:var(--green);display:flex;gap:6px;align-items:center">${I('check')}Kodi i ri u dërgua. Skadon pas <b class="tm" style="color:var(--ink)">1:00</b></span>`}),
+ ok:()=>codeScr({d:'482915',st:'ok',msg:`<span style="color:var(--green);display:flex;gap:6px;align-items:center">${I('check')}Numri u konfirmua</span>`}),
+};
+
+const F={
+ 'path-1':()=>pform(),
+ 'ped-empty':()=>pform(), 'ped-full':()=>pform(pfilled), 'ped-err':()=>PF2.err(), 'ped-docs':()=>PF2.docstates(),
+ 'p-wait':()=>PF['p-wait'](), 'p-part':()=>PF['p-part'](), 'p-rej':()=>PF['p-rej'](), 'p-re':()=>PF['p-re'](), 'p-ok':()=>PF['p-ok'](),
+};
+window.FRAME_IDS=Object.keys(F);
+function show(){
+  const id=location.hash.slice(1)||'path-1';
+  document.getElementById('f').innerHTML=(F[id]||F['path-1'])();
+  const post=()=>{try{parent.postMessage({liveFrame:id,h:document.getElementById('f').scrollHeight},'*')}catch(e){}};
+  requestAnimationFrame(post);document.querySelectorAll('#f img').forEach(i=>i.complete||i.addEventListener('load',post));
+}
+addEventListener('hashchange',show);show();
+document.fonts&&document.fonts.ready.then(show);
+</script>
+</body>
+</html>

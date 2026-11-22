@@ -70,10 +70,10 @@
 .cv{min-height:852px;display:flex;flex-direction:column;padding:0 20px;position:relative}
 .cv .sb{margin:0 -20px}
 .cv h1{font-size:30px;font-weight:600;letter-spacing:-.02em;margin:22px 0 0}
-.cn-num{display:flex;align-items:center;gap:10px;margin-top:14px;font-size:17px}
+.cn-num{display:flex;align-items:center;gap:6px;margin-top:14px;font-size:17px}
 .cn-num b{color:var(--ink);font-weight:600}
-.cn-num .ed{width:28px;height:28px;border-radius:14px;background:var(--blue-fill);color:var(--blue-ink);display:grid;place-items:center}
-.cn-num .ed svg{width:14px;height:14px}
+.cn-num .ed{color:var(--muted);display:grid;place-items:center}
+.cn-num .ed svg{width:19px;height:19px;stroke-width:2}
 .cn-boxes{display:flex;gap:9px;margin-top:30px}
 .cn-boxes span{flex:1;height:62px;border-radius:16px;background:#fff;display:grid;place-items:center;font-size:27px;font-weight:600;box-shadow:0 4px 12px rgba(40,80,160,.05)}
 .cn-boxes span.f{box-shadow:0 0 0 1.6px var(--blue),0 0 0 5px rgba(91,150,255,.15)}
@@ -204,9 +204,6 @@ const CF={
 const F={
  /* confirm number */
  'path-3':()=>CF.wait(), 'code-wait':()=>CF.wait(), 'code-typing':()=>CF.typing(), 'code-busy':()=>CF.busy(), 'code-wrong':()=>CF.wrong(), 'code-expired':()=>CF.expired(), 'code-sent':()=>CF.sent(), 'code-ok':()=>CF.ok(),
- /* pediatrician */
- 'ped-empty':()=>pform(), 'ped-full':()=>pform(pfilled), 'ped-err':()=>PF2.err(), 'ped-docs':()=>PF2.docstates(),
- 'p-wait':()=>PF['p-wait'](), 'p-part':()=>PF['p-part'](), 'p-rej':()=>PF['p-rej'](), 'p-re':()=>PF['p-re'](), 'p-ok':()=>PF['p-ok'](),
 
  /* minimal path */
  'path-1':()=>form(),
