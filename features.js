@@ -590,7 +590,7 @@ window.FEATURES = [
     path: {
       note: "Dr. Arben Shehu has only completed sign-up: name, specialty, licence, workplace and city. No photo, no bio, no reviews yet. Zyra keeps every row of the current app; only the look changes.",
       frames: [
-        { state: "min", img: "path-1.jpg", title: "Zyra", spec: "Bottom bar, last tab. Profile card on top (photo, name, verified badge, Aktive, rating when there is one), then Puna, Llogaria, Kalo te prindi and Dil, as in the app now." },
+        { state: "min", img: "path-1.jpg", title: "Zyra", spec: "Glass bottom bar, last tab. Profile card on top (photo, name, verified badge, Aktive, rating when there is one), then Puna (Orari, Fitimet, Dokumentet), Llogaria, Kalo te prindi and Dil." },
         { state: "min", img: "path-2.jpg", via: "Tap the profile card", title: "Profili", spec: "Centred photo, name, verified badge and rating line, then Profili and Vlerësimet tabs. Ndrysho top right. Bio is empty, so a quiet card invites the doctor to add one." },
         { state: "min", img: "path-3.jpg", via: "Tap Ndrysho", page: true, title: "Ndrysho profilin", spec: "Editable fields first; name, specialty and licence locked at the bottom. Ruaj ndryshimet stays grey until something changes." },
         { state: "min", img: "path-4.jpg", via: "Tap Shtoni foto", page: true, title: "Fotoja e profilit", spec: "Bottom sheet with camera and gallery. No photo yet, so no Hiqni foton." },
@@ -613,8 +613,12 @@ window.FEATURES = [
         { state: "col", img: "z-card-off.jpg", spec: "Out of shift (Turni off): grey dot, \"Jo aktive\"." },
         { state: "col", img: "z-card-pend.jpg", spec: "Licence still being checked: no verified badge, grey \"Në verifikim\" in place of the status." }
       ]},
-      { name: "Licenca row in Zyra", note: "The status chip says when the licence needs attention. The row opens the Licenca page (not designed here).", frames: [
-        { state: "col", img: "z-lic.jpg", spec: "Valid: no chip. Expires within 30 days: amber Skadon. Expired: pink Ka skaduar." }
+      { name: "Dokumentet row in Zyra", note: "Was the Licenca row (22.11.2026). While the application is pending or rejected the row is Aplikimi; once approved it becomes Dokumentet: the three verified documents, with the licence expiry chip on the row.", frames: [
+        { state: "col", img: "z-lic.jpg", spec: "Valid: no chip. Expires within 30 days: amber Skadon. Expired: pink Ka skaduar." },
+        { state: "col", img: "z-app.jpg", spec: "Before approval: Aplikimi with Në verifikim or Refuzuar." },
+        { state: "det", img: "docs-ok.jpg", page: true, title: "Dokumentet", spec: "The three documents, all Aktive." },
+        { state: "det", img: "docs-soon.jpg", page: true, title: "Licence expiring", spec: "Skadon më 15.12 on the Licenca line." },
+        { state: "det", img: "docs-gone.jpg", page: true, title: "Licence expired", spec: "Ka skaduar in red." }
       ]},
       { name: "Profile header", note: "Centred, as in the app. On the doctor's own profile the camera badge opens the photo sheet.", frames: [
         { state: "min", img: "id-min.jpg", spec: "No photo: the profile icon. No reviews: no rating line (the tab already says 0)." },
@@ -966,7 +970,7 @@ window.FEATURES.push(
   purpose: "The first screen a parent sees: a slow wall of real Kidocare moments shows the strengths, then one headline and two buttons, Krijo llogari and Hyr.",
   path: { note: "Two exits only, no separate doctor link. Hyr (login) is still to be designed together.", frames: [
     { state: "min", img: "path-1.jpg", page: true, title: "Mirë se vini", spec: "The wall drifts slowly; headline and buttons stay still." },
-    { state: "min", img: "path-1.jpg", from: "krijo-llogarine", page: true, via: "Tap Krijo llogari", title: "Krijo llogarinë", spec: "Opens the sign-up form with Prind selected." }
+    { state: "min", img: "path-1.jpg", from: "krijo-llogarine", page: true, via: "Tap Krijo llogari", title: "Krijo llogarinë", spec: "Opens the parent sign-up; doctors use the Jeni pediatër? chip there." }
   ]},
   screen: { note: "The wall has three columns drifting in opposite directions (46 to 52 s per loop, the middle one downwards). Nothing in it is tappable. On phones with reduced motion it stands still.", frames: [
     { state: "min", img: "screen-min.jpg", page: true, title: "Animated", spec: "Opens with a 1.6 s settle-in, then drifts forever." },
@@ -993,22 +997,22 @@ window.FEATURES.push(
   ]
 },
 {
-  id: "krijo-llogarine", name: "Krijo llogarinë", side: "parent", date: "21.11.2026",
-  purpose: "Sign-up for parents, with their number confirmed by SMS. The Prind / Pediatër switch sends doctors to their own sign-up (Regjistrimi i pediatrit, doctor side).",
+  id: "krijo-llogarine", name: "Krijo llogarinë", side: "parent", date: "22.11.2026",
+  purpose: "Sign-up for parents, with their number confirmed by SMS. A quiet \"Jeni pediatër?\" chip in the top bar sends doctors to their own sign-up (Regjistrimi i pediatrit, doctor side).",
   path: { note: "Klea Leka, Noa's mother, signs up as a parent. Email is optional for parents. After the number is confirmed the parent lands on Kreu, where the child is added.", frames: [
-    { state: "min", img: "path-1.jpg", page: true, title: "Empty form", spec: "Prind selected. Fields: Emri i plotë, Numri i telefonit, Email (opsionale), Fjalëkalimi, then the terms checkbox." },
-    { state: "min", img: "path-2.jpg", page: true, via: "Fill in, tick the terms", title: "Filled", spec: "A valid number shows a green check; the password hint turns green at 8 characters; the ticked box is green." },
+    { state: "min", img: "path-1.jpg", page: true, title: "Empty form", spec: "Fields: Emri i plotë, Numri i telefonit, Email (opsionale), Fjalëkalimi, Konfirmoni fjalëkalimin, then the terms checkbox. Jeni pediatër? sits in the top bar." },
+    { state: "min", img: "path-2.jpg", page: true, via: "Fill in, tick the terms", title: "Filled", spec: "A valid number shows a green check; the password hint turns green at 8 characters; the confirmation gets a check when it matches; the ticked box is green." },
     { state: "min", img: "path-3.jpg", page: true, via: "Tap Krijo llogarinë", title: "Konfirmoni numrin", spec: "A code goes to the number by SMS; the phone's own keyboard opens and offers it. Confirmed goes to Kreu." }
   ]},
   screen: { note: "The button stays enabled. Tapping it with something missing marks the fields in red and shows one short line above the button; nothing else.", frames: [
     { state: "min", img: "screen-min.jpg", page: true, title: "Empty", spec: "On open." },
     { state: "full", img: "screen-full.jpg", page: true, title: "Filled", spec: "Ready to send." },
-    { state: "sys", img: "screen-err.jpg", page: true, title: "Sent with gaps", spec: "Empty name, short number, short password and unticked terms all turn red at once; one line above the button." }
+    { state: "sys", img: "screen-err.jpg", page: true, title: "Sent with gaps", spec: "Empty name, short number, short password, empty confirmation and unticked terms all turn red at once; one line above the button." },
+    { state: "sys", img: "screen-mis.jpg", page: true, title: "Passwords differ", spec: "Only the confirmation turns red, with one line under it." }
   ]},
   components: [
-    { name: "Prind / Pediatër", note: "Raised white pill on a blue-grey track, so only the main button is blue.", frames: [
-      { state: "col", img: "role-prind.jpg", title: "Prind", spec: "Default." },
-      { state: "col", img: "role-ped.jpg", title: "Pediatër", spec: "Tap swaps the fields to the pediatrician form; see Regjistrimi i pediatrit on the doctor side." }
+    { name: "Jeni pediatër?", note: "Replaces the Prind / Pediatër switch (Ador, 22.11.2026). A small white chip in the top bar, right of the logo: visible, but not competing with the main button.", frames: [
+      { state: "col", img: "ped-chip.jpg", title: "Chip", spec: "Tap opens Regjistrimi i pediatrit, step 1." }
     ]},
     { name: "Emri i plotë", note: "One field for the full name. Required.", frames: [
       { state: "min", img: "name-empty.jpg", title: "Empty", spec: "No placeholder example." },
@@ -1023,7 +1027,7 @@ window.FEATURES.push(
       { state: "col", img: "ph-ok.jpg", title: "Valid", spec: "Green check once 9 digits starting with 6." },
       { state: "sys", img: "ph-short.jpg", title: "Too short", spec: "Red with one line: the number needs 9 digits." },
       { state: "sys", img: "ph-wrong.jpg", title: "Not a mobile", spec: "Red with one line: mobile numbers start with 6." },
-      { state: "sys", img: "ph-taken.jpg", title: "Already registered", spec: "Checked on send. Hyr in the line opens login with the number filled in." },
+      { state: "sys", img: "ph-taken.jpg", title: "Already registered", spec: "Checked on send. One red line; no Hyr link, the parent goes back to log in." },
       { state: "det", img: "ph-sheet.jpg", page: true, title: "Country code", spec: "Tap +355: sheet with search; Albania first, then the region and the main diaspora countries." },
       { state: "col", img: "ph-xk.jpg", title: "Kosovë", spec: "The hint changes to that country's format and the checks follow its rules." }
     ]},
@@ -1038,6 +1042,11 @@ window.FEATURES.push(
       { state: "col", img: "pw-ok.jpg", title: "Long enough", spec: "Hint turns green with a check." },
       { state: "col", img: "pw-shown.jpg", title: "Shown", spec: "Tap the eye to show the password; the icon crosses out." },
       { state: "sys", img: "pw-err.jpg", title: "Too short", spec: "On send: red field and red hint." }
+    ]},
+    { name: "Konfirmoni fjalëkalimin", note: "Same field as Fjalëkalimi, without a hint. Required.", frames: [
+      { state: "min", img: "cf-empty.jpg", title: "Empty", spec: "No hint." },
+      { state: "col", img: "cf-ok.jpg", title: "Matches", spec: "Green check once it matches." },
+      { state: "sys", img: "cf-err.jpg", title: "Does not match", spec: "On send: red field and one line, Fjalëkalimet nuk përputhen." }
     ]},
     { name: "Kushtet", note: "Quiet grey line; the two documents are dark, underlined links. Ticked turns green.", frames: [
       { state: "min", img: "t-off.jpg", title: "Not ticked", spec: "Default." },
@@ -1064,7 +1073,7 @@ window.FEATURES.push(
     ["One message line", "Form-level messages sit in one small red line above the main button. Fields only turn red, except where the fix is not obvious (phone format, email, password length, number taken)."],
     ["Button always enabled", "Never grey out the main button; tapping it is how the parent finds out what is missing."],
     ["One signal per problem", "A missing or wrong item gets one red signal only: a red outline, a red line or a red Ngarko, never several."],
-    ["Selection is not blue", "The selected role is a raised white pill. Blue is reserved for the main button, green for an accepted checkbox."]
+    ["No role switch", "Parents and pediatricians sign up on separate screens. The only way to the pediatrician sign-up is the Jeni pediatër? chip."]
   ]
 }
 );
@@ -1072,44 +1081,84 @@ window.FEATURES.push(
 window.LIVE["regjistrimi-pediatrit"]="live/regjistrimi-pediatrit.html";
 window.FEATURES.push({
   id: "regjistrimi-pediatrit", name: "Regjistrimi i pediatrit", side: "doctor", date: "22.11.2026",
-  purpose: "A pediatrician signs up from Krijo llogarinë with Pediatër selected, sends the application with three documents, waits on the pending account while Kidocare verifies with institutions, then completes the profile on Turni before going online.",
-  path: { note: "Dr. Blerina Kola, from the empty form to her first online-ready Turni.", frames: [
-    { state: "min", img: "ped-empty.jpg", page: true, title: "Pediatër form", spec: "Opened from the Prind / Pediatër switch on Krijo llogarinë." },
-    { state: "min", img: "ped-full.jpg", page: true, via: "Fill in, upload the documents", title: "Filled", spec: "All three documents required." },
-    { state: "min", img: "p-wait.jpg", page: true, via: "Tap Dërgo aplikimin", title: "Në proces verifikimi", spec: "The account is created; this is what she sees on every login until approved." },
-    { state: "min", img: "p-ok.jpg", page: true, via: "All three verified", title: "Llogaria u aktivizua", spec: "Vazhdo." },
-    { state: "min", from: "turni-live", img: "n-0.jpg", page: true, via: "Tap Vazhdo", title: "Turni, first open", spec: "Offline, on Agjenda, with Plotësoni profilin on top; the toggle is locked." },
-    { state: "min", from: "turni-live", img: "n-done.jpg", page: true, via: "Photo, biography, languages", title: "Ready to go online", spec: "The card disappears and the toggle unlocks." }
+  purpose: "A pediatrician signs up in two steps (data, then documents) from the Jeni pediatër? chip on Krijo llogarinë. The account is created on sending; Turni stays locked behind a blurred preview until Kidocare verifies the documents and the profile has a photo and a biography. The application status lives in Zyra.",
+  path: { note: "Dr. Blerina Kola, from the empty form to her first online-ready Turni. Reworked after Ador's feedback (22.11.2026): no Prind / Pediatër switch, password confirmation, two steps, a locked Turni instead of a separate pending screen. Logging in while pending (Hyr) opens the same locked Turni. The phone is not confirmed by SMS for doctors.", frames: [
+    { state: "min", img: "path-1.jpg", page: true, title: "Të dhënat, 1/2", spec: "Opened from Jeni pediatër? on Krijo llogarinë. Specialiteti is typed, not picked." },
+    { state: "min", img: "path-2.jpg", page: true, via: "Fill in", title: "Filled", spec: "Vazhdo checks every field and whether the number or licence already has an account." },
+    { state: "min", img: "path-3.jpg", page: true, via: "Tap Vazhdo, upload the three documents", title: "Dokumentet, 2/2", spec: "All three required. Each shows a preview once uploaded." },
+    { state: "min", img: "path-4.jpg", page: true, via: "Tap Dërgo aplikimin", title: "Aplikimi u dërgua", spec: "The account is created. The sheet explains the verification once." },
+    { state: "min", from: "turni-live", img: "lk-wait.jpg", page: true, via: "Tap Në rregull", title: "Turni, locked", spec: "Agjenda, blurred, with the status on top. Only Turni, Infopoint and Zyra work." },
+    { state: "min", from: "profili-i-mjekut", img: "zyra-pend.jpg", page: true, via: "Tap Zyra", title: "Zyra", spec: "Aplikimi row with the amber Në verifikim chip." },
+    { state: "min", from: "profili-i-mjekut", img: "ap-wait.jpg", page: true, via: "Tap Aplikimi", title: "Aplikimi", spec: "The three documents and where each one stands." },
+    { state: "min", from: "turni-live", img: "lk-ok.jpg", page: true, via: "All three verified, open Turni", title: "Llogaria u aktivizua", spec: "Shown once, on the first open after approval." },
+    { state: "min", from: "turni-live", img: "lk-prof.jpg", page: true, via: "Next open", title: "Plotësoni profilin", spec: "Still locked until the photo and the biography are in." },
+    { state: "min", from: "turni-live", img: "n-done.jpg", page: true, via: "Photo and biography added", title: "Ready to go online", spec: "The card and the lock disappear; the toggle works." }
   ]},
-  screen: { note: "The form shares its fields and error rule with the parent sign-up.", frames: [
-    { state: "min", img: "ped-empty.jpg", page: true, title: "Empty", spec: "On open." },
-    { state: "full", img: "ped-full.jpg", page: true, title: "Filled", spec: "Ready to send." }
+  screen: { note: "The two steps share the parent sign-up's fields and error rule: the button stays enabled, one red line above it, one red signal per problem.", frames: [
+    { state: "min", img: "screen-min.jpg", page: true, title: "Step 1", spec: "Empty." },
+    { state: "full", img: "screen-full.jpg", page: true, title: "Step 2", spec: "All three documents uploaded, terms ticked." }
   ]},
   components: [
-    { name: "Pediatër: form", note: "Same screen with Pediatër selected. Email is required and specialty is one choice from the profile's list. All three documents are required. Same error rule as parents.", frames: [
-      { state: "min", img: "ped-empty.jpg", page: true, title: "Empty", spec: "Emri i plotë, Numri i licencës, Specialiteti, telefoni, Email, Fjalëkalimi, Dokumentet, kushtet." },
-      { state: "full", img: "ped-full.jpg", page: true, title: "Filled", spec: "Ready to send." },
-      { state: "sys", img: "ped-err.jpg", page: true, title: "Sent with gaps", spec: "Red fields; a missing document shows only a red Ngarko." }
+    { name: "Step 1: Të dhënat", note: "Emri i plotë, Numri i licencës, Specialiteti (typed), telefoni, Email (required for doctors), Fjalëkalimi, Konfirmoni fjalëkalimin. 1/2 sits in the top bar instead of a progress bar. Already registered is checked on Vazhdo; the line has no Hyr link, the doctor goes back to log in.", frames: [
+      { state: "min", img: "s1-empty.jpg", page: true, title: "Empty", spec: "On open." },
+      { state: "col", img: "s1-full.jpg", page: true, title: "Filled", spec: "Green checks on the number and the matching confirmation." },
+      { state: "sys", img: "s1-err.jpg", page: true, title: "Sent with gaps", spec: "Empty fields turn red; one line above Vazhdo." },
+      { state: "sys", img: "s1-mis.jpg", page: true, title: "Passwords differ", spec: "Fjalëkalimet nuk përputhen." },
+      { state: "sys", img: "s1-taken.jpg", page: true, title: "Number registered", spec: "Ky numër ka tashmë një llogari." },
+      { state: "sys", img: "s1-lic.jpg", page: true, title: "Licence registered", spec: "Kjo licencë ka tashmë një llogari." }
     ]},
-    { name: "Dokumentet", note: "One card, three rows; the whole row is tappable.", frames: [
-      { state: "col", img: "ped-docs.jpg", title: "Row states", spec: "Not uploaded (Ngarko), uploading (bar), uploaded (check, file, ×); missing after sending: red Ngarko only." }
+    { name: "Specialiteti", note: "A plain text field: one specialty, typed.", frames: [
+      { state: "min", img: "spec-empty.jpg", title: "Empty", spec: "No placeholder." },
+      { state: "col", img: "spec-full.jpg", title: "Filled", spec: "Plain text." }
     ]},
-    { name: "Pending account", note: "Sending creates the account and opens this screen; it is also what the doctor sees on every login until approved. One fixed structure, centred between the logo and the buttons: tinted icon, title, then the three documents with status chips. The button slot is kept even when empty so nothing moves. Only the rejected state has an explanation.", frames: [
-      { state: "min", img: "p-wait.jpg", page: true, title: "Në proces verifikimi", spec: "All three Në pritje." },
-      { state: "col", img: "p-part.jpg", page: true, title: "Partly verified", spec: "Each turns Verifikuar as Kidocare confirms it." },
-      { state: "sys", img: "p-rej.jpg", page: true, title: "Not approved", spec: "Refuzuar with the reason under the document; Apliko përsëri." },
-      { state: "det", img: "p-re.jpg", page: true, title: "Apliko përsëri", spec: "Prefilled with the same details; verified documents kept, only the rejected one is empty; no password." },
-      { state: "det", img: "p-ok.jpg", page: true, title: "Llogaria u aktivizua", spec: "Vazhdo opens Turni with the setup card (next section)." }
+    { name: "Step 2: Dokumentet", note: "Three cards of one height (100px), in the style of the Kartela test cards. Back returns to step 1 with everything still filled in.", frames: [
+      { state: "min", img: "s2-empty.jpg", page: true, title: "Empty", spec: "Three dashed cards with Ngarko." },
+      { state: "col", img: "s2-mix.jpg", page: true, title: "Uploading", spec: "One uploaded, one in progress, one empty." },
+      { state: "full", img: "s2-full.jpg", page: true, title: "All uploaded", spec: "Previews with Zëvendëso." },
+      { state: "sys", img: "s2-err.jpg", page: true, title: "Sent with gaps", spec: "A missing document shows only a red Ngarko." },
+      { state: "col", img: "s2-busy.jpg", page: true, title: "Sending", spec: "Spinner in the button." }
     ]},
-    { name: "Onboarding: Plotësoni profilin", note: "After Llogaria u aktivizua. Offline, so Turni opens on Agjenda, empty. One compact card above the shift card: the doctor's avatar inside a ring that fills with each step, Plotësoni profilin, and only the next step (photo, biography, languages). The card opens the edit profile at that step and disappears when done. The online toggle is locked until then; tapping it shows one amber line. Notifications are asked by the phone the first time the toggle is turned on.", frames: [
-      { state: "min", from: "turni-live", img: "n-0.jpg", page: true, title: "First open", spec: "Shtoni një foto profili." },
-      { state: "col", from: "turni-live", img: "n-1.jpg", page: true, title: "Photo added", spec: "Shkruani biografinë; the ring fills a third." },
-      { state: "col", from: "turni-live", img: "n-2.jpg", page: true, title: "Biography added", spec: "Zgjidhni gjuhët që flisni." },
-      { state: "sys", from: "turni-live", img: "n-lock.jpg", page: true, title: "Toggle tapped", spec: "Plotësoni profilin për të hyrë në linjë." },
-      { state: "det", from: "turni-live", img: "n-done.jpg", page: true, title: "Profile complete", spec: "Card gone; the toggle works." },
-      { state: "col", from: "turni-live", img: "n-card0.jpg", title: "Card, step 1", spec: "Camera icon until the photo is added." },
-      { state: "col", from: "turni-live", img: "n-card1.jpg", title: "Card, step 2", spec: "The photo shows inside the ring." },
-      { state: "col", from: "turni-live", img: "n-card2.jpg", title: "Card, step 3", spec: "Two thirds of the ring." }
+    { name: "Document card", note: "Before upload: dashed with Ngarko. Uploaded: file preview (PDF or Foto), the name and the file name, and a quiet Zëvendëso instead of an X. Failures replace the file name with one red line; the action stays Ngarko. The 10 MB limit is a placeholder to confirm.", frames: [
+      { state: "min", img: "d-empty.jpg", title: "Empty", spec: "Tap Ngarko opens the source sheet." },
+      { state: "col", img: "d-busy.jpg", title: "Uploading", spec: "Bar under the name." },
+      { state: "col", img: "d-pdf.jpg", title: "PDF", spec: "Tap the card opens the file." },
+      { state: "col", img: "d-img.jpg", title: "Photo", spec: "Same card, Foto tag." },
+      { state: "sys", img: "d-fail.jpg", title: "Upload failed", spec: "Ngarkimi dështoi." },
+      { state: "sys", img: "d-big.jpg", title: "Too large", spec: "Skedari kalon 10 MB." },
+      { state: "sys", img: "d-miss.jpg", title: "Missing on send", spec: "Red Ngarko only." },
+      { state: "det", img: "d-src.jpg", page: true, title: "Tap Ngarko", spec: "Bëni foto, Zgjidhni nga galeria, Zgjidhni skedar." },
+      { state: "det", img: "d-view.jpg", page: true, title: "Tap a document", spec: "The Kartela file overlay: pages, close, and Zëvendëso in the bottom card." },
+      { state: "det", img: "d-view1.jpg", page: true, title: "One page", spec: "No count, no dots." }
+    ]},
+    { name: "Leaving and sending", note: "Back on step 1, or leaving the sign-up with anything filled in, asks first. Sending creates the account.", frames: [
+      { state: "sys", img: "leave.jpg", page: true, title: "Leaving halfway", spec: "Të dilni nga regjistrimi? Dil (red) or Vazhdo regjistrimin." },
+      { state: "det", img: "sent.jpg", page: true, title: "Aplikimi u dërgua", spec: "What Kidocare verifies; Në rregull opens the locked Turni." }
+    ]},
+    { name: "Locked Turni", note: "Opens on Agjenda. The tabs show no counts; the list behind is a blurred sample that fades out at every edge, never real data. On top: one icon, one title, one line, centred. The toggle is locked (tapping it shows one amber line) and Konsultat and Forumi are faded with a lock; Turni, Infopoint and Zyra work. The profile card (photo, then biography) stays on top in every locked state.", frames: [
+      { state: "min", from: "turni-live", img: "lk-wait.jpg", page: true, title: "Në verifikim", spec: "Statusin e aplikimit e gjeni te Zyra." },
+      { state: "sys", from: "turni-live", img: "lk-tap.jpg", page: true, title: "Toggle tapped", spec: "Llogaria juaj është në verifikim." },
+      { state: "sys", from: "turni-live", img: "lk-rej.jpg", page: true, title: "Not approved", spec: "Shikoni arsyen te Zyra." },
+      { state: "col", from: "turni-live", img: "lk-ok.jpg", page: true, title: "Activated, once", spec: "Only on the first open after approval." },
+      { state: "col", from: "turni-live", img: "lk-prof.jpg", page: true, title: "Profile not done", spec: "Pas fotos dhe biografisë mund të hyni në linjë." },
+      { state: "sys", from: "turni-live", img: "lk-tap2.jpg", page: true, title: "Toggle tapped", spec: "Plotësoni profilin për të hyrë në linjë." },
+      { state: "det", from: "turni-live", img: "n-done.jpg", page: true, title: "Unlocked", spec: "Profile complete: no card, no lock." }
+    ]},
+    { name: "Plotësoni profilin card", note: "Two steps only: photo, then biography (the specialty comes from sign-up). The ring fills by halves; the card opens the edit profile at the next step.", frames: [
+      { state: "min", from: "turni-live", img: "n-card0.jpg", title: "Step 1", spec: "Shtoni një foto profili." },
+      { state: "col", from: "turni-live", img: "n-card1.jpg", title: "Step 2", spec: "Shkruani biografinë; the photo shows in the ring." }
+    ]},
+    { name: "Aplikimi in Zyra", note: "The status lives in Zyra, not on Turni. While pending or rejected the row under Puna is Aplikimi with a chip; once approved it becomes Dokumentet (see Profili i mjekut). The page lists the three documents; only the latest rejection is shown, with its reason, a centred line and Apliko përsëri.", frames: [
+      { state: "min", from: "profili-i-mjekut", img: "zyra-pend.jpg", page: true, title: "Zyra, pending", spec: "No verified badge, Në verifikim on the card and the row." },
+      { state: "sys", from: "profili-i-mjekut", img: "zyra-rej.jpg", page: true, title: "Zyra, not approved", spec: "Pink Refuzuar on the row." },
+      { state: "det", from: "profili-i-mjekut", img: "ap-wait.jpg", page: true, title: "Aplikimi", spec: "All three Në pritje." },
+      { state: "det", from: "profili-i-mjekut", img: "ap-part.jpg", page: true, title: "Partly verified", spec: "Each turns Verifikuar as it is confirmed." },
+      { state: "det", from: "profili-i-mjekut", img: "ap-rej.jpg", page: true, title: "Not approved", spec: "Reason under the document; Apliko përsëri." },
+      { state: "det", img: "re.jpg", page: true, title: "Apliko përsëri", spec: "Step 2 only: verified documents locked, the rejected one empty with its reason." }
     ]}
+  ],
+  rules: [
+    ["Status in one place", "Turni only says that the account is locked and why in one line; the documents and their status live in Zyra (Aplikimi, later Dokumentet)."],
+    ["No Hyr in errors", "An already-registered number or licence gets one red line and no link; the doctor goes back to log in."],
+    ["Later: notification", "Approval and rejection each need a notification; to design with the notifications."]
   ]
 });

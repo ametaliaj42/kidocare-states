@@ -92,6 +92,11 @@
 
 .cn-msg b.tm{color:var(--ink);font-size:15px;font-variant-numeric:tabular-nums}
 
+
+/* Jeni pediatër? chip and password confirmation (22.11.2026) */
+.kl-ped{margin-left:auto;display:flex;align-items:center;gap:6px;height:36px;padding:0 13px 0 11px;border-radius:18px;background:#fff;color:var(--ink);font-size:14.5px;font-weight:500;box-shadow:0 4px 12px rgba(40,80,160,.06)}
+.kl-ped svg{width:17px;height:17px;color:var(--blue-ink)}
+.au-top.kl-alone{padding-left:0}
 </style>
 </head>
 <body>
@@ -101,82 +106,28 @@
 const c=h=>`<div class="crop au-c bg">${h}</div>`;
 const ERR_REQ='Plotësoni fushat e detyrueshme për të vazhduar.';
 /* the parent form; o lets every field take any state */
+const klTop=()=>`<div class="au-top"><span class="back">${I('back')}</span><img class="lg" src="img/logo-kidocare.png" alt="KidoCare"><span class="kl-ped">${I('steth')}Jeni pediatër?</span></div>`;
+const klPed=()=>`<div class="au-top kl-alone"><span class="kl-ped" style="margin-left:0">${I('steth')}Jeni pediatër?</span></div>`;
+/* confirm password: same field as Fjalëkalimi, a check once it matches */
+function auConf(o={}){
+  const v=o.v?`<span class="v" style="letter-spacing:2px">${'•'.repeat(o.v)}</span>`:`<span class="ph"></span>`;
+  const help=o.help?`<div class="au-help err">${o.help}</div>`:'';
+  return `<div class="au-f"><label>Konfirmoni fjalëkalimin</label><div class="au-in pw ${o.st||''}">${v}${o.st==='ok'?`<span class="ok">${I('check')}</span>`:''}${I('eye')}</div>${help}</div>`;
+}
 function form(o={}){
-  return auPage(`${auTop()}<h1>Krijo llogarinë</h1>${auSeg('prind')}
+  return auPage(`${klTop()}<h1>Krijo llogarinë</h1>
    ${o.name||auField('Emri i plotë')}
    ${o.phone||auPhone()}
    ${o.email||auField('Email (opsionale)')}
    ${o.pass||auPass()}
+   ${o.conf||auConf()}
    ${o.terms||auTerms()}
    ${auCta('Krijo llogarinë',{link:['Kam llogari?','Hyr'],...(o.cta||{})})}`);
 }
-const filled={name:auField('Emri i plotë',{v:KLEA.name}),phone:auPhone({v:KLEA.phone,st:'ok'}),email:auField('Email (opsionale)',{v:KLEA.email}),pass:auPass({v:'kidocare26',hst:'ok'}),terms:auTerms('on')};
+const filled={name:auField('Emri i plotë',{v:KLEA.name}),phone:auPhone({v:KLEA.phone,st:'ok'}),email:auField('Email (opsionale)',{v:KLEA.email}),pass:auPass({v:'kidocare26',hst:'ok'}),conf:auConf({v:10,st:'ok'}),terms:auTerms('on')};
 const countrySheet=()=>`<div style="position:relative">${form()}${bsheet(`<div class="stitle">Zgjidhni shtetin</div><div class="au-search">${I('search')}Kërkoni shtetin</div>
   <div class="au-cl">${[['al','Shqipëri','+355',1],['xk','Kosovë','+383'],['mk','Maqedoni e Veriut','+389'],['me','Mal i Zi','+382'],['it','Itali','+39'],['gr','Greqi','+30'],['de','Gjermani','+49'],['gb','Mbretëri e Bashkuar','+44']]
    .map(([f,n,cc,on])=>`<div class="${on?'on':''}"><span class="au-flag ${f}"></span>${n}<em>${cc}</em></div>`).join('')}</div>`)}</div>`;
-/* ---- Pediatër ---- */
-
-P.upload='<path d="M12 16V4M7 9l5-5 5 5"/><path d="M4 15v4h16v-4"/>';
-P.shield='<path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/><path d="M9 12l2 2 4-4"/>';
-P.hosp='<path d="M4 21V7l8-4 8 4v14"/><path d="M12 9v6M9 12h6"/>';
-P.badge='<rect x="4" y="3" width="16" height="18" rx="3"/><circle cx="12" cy="10" r="3"/><path d="M8 17h8"/>';
-const DOCS=['Licenca','Karta e identitetit','Sigurimi profesional'];
-function pdoc(n,st='',file=''){
-  const ic=st==='ok'?I('check'):I('upload');
-  const sub=st==='ok'?`<small>${file}</small>`:st==='busy'?`<div class="bar"><i></i></div>`:st==='err'?`<small>${file||'Nuk u ngarkua. Provoni përsëri.'}</small>`:'';
-  const act=st==='miss'?`<span class="act" style="color:var(--red)">Ngarko</span>`:st==='ok'?`<span class="x">${I('x')}</span>`:st==='busy'?'':`<span class="act">Ngarko</span>`;
-  return `<div class="pd-row ${st}"><span class="ic">${ic}</span><div class="tx"><b>${n}</b>${sub}</div>${act}</div>`;
-}
-const pdocs=(rows,err)=>`<div class="au-f"><label>Dokumentet</label><div class="pd-docs${err?' err':''}">${rows.join('')}</div></div>`;
-const spec=(v,st)=>`<div class="au-f"><label>Specialiteti</label><div class="au-in ${st||''}">${v?`<span class="v">${v}</span>`:'<span class="ph">Zgjidhni specialitetin</span>'}<span class="chev">${I('caret')}</span></div></div>`;
-function pform(o={}){
-  return `<div class="au bg">${statusBar()}${auTop()}<h1>Krijo llogarinë</h1>${auSeg('ped')}
-  ${o.name||auField('Emri i plotë')}
-  ${o.lic||auField('Numri i licencës (Urdhri i Mjekut)')}
-  ${o.spec||spec()}
-  ${o.phone||auPhone()}
-  ${o.email||auField('Email')}
-  ${o.pass||auPass()}
-  ${o.docs||pdocs(DOCS.map(n=>pdoc(n)))}
-  ${o.terms||auTerms()}
-  ${auCta('Dërgo aplikimin',{link:['Kam llogari?','Hyr'],err:o.err})}</div>`;
-}
-const pfilled={name:auField('Emri i plotë',{v:'Blerina Kola'}),lic:auField('Numri i licencës (Urdhri i Mjekut)',{v:'1937'}),spec:spec('Pediatri e përgjithshme'),
- phone:auPhone({v:'68 220 4519',st:'ok'}),email:auField('Email',{v:'blerina.kola@gmail.com'}),pass:auPass({v:'pediatri2026',hst:'ok'}),
- docs:pdocs([pdoc('Licenca','ok','licenca-urdhri.pdf, 1.2 MB'),pdoc('Karta e identitetit','ok','karta-id.jpg, 2.4 MB'),pdoc('Sigurimi profesional','ok','sigurimi-2026.pdf, 0.8 MB')]),terms:auTerms('on')};
-const sent=()=>`<div style="position:relative">${ppform(pfilled)}${bsheet(`<div class="sico">${I('check')}</div><div class="stitle">Aplikimi u dërgua</div>
-  <div class="ssub">Para se llogaria të aktivizohet, kontaktojmë institucionet për të verifikuar:</div>
-  <div class="pd-vlist"><div class="pd-vrow"><i>${I('badge')}</i>Licencën te Urdhri i Mjekut</div><div class="pd-vrow"><i>${I('hosp')}</i>Miratimin klinik</div><div class="pd-vrow"><i>${I('shield')}</i>Sigurimin profesional</div></div>
-  <div class="ssub">Do t'ju njoftojmë sapo llogaria të jetë aktive.</div><div class="au-btn">Në rregull</div>`,false)}</div>`;
-
-
-const ST={wait:['Në pritje',''],ok:['Verifikuar','g'],no:['Refuzuar','r']};
-const prow=(ic,t,st='wait',why='')=>`<div class="prow"><i class="${st}">${I(ic)}</i><span>${t}${why?`<small>${why}</small>`:''}</span><em class="${ST[st][1]}">${ST[st][0]}</em></div>`;
-P.hourglass='<path d="M6 3h12M6 21h12M7 3v3a5 5 0 0 0 10 0V3M7 21v-3a5 5 0 0 1 10 0v3"/>';
-function pstate(o){
-  return `<div class="au bg">${statusBar()}<div class="au-top"><img class="lg" src="img/logo-kidocare.png"></div>
-  <div class="ps ${o.k}"><span class="ps-ic">${I(o.ic)}</span><h2>${o.t}</h2>${o.p?`<p>${o.p}</p>`:''}</div>
-  <div class="ptitle2">Dokumentet</div>
-  <div class="pcard">${prow('badge','Licenca',o.r[0][0],o.r[0][1])}${prow('hosp','Miratimi klinik',o.r[1][0],o.r[1][1])}${prow('shield','Sigurimi profesional',o.r[2][0],o.r[2][1])}</div>
-  <div class="au-cta"><div class="au-btn${o.btn?'':' ghost'}">${o.btn||''}</div><div class="au-link"><b>Dil nga llogaria</b></div></div></div>`;
-}
-const PEND={k:'w',ic:'hourglass',t:'Në proces verifikimi'};
-const PF={
- 'p-wait':()=>pstate({...PEND,r:[['wait'],['wait'],['wait']]}),
- 'p-part':()=>pstate({...PEND,r:[['ok'],['wait'],['wait']]}),
- 'p-rej':()=>pstate({k:'r',ic:'alert',t:'Aplikimi nuk u miratua',p:'Një dokument nuk u verifikua. Aplikoni përsëri me të njëjtat të dhëna.',r:[['ok'],['ok'],['no','Sigurimi ka skaduar']],btn:'Apliko përsëri'}),
- 'p-re':()=>pform({name:auField('Emri i plotë',{v:'Blerina Kola'}),lic:auField('Numri i licencës (Urdhri i Mjekut)',{v:'1937'}),spec:spec('Pediatri e përgjithshme'),
-   phone:auPhone({v:'68 220 4519',st:'ok'}),email:auField('Email',{v:'blerina.kola@gmail.com'}),pass:' ',
-   docs:pdocs([pdoc('Licenca','ok','licenca-urdhri.pdf, 1.2 MB'),pdoc('Karta e identitetit','ok','karta-id.jpg, 2.4 MB'),pdoc('Sigurimi profesional')]),terms:auTerms('on')}).replace('<h1>Krijo llogarinë</h1>','<h1>Apliko përsëri</h1>').replace(/<div class="au-link">Kam llogari\? <b>Hyr<\/b><\/div>/,'').replace(/<div class="au-seg">[\s\S]*?<\/div>/,''),
- 'p-ok':()=>pstate({k:'g',ic:'check',t:'Llogaria u aktivizua',r:[['ok'],['ok'],['ok']],btn:'Vazhdo'}),
-};
-
-
-const PF2={
- err:()=>pform({name:auField('Emri i plotë',{v:'Blerina Kola'}),lic:auField('Numri i licencës (Urdhri i Mjekut)',{st:'err'}),spec:spec('','err'),phone:auPhone({st:'err'}),email:auField('Email',{st:'err'}),pass:auPass({st:'err',hst:'err'}),
-   docs:pdocs([pdoc('Licenca','ok','licenca-urdhri.pdf, 1.2 MB'),pdoc('Karta e identitetit','miss'),pdoc('Sigurimi profesional','miss')]),terms:auTerms('err'),err:'Plotësoni fushat e detyrueshme për të vazhduar.'}),
- docstates:()=>c(pdocs([pdoc('Licenca'),pdoc('Karta e identitetit','busy'),pdoc('Sigurimi profesional','ok','sigurimi-2026.pdf, 0.8 MB')])+`<div style="height:12px"></div>`+pdocs([pdoc('Licenca','miss')])),
-};
 /* ---- Konfirmoni numrin ---- */
 
 P.pen2='<path d="M4 20h4L19 9l-4-4L4 16z"/>';
@@ -211,10 +162,13 @@ const F={
  /* whole screen */
  'screen-min':()=>form(),
  'screen-full':()=>form(filled),
- 'screen-err':()=>form({name:auField('Emri i plotë',{st:'err'}),phone:auPhone({v:'69 412',st:'err',help:['Numri duhet të ketë 9 shifra.','err']}),pass:auPass({st:'err',hst:'err'}),terms:auTerms('err'),cta:{err:ERR_REQ}}),
+ 'screen-err':()=>form({conf:auConf({st:'err'}),name:auField('Emri i plotë',{st:'err'}),phone:auPhone({v:'69 412',st:'err',help:['Numri duhet të ketë 9 shifra.','err']}),pass:auPass({st:'err',hst:'err'}),terms:auTerms('err'),cta:{err:ERR_REQ}}),
  /* role */
- 'role-prind':()=>c(auSeg('prind')),
- 'role-ped':()=>c(auSeg('ped')),
+ 'ped-chip':()=>c(klPed()),
+ 'cf-empty':()=>c(auConf()),
+ 'cf-ok':()=>c(auConf({v:10,st:'ok'})),
+ 'cf-err':()=>c(auConf({v:9,st:'err',help:'Fjalëkalimet nuk përputhen.'})),
+ 'screen-mis':()=>form({...filled,conf:auConf({v:9,st:'err',help:'Fjalëkalimet nuk përputhen.'})}),
  /* name */
  'name-empty':()=>c(auField('Emri i plotë')),
  'name-focus':()=>c(auField('Emri i plotë',{v:'Klea Le',caret:1,st:'focus'})),
@@ -227,7 +181,7 @@ const F={
  'ph-ok':()=>c(auPhone({v:KLEA.phone,st:'ok'})),
  'ph-short':()=>c(auPhone({v:'69 412',st:'err',help:['Numri duhet të ketë 9 shifra.','err']})),
  'ph-wrong':()=>c(auPhone({v:'42 123 4567',st:'err',help:['Numri celular fillon me 6.','err']})),
- 'ph-taken':()=>c(auPhone({v:KLEA.phone,st:'err',help:['Ky numër ka tashmë një llogari. <b>Hyr</b>','err']})),
+ 'ph-taken':()=>c(auPhone({v:KLEA.phone,st:'err',help:['Ky numër ka tashmë një llogari.','err']})),
  'ph-sheet':()=>countrySheet(),
  'ph-xk':()=>c(auPhone({cc:'xk'})),
  /* email */

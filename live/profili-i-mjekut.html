@@ -194,6 +194,25 @@
 .peer p.bio2.cut{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;margin-bottom:4px}
 .peer .about{box-shadow:none;background:var(--tile);text-align:left}
 .peer .ar{border-color:#E2E9F4}
+
+/* Aplikimi and Dokumentet (22.11.2026) */
+.gnav .g.lk{opacity:.42}
+.gnav .g .lkb{position:absolute;top:5px;left:calc(50% + 5px);width:16px;height:16px;border-radius:8px;background:#0E1B3D;display:grid;place-items:center}
+.gnav .g .lkb svg{width:10px;height:10px;stroke-width:2.4;color:#fff}
+.dc-row{display:flex;align-items:center;gap:12px;padding:14px 16px;border-bottom:1px solid var(--line)}.dc-row:last-child{border:0}
+.dc-row i{width:38px;height:38px;border-radius:19px;background:var(--blue-fill);color:var(--blue-ink);display:grid;place-items:center;flex:none}.dc-row i svg{width:18px;height:18px}
+.dc-row i.ok,.dc-row i.valid{background:var(--green-fill);color:var(--green)}.dc-row i.no{background:#FDE8EC;color:var(--red)}
+.dc-row>span{flex:1;font-size:15.5px;font-weight:500;color:var(--ink)}
+.dc-row>span small{display:block;font-size:13px;color:var(--red);font-weight:400;margin-top:2px}
+.dc-row em{font-style:normal;font-size:13px;font-weight:600;color:var(--amber);background:var(--amber-fill);border-radius:10px;padding:4px 10px;white-space:nowrap}
+.dc-row em.g{color:var(--green);background:var(--green-fill)}.dc-row em.r{color:var(--red);background:#FDE8EC}
+.dc-card{background:#fff;border-radius:20px;box-shadow:0 4px 12px rgba(40,80,160,.05);overflow:hidden}
+.ap{height:852px;position:relative;padding:0 16px}
+.ap h1{font-size:30px;font-weight:600;letter-spacing:-.02em;margin:14px 4px 6px}
+.ap .apst{margin:0 4px 22px;font-size:15px;color:var(--muted)}
+.ap .apst b{font-weight:600}.ap .apst b.w{color:var(--amber)}.ap .apst b.r{color:var(--red)}.ap .apst b.g{color:var(--green)}
+.ap .ex{text-align:center;font-size:15px;color:var(--muted);line-height:1.4;margin:18px 16px 0}
+.ap .abtn{position:absolute;left:16px;right:16px;bottom:34px;height:56px;border-radius:18px;background:var(--blue);color:#fff;font-size:17px;font-weight:600;display:grid;place-items:center;box-shadow:0 12px 28px rgba(80,140,250,.35)}
 </style>
 </head>
 <body>
@@ -239,14 +258,39 @@ function zcard(d,o={}){
 }
 const mi=(ic,t,right)=>`<div class="mi"><i>${I(ic)}</i><b>${t}</b>${right||`<span class="cb">${I('chev')}</span>`}</div>`;
 const licChip=s=>s==='soon'?`<span class="chip c-amber">Skadon</span>`:s==='gone'?`<span class="chip c-pink">Ka skaduar</span>`:'';
-const navbar=()=>`<div class="nav">${[['steth','Turni'],['msg','Konsultat',3],['info','Infopoint'],['chat','Forumi'],['file','Zyra',0,1]].map(([i,l,b,on])=>`<span class="${on?'on':''}"><i>${I(i)}</i>${l}${b?`<em class="nb">${b}</em>`:''}</span>`).join('')}</div>`;
+/* glass bottom bar, same as Turni; locked: Konsultat and Forumi faded with a lock while the account is pending */
+const navbar=(lock)=>`<div class="gnav">${[['steth','Turni'],['chat','Konsultat',1],['info','Infopoint'],['forum','Forumi',1],['office','Zyra']].map(([i,l,lk],k)=>`<div class="g ${k===4?'on':''} ${lock&&lk?'lk':''}">${I(i)}${l}${lock&&lk?`<span class="lkb">${I('lock')}</span>`:(k===1&&!lock?'<em>3</em>':'')}</div>`).join('')}</div>`;
+P.fileck='<path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M9 15l2 2 4-4"/>';
+P.idc='<rect x="3" y="5" width="18" height="14" rx="2.5"/><circle cx="9" cy="12" r="2.4"/><path d="M14 10.5h4M14 13.5h3"/>';
+P.shield2='<path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/><path d="M9 12l2 2 4-4"/>';
+P.lock=P.lock||'<rect x="5" y="10.5" width="14" height="10" rx="2.5"/><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5"/>';
+/* one row under Puna: Aplikimi while pending or rejected, Dokumentet once approved (licence expiry chip moves here) */
+const apChip=s=>s==='rej'?`<span class="chip c-pink">Refuzuar</span>`:`<span class="chip c-amber">Në verifikim</span>`;
+function docRow(o){
+  if(o.app) return mi('fileck','Aplikimi',apChip(o.app)+` <span class="cb">${I('chev')}</span>`);
+  return mi('fileck','Dokumentet',(o.lic?licChip(o.lic)+' ':'')+`<span class="cb">${I('chev')}</span>`);
+}
 function zyra(d,o={}){
-  return `<div class="page bg" style="padding-bottom:120px">${statusBar()}<div class="zh"><h1>Zyra</h1><span class="bell">${I('bell')}</span></div>${zcard(d)}
-   <div class="zs">Puna</div><div class="menu">${mi('cal','Orari')}${mi('coin','Fitimet')}${mi('award','Licenca',(o.lic?licChip(o.lic)+' ':'')+`<span class="cb">${I('chev')}</span>`)}</div>
+  return `<div class="page bg" style="padding-bottom:120px">${statusBar()}<div class="zh"><h1>Zyra</h1><span class="bell">${I('bell')}</span></div>${zcard(d,{pend:!!o.app})}
+   <div class="zs">Puna</div><div class="menu">${mi('cal','Orari')}${mi('coin','Fitimet')}${docRow(o)}</div>
    <div class="zs">Llogaria</div><div class="menu">${mi('shield','Siguria')}${mi('globe','Gjuha','<span class="lang"><span class="on">AL</span><span>EN</span></span>')}</div>
    <div class="menu" style="margin-top:16px">${mi('heart','Kalo te prindi')}${mi('logout','Dil','')}</div>
-   <p class="znote">Miratimi, auditimi dhe protokollet menaxhohen nga Drejtuesi Klinik jashtë aplikacionit.</p>${navbar()}</div>`;
+   ${o.app?'':'<p class="znote">Miratimi, auditimi dhe protokollet menaxhohen nga Drejtuesi Klinik jashtë aplikacionit.</p>'}${navbar(!!o.app)}</div>`;
 }
+/* Aplikimi (pending, rejected) and Dokumentet (approved): one page, opened from that row */
+const DST={wait:['Në pritje',''],ok:['Verifikuar','g'],no:['Refuzuar','r'],soon:['Skadon më 15.12',''],gone:['Ka skaduar','r'],valid:['Aktive','g']};
+const dcRow=(ic,t,st,why='')=>`<div class="dc-row"><i class="${st}">${I(ic)}</i><span>${t}${why?`<small>${why}</small>`:''}</span><em class="${DST[st][1]}">${DST[st][0]}</em></div>`;
+function apPage(o){
+  return `<div class="ap bg">${statusBar()}<div class="ph-top"><span class="l"><span class="back">${I('back')}</span>Zyra</span></div><h1>${o.title||'Aplikimi'}</h1><div class="apst">${o.st}</div>
+  <div class="dc-card">${dcRow('award','Licenca',o.r[0][0])}${dcRow('idc','Karta e identitetit',o.r[1][0])}${dcRow('shield2','Sigurimi profesional',o.r[2][0],o.r[2][1])}</div>
+  ${o.ex?`<div class="ex">${o.ex}</div>`:''}${o.btn?`<div class="abtn">${o.btn}</div>`:''}</div>`;
+}
+const AP={
+ wait:()=>apPage({st:'<b class="w">Në proces verifikimi</b>, dërguar më 22.11',r:[['wait'],['wait'],['wait']]}),
+ part:()=>apPage({st:'<b class="w">Në proces verifikimi</b>, dërguar më 22.11',r:[['ok'],['wait'],['wait']]}),
+ rej:()=>apPage({st:'<b class="r">Nuk u miratua</b> më 24.11',r:[['ok'],['ok'],['no','Sigurimi ka skaduar']],ex:'Ngarkoni përsëri dokumentin e refuzuar. Të dhënat e tjera mbeten të njëjta.',btn:'Apliko përsëri'}),
+ docs:(l='')=>apPage({title:'Dokumentet',st:'<b class="g">Verifikuar</b> më 24.11',r:[[l||'valid'],['valid'],['valid']]}),
+};
 
 /* ---------- profile ---------- */
 function hero(d,o={}){
@@ -333,7 +377,10 @@ const F={
  'z-card-full':()=>crop(zcard(BLERINA)),
  'z-card-off':()=>crop(zcard(BLERINA,{off:1})),
  'z-card-pend':()=>crop(zcard(ARBEN,{pend:1})),
- 'z-lic':()=>crop(['','soon','gone'].map(s=>`<div class="menu" style="margin-bottom:10px">${mi('award','Licenca',licChip(s)+`<span class="cb">${I('chev')}</span>`)}</div>`).join('')),
+ 'z-lic':()=>crop(['','soon','gone'].map(s=>`<div class="menu" style="margin-bottom:10px">${docRow({lic:s})}</div>`).join('')),
+ 'z-app':()=>crop(['wait','rej'].map(s=>`<div class="menu" style="margin-bottom:10px">${docRow({app:s})}</div>`).join('')),
+ 'zyra-pend':()=>zyra(ARBEN,{app:'wait'}), 'zyra-rej':()=>zyra(ARBEN,{app:'rej'}),
+ 'ap-wait':()=>AP.wait(), 'ap-part':()=>AP.part(), 'ap-rej':()=>AP.rej(), 'docs-ok':()=>AP.docs(), 'docs-soon':()=>AP.docs('soon'), 'docs-gone':()=>AP.docs('gone'),
  'id-min':()=>crop(hero(ARBEN)),
  'id-full':()=>crop(hero(BLERINA)),
  'id-long':()=>crop(hero(BLERINA,{long:1})),
