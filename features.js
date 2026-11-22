@@ -26,7 +26,7 @@ window.FEATURES = [
       ]
     },
     components: [
-      { name: "Live and Agjenda tabs", note: "Same toggle as the current app.", frames: [
+    { name: "Live and Agjenda tabs", note: "Same toggle as the current app.", frames: [
         { state: "col", img: "seg-live.jpg", title: "Someone waiting", spec: "Live is active with its count." },
         { state: "min", img: "seg-zero.jpg", title: "Nobody waiting", spec: "Count 0." }
       ]},
@@ -52,8 +52,18 @@ window.FEATURES = [
       ]},
       { name: "Empty", note: "Online with nobody waiting.", frames: [
         { state: "min", img: "screen-empty.jpg", page: true, title: "Askush nuk po pret", spec: "Quiet empty card in place of the list." }
-      ]}
-    ],
+      ]},
+    { name: "New doctor", note: "After Llogaria u aktivizua. Offline, so Turni opens on Agjenda, empty. One compact card above the shift card: the doctor's avatar inside a ring that fills with each step, Plotësoni profilin, and only the next step (photo, biography, languages). The card opens the edit profile at that step and disappears when done. The online toggle is locked until then; tapping it shows one amber line. Notifications are asked by the phone the first time the toggle is turned on.", frames: [
+      { state: "min", img: "n-0.jpg", page: true, title: "First open", spec: "Shtoni një foto profili." },
+      { state: "col", img: "n-1.jpg", page: true, title: "Photo added", spec: "Shkruani biografinë; the ring fills a third." },
+      { state: "col", img: "n-2.jpg", page: true, title: "Biography added", spec: "Zgjidhni gjuhët që flisni." },
+      { state: "sys", img: "n-lock.jpg", page: true, title: "Toggle tapped", spec: "Plotësoni profilin për të hyrë në linjë." },
+      { state: "det", img: "n-done.jpg", page: true, title: "Profile complete", spec: "Card gone; the toggle works." },
+      { state: "col", img: "n-card0.jpg", title: "Card, step 1", spec: "Camera icon until the photo is added." },
+      { state: "col", img: "n-card1.jpg", title: "Card, step 2", spec: "The photo shows inside the ring." },
+      { state: "col", img: "n-card2.jpg", title: "Card, step 3", spec: "Two thirds of the ring." }
+    ]}
+  ],
     rules: [
       ["Open card shows only what helps before accepting", "Parent note, Pesha, Mosha, then Alergjitë and Sëmundje kronike only if the child has any. No measurement dates, no \"Asnjë\". Everything else lives in the Kartela."],
       ["Two tones", "Allergies are pink with the warning icon; chronic illnesses are amber with the repeat icon, everywhere in the app."]
@@ -994,10 +1004,11 @@ window.FEATURES.push(
 },
 {
   id: "krijo-llogarine", name: "Krijo llogarinë", side: "parent", date: "21.11.2026",
-  purpose: "Sign-up for parents. The Prind / Pediatër switch sits under the title; the Pediatër side is still to be designed together.",
-  path: { note: "Klea Leka, Noa's mother, signs up as a parent. Email is optional for parents. What happens after Krijo llogarinë is still to be designed together.", frames: [
+  purpose: "Sign-up for parents and pediatricians on one screen, chosen with the Prind / Pediatër switch. Parents confirm their number by SMS; pediatricians apply and wait for verification on their account.",
+  path: { note: "Klea Leka, Noa's mother, signs up as a parent. Email is optional for parents. After the number is confirmed the parent lands on Kreu, where the child is added.", frames: [
     { state: "min", img: "path-1.jpg", page: true, title: "Empty form", spec: "Prind selected. Fields: Emri i plotë, Numri i telefonit, Email (opsionale), Fjalëkalimi, then the terms checkbox." },
-    { state: "min", img: "path-2.jpg", page: true, via: "Fill in, tick the terms", title: "Filled", spec: "A valid number shows a green check; the password hint turns green at 8 characters; the ticked box is green." }
+    { state: "min", img: "path-2.jpg", page: true, via: "Fill in, tick the terms", title: "Filled", spec: "A valid number shows a green check; the password hint turns green at 8 characters; the ticked box is green." },
+    { state: "min", img: "path-3.jpg", page: true, via: "Tap Krijo llogarinë", title: "Konfirmoni numrin", spec: "A code goes to the number by SMS; the phone's own keyboard opens and offers it. Confirmed goes to Kreu." }
   ]},
   screen: { note: "The button stays enabled. Tapping it with something missing marks the fields in red and shows one short line above the button; nothing else.", frames: [
     { state: "min", img: "screen-min.jpg", page: true, title: "Empty", spec: "On open." },
@@ -1007,7 +1018,7 @@ window.FEATURES.push(
   components: [
     { name: "Prind / Pediatër", note: "Raised white pill on a blue-grey track, so only the main button is blue.", frames: [
       { state: "col", img: "role-prind.jpg", title: "Prind", spec: "Default." },
-      { state: "col", img: "role-ped.jpg", title: "Pediatër", spec: "Selected state of the switch only; the doctor form is still to be designed." }
+      { state: "col", img: "role-ped.jpg", title: "Pediatër", spec: "Tap swaps the fields to the pediatrician form." }
     ]},
     { name: "Emri i plotë", note: "One field for the full name. Required.", frames: [
       { state: "min", img: "name-empty.jpg", title: "Empty", spec: "No placeholder example." },
@@ -1048,11 +1059,36 @@ window.FEATURES.push(
       { state: "sys", img: "cta-err.jpg", title: "Fields missing", spec: "Plotësoni fushat e detyrueshme për të vazhduar." },
       { state: "col", img: "cta-busy.jpg", title: "Sending", spec: "Spinner and text; taps are ignored." },
       { state: "sys", img: "cta-net.jpg", title: "No connection", spec: "Nothing is lost; tapping again retries." }
+    ]},
+    { name: "Konfirmoni numrin", note: "Parents only. No explanation text: the number with a pen icon to change it, six boxes filled by the phone's one-time-code autofill, one message line, and a resend button that works at any time. The timer is how long the code stays valid (1:00 placeholder, to confirm). The code is checked at the 6th digit, no button. The phone's own keyboard fills the lower half.", frames: [
+      { state: "min", img: "code-wait.jpg", page: true, title: "Waiting", spec: "Kodi skadon pas 0:42." },
+      { state: "col", img: "code-typing.jpg", page: true, title: "Typing", spec: "Blue ring moves to the next box." },
+      { state: "col", img: "code-busy.jpg", page: true, title: "Checking", spec: "At the 6th digit; resend hides while checking." },
+      { state: "sys", img: "code-wrong.jpg", page: true, title: "Wrong code", spec: "Boxes clear; one red line is the only signal." },
+      { state: "sys", img: "code-expired.jpg", page: true, title: "Expired", spec: "Red line; resend is right below." },
+      { state: "col", img: "code-sent.jpg", page: true, title: "New code sent", spec: "Green line and a fresh timer." },
+      { state: "det", img: "code-ok.jpg", page: true, title: "Confirmed", spec: "Green boxes, then Kreu." }
+    ]},
+    { name: "Pediatër: form", note: "Same screen with Pediatër selected. Email is required and specialty is one choice from the profile's list. All three documents are required. Same error rule as parents.", frames: [
+      { state: "min", img: "ped-empty.jpg", page: true, title: "Empty", spec: "Emri i plotë, Numri i licencës, Specialiteti, telefoni, Email, Fjalëkalimi, Dokumentet, kushtet." },
+      { state: "full", img: "ped-full.jpg", page: true, title: "Filled", spec: "Ready to send." },
+      { state: "sys", img: "ped-err.jpg", page: true, title: "Sent with gaps", spec: "Red fields; a missing document shows only a red Ngarko." }
+    ]},
+    { name: "Dokumentet", note: "One card, three rows; the whole row is tappable.", frames: [
+      { state: "col", img: "ped-docs.jpg", title: "Row states", spec: "Not uploaded (Ngarko), uploading (bar), uploaded (check, file, ×); missing after sending: red Ngarko only." }
+    ]},
+    { name: "Pending account", note: "Sending creates the account and opens this screen; it is also what the doctor sees on every login until approved. One fixed structure, centred between the logo and the buttons: tinted icon, title, then the three documents with status chips. The button slot is kept even when empty so nothing moves. Only the rejected state has an explanation.", frames: [
+      { state: "min", img: "p-wait.jpg", page: true, title: "Në proces verifikimi", spec: "All three Në pritje." },
+      { state: "col", img: "p-part.jpg", page: true, title: "Partly verified", spec: "Each turns Verifikuar as Kidocare confirms it." },
+      { state: "sys", img: "p-rej.jpg", page: true, title: "Not approved", spec: "Refuzuar with the reason under the document; Apliko përsëri." },
+      { state: "det", img: "p-re.jpg", page: true, title: "Apliko përsëri", spec: "Prefilled with the same details; verified documents kept, only the rejected one is empty; no password." },
+      { state: "det", img: "p-ok.jpg", page: true, title: "Llogaria u aktivizua", spec: "Vazhdo opens Turni with the setup card (see Turni: Live)." }
     ]}
   ],
   rules: [
     ["One message line", "Form-level messages sit in one small red line above the main button. Fields only turn red, except where the fix is not obvious (phone format, email, password length, number taken)."],
     ["Button always enabled", "Never grey out the main button; tapping it is how the parent finds out what is missing."],
+    ["One signal per problem", "A missing or wrong item gets one red signal only: a red outline, a red line or a red Ngarko, never several."],
     ["Selection is not blue", "The selected role is a raised white pill. Blue is reserved for the main button, green for an accepted checkbox."]
   ]
 }
