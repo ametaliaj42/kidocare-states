@@ -1162,3 +1162,40 @@ window.FEATURES.push({
     ["Later: notification", "Approval and rejection each need a notification; to design with the notifications."]
   ]
 });
+
+// One account, both roles: a pediatrician who is also a parent (added 22.11.2026)
+window.LIVE["prind-dhe-pediater"]="live/dy-rolet.html";
+window.FEATURES.push({
+  id: "prind-dhe-pediater", name: "Prind dhe pediatër", side: "doctor", date: "22.11.2026",
+  purpose: "One phone number, one login, two sides. A pediatrician who is also a parent picks a side once after logging in; after that the app opens on the side used last, and they switch from Zyra or the parent profile.",
+  path: { note: "Shown only to accounts that have both a parent and a pediatrician side. Everyone else lands straight on their own side after Hyr.", frames: [
+    { state: "min", img: "path-1.jpg", page: true, title: "Si do të vazhdoni?", spec: "After Hyr, first time only. Tapping a card opens that side directly; there is no Vazhdo button. The choice is remembered." }
+  ]},
+  screen: { note: "Same layout and illustration as the login. Each card carries the number of unread notifications waiting on that side.", frames: [
+    { state: "min", img: "screen-min.jpg", page: true, title: "No notifications", spec: "No counts at all." },
+    { state: "full", img: "screen-full.jpg", page: true, title: "Notifications on both sides", spec: "Dark count before the chevron, same badge as the bottom bar." }
+  ]},
+  components: [
+    { name: "Role card", note: "Icon circle, role name, count if any, chevron. The whole card is the tap target.", frames: [
+      { state: "min", img: "ch-none.jpg", title: "No notifications", spec: "Only icon, name and chevron." },
+      { state: "col", img: "ch-one.jpg", title: "One side has news", spec: "Count only where there is something unread." },
+      { state: "col", img: "ch-both.jpg", title: "Both sides", spec: "Each side its own count." },
+      { state: "sys", img: "ch-many.jpg", title: "Large counts", spec: "Over 99 shows 99+." },
+      { state: "sys", img: "ch-busy.jpg", title: "Opening", spec: "Spinner on the chosen card; the other card fades." }
+    ]},
+    { name: "Kalo te prindi (Zyra)", note: "Doctor side, above Dil. Shown to every pediatrician: with a parent side it switches over; without one, it starts the parent setup (adding a child).", frames: [
+      { state: "min", img: "zr-min.jpg", title: "Default", spec: "Opens the parent side." },
+      { state: "col", img: "zr-n.jpg", title: "Unread on the parent side", spec: "Count before the chevron." },
+      { state: "sys", img: "zr-busy.jpg", title: "Switching", spec: "Spinner instead of the chevron." }
+    ]},
+    { name: "Kalo te pediatri (parent profile)", note: "Parent side, above Dil. Only for accounts that also have a pediatrician side; parents never see it otherwise. The parent profile itself is still to be redesigned.", frames: [
+      { state: "min", img: "pr-min.jpg", title: "Default", spec: "Opens the doctor side on Turni." },
+      { state: "col", img: "pr-n.jpg", title: "Unread on the doctor side", spec: "Count before the chevron." },
+      { state: "sys", img: "pr-busy.jpg", title: "Switching", spec: "Spinner instead of the chevron." }
+    ]}
+  ],
+  rules: [
+    ["Ask once", "The choice screen appears only the first time; afterwards the app opens on the last side used."],
+    ["One login", "No role switch on the login screen; the account knows its roles."]
+  ]
+});

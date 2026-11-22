@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="sq">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=393">
+<title>Prind dhe pediatër frames</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="kidocare.css">
+<style>
+/* Prind dhe pediatër: one account with both roles (22.11.2026) */
+.rl{display:flex;flex-direction:column;gap:12px;margin-top:26px}
+.rl a{display:flex;align-items:center;gap:14px;background:#fff;border-radius:22px;padding:16px;box-shadow:0 10px 30px rgba(40,80,160,.08);color:var(--ink)}
+.rl a i{width:52px;height:52px;border-radius:26px;background:var(--blue-fill);color:var(--blue-ink);display:grid;place-items:center;flex:none}
+.rl a i svg{width:24px;height:24px}
+.rl a b{flex:1;font-size:17px;font-weight:600}
+.rl a .chev{color:#A9B6CC;width:18px;height:18px;flex:none}
+.rl a.busy .chev{display:none}
+.nb{min-width:24px;height:24px;padding:0 7px;border-radius:12px;background:#0E1B3D;color:#fff;font-size:13px;font-weight:600;display:grid;place-items:center}
+.sp{width:18px;height:18px;border-radius:50%;border:2.2px solid #C9D6EE;border-top-color:var(--blue);flex:none}
+.rl a.off{opacity:.55}
+.fld{position:absolute;left:0;right:0;bottom:0;height:220px;background:url(img/hyr-gpt2t.png) center bottom/100% auto no-repeat;mix-blend-mode:multiply;pointer-events:none}
+.menu{background:#fff;border-radius:24px;box-shadow:0 10px 30px rgba(40,80,160,.08);padding:0 16px}
+.mi{display:flex;align-items:center;gap:14px;height:64px;border-top:1px solid var(--line);font-size:17px;font-weight:600}
+.mi:first-child{border-top:0}
+.mi i{width:38px;height:38px;border-radius:19px;background:var(--blue-fill);color:var(--blue-ink);display:grid;place-items:center;flex:none}
+.mi i svg{width:18px;height:18px}
+.mi b{flex:1;font-weight:600}
+.cb{width:34px;height:34px;border-radius:17px;background:var(--track);display:grid;place-items:center;color:var(--muted)}
+.cb svg{width:18px;height:18px}
+.mi .nb{margin-right:2px}
+</style>
+</head>
+<body>
+<div id="f"></div>
+<script src="kidocare.js"></script>
+<script>
+P.heart=P.heart||'<path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>';
+P.logout=P.logout||'<path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5M21 12H9"/>';
+const c=h=>`<div class="crop bg">${h}</div>`;
+/* role card: n = unread notifications on that side, busy = opening */
+const role=(ic,t,o={})=>`<a class="${o.busy?'busy':''} ${o.off?'off':''}"><i>${I(ic)}</i><b>${t}</b>${o.n?`<span class="nb">${o.n}</span>`:''}${o.busy?'<span class="sp"></span>':''}${I('chev','chev')}</a>`;
+function choose(o={}){
+  return auPage(`<div class="au-top"><img class="lg" src="img/logo-kidocare.png" alt="KidoCare"></div><h1>Si do të vazhdoni?</h1>
+   <div class="rl">${role('parents','Prind',{n:o.p,busy:o.busy==='p',off:o.busy==='d'})}${role('steth','Pediatër',{n:o.d,busy:o.busy==='d',off:o.busy==='p'})}</div><div class="fld"></div>`);
+}
+/* switch row: doctor side (Zyra, above Dil) and parent side (profile) */
+const sw=(ic,t,o={})=>`<div class="mi"><i>${I(ic)}</i><b>${t}</b>${o.n?`<span class="nb">${o.n}</span>`:''}${o.busy?'<span class="sp"></span>':`<span class="cb">${I('chev')}</span>`}</div>`;
+const dil=()=>`<div class="mi"><i>${I('logout')}</i><b>Dil</b></div>`;
+const F={
+ 'path-1':()=>choose(),
+ 'screen-min':()=>choose(),
+ 'screen-full':()=>choose({p:2,d:5}),
+ 'ch-none':()=>c(`<div class="rl" style="margin-top:0">${role('parents','Prind')}${role('steth','Pediatër')}</div>`),
+ 'ch-one':()=>c(`<div class="rl" style="margin-top:0">${role('parents','Prind',{n:2})}${role('steth','Pediatër')}</div>`),
+ 'ch-both':()=>c(`<div class="rl" style="margin-top:0">${role('parents','Prind',{n:2})}${role('steth','Pediatër',{n:5})}</div>`),
+ 'ch-many':()=>c(`<div class="rl" style="margin-top:0">${role('parents','Prind',{n:'99+'})}${role('steth','Pediatër',{n:12})}</div>`),
+ 'ch-busy':()=>c(`<div class="rl" style="margin-top:0">${role('parents','Prind',{busy:'p',off:0,n:0,busy:1})}${role('steth','Pediatër',{off:1})}</div>`),
+ 'zr-min':()=>c(`<div class="menu">${sw('heart','Kalo te prindi')}${dil()}</div>`),
+ 'zr-n':()=>c(`<div class="menu">${sw('heart','Kalo te prindi',{n:2})}${dil()}</div>`),
+ 'zr-busy':()=>c(`<div class="menu">${sw('heart','Kalo te prindi',{busy:1})}${dil()}</div>`),
+ 'pr-min':()=>c(`<div class="menu">${sw('steth','Kalo te pediatri')}${dil()}</div>`),
+ 'pr-n':()=>c(`<div class="menu">${sw('steth','Kalo te pediatri',{n:5})}${dil()}</div>`),
+ 'pr-busy':()=>c(`<div class="menu">${sw('steth','Kalo te pediatri',{busy:1})}${dil()}</div>`),
+};
+window.FRAME_IDS=Object.keys(F);
+function show(){
+  const id=location.hash.slice(1)||'path-1';
+  document.getElementById('f').innerHTML=(F[id]||F['path-1'])();
+  const post=()=>{try{parent.postMessage({liveFrame:id,h:document.getElementById('f').scrollHeight},'*')}catch(e){}};
+  requestAnimationFrame(post);document.querySelectorAll('#f img').forEach(i=>i.complete||i.addEventListener('load',post));
+}
+addEventListener('hashchange',show);show();
+document.fonts&&document.fonts.ready.then(show);
+</script>
+</body>
+</html>
