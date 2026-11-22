@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="sq">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=393">
+<title>Hyr frames</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="kidocare.css">
+<style>
+/* Hyr (22.11.2026): one login for parents and pediatricians. Button sits under the fields, the illustration rises from the bottom */
+.au-forgot{color:var(--muted);font-weight:500;margin-top:12px}
+.hy .au-cta.flow{position:static;margin-top:22px;padding-top:0}
+.hy .au-link{margin-top:16px}
+.fld{position:absolute;left:0;right:0;bottom:0;height:220px;background:url(img/hyr-gpt2t.png) center bottom/100% auto no-repeat;mix-blend-mode:multiply;pointer-events:none}
+.kb{position:absolute;left:0;right:0;bottom:0;height:291px;background:#D1D5DC;padding:8px 6px 0;display:grid;grid-template-columns:repeat(3,1fr);grid-auto-rows:46px;gap:7px}
+.kb span{background:#fff;border-radius:6px;display:grid;place-items:center;font-size:25px;color:#000;box-shadow:0 1px 0 #898A8D;line-height:1}
+.kb span small{display:block;font-size:10px;letter-spacing:2px;font-weight:600;margin-top:-4px}
+.kb span.n{background:none;box-shadow:none}
+.au-ferr{font-size:12px}
+.cv{min-height:852px;display:flex;flex-direction:column;padding:0 20px;position:relative}
+.cv .sb{margin:0 -20px}
+.cv h1{font-size:30px;font-weight:600;letter-spacing:-.02em;margin:22px 0 0}
+.cn-num{display:flex;align-items:center;gap:6px;margin-top:14px;font-size:17px}
+.cn-num b{color:var(--ink);font-weight:600}
+.cn-num .ed{color:var(--muted);display:grid;place-items:center}
+.cn-num .ed svg{width:19px;height:19px;stroke-width:2}
+.cn-boxes{display:flex;gap:9px;margin-top:30px}
+.cn-boxes span{flex:1;height:62px;border-radius:16px;background:#fff;display:grid;place-items:center;font-size:27px;font-weight:600;box-shadow:0 4px 12px rgba(40,80,160,.05)}
+.cn-boxes span.f{box-shadow:0 0 0 1.6px var(--blue),0 0 0 5px rgba(91,150,255,.15)}
+.cn-boxes span.f::after{content:"";width:1.6px;height:26px;background:var(--blue)}
+.cn-boxes.ok span{box-shadow:0 0 0 1.6px var(--green);color:var(--green)}
+.cn-boxes.busy span{color:var(--muted)}
+.cn-msg{font-size:14px;margin-top:14px;min-height:20px;color:var(--muted);display:flex;align-items:center;gap:7px}
+.cn-msg.err{color:var(--red)}
+.cn-msg b{color:var(--blue-ink);font-weight:600}
+.cn-msg .sp{width:15px;height:15px;border-radius:50%;border:2px solid #C9D6EE;border-top-color:var(--blue)}
+.cn-msg svg{width:15px;height:15px}
+.cn-ch{height:34px;padding:0 14px;border-radius:17px;background:#fff;color:var(--blue-ink);font-size:14.5px;font-weight:600;display:grid;place-items:center;box-shadow:0 4px 12px rgba(40,80,160,.06)}
+.cn-rs{height:52px;border-radius:16px;background:rgba(255,255,255,.55);color:var(--muted);font-size:16px;font-weight:500;display:flex;align-items:center;justify-content:center;gap:6px;margin-top:6px}
+.cn-rs b{font-size:18px;font-weight:600;color:var(--ink);font-variant-numeric:tabular-nums;min-width:40px}
+.cn-rs.on{background:#fff;color:var(--blue-ink);font-weight:600;box-shadow:0 8px 20px rgba(40,80,160,.08)}
+
+.cn-msg b.tm{color:var(--ink);font-size:15px;font-variant-numeric:tabular-nums}
+
+
+
+</style>
+</head>
+<body>
+<div id="f"></div>
+<script src="kidocare.js"></script>
+<script>
+const c=h=>`<div class="crop au-c bg">${h}</div>`;
+const ERR_REQ='Plotësoni fushat e detyrueshme për të vazhduar.';
+const WRONG='Numri ose fjalëkalimi nuk është i saktë.';
+const top_=()=>`<div class="au-top"><span class="back">${I('back')}</span><img class="lg" src="img/logo-kidocare.png" alt="KidoCare"></div>`;
+function auConf(o={}){
+  const v=o.v?`<span class="v" style="letter-spacing:2px">${'•'.repeat(o.v)}</span>`:`<span class="ph"></span>`;
+  const help=o.help?`<div class="au-help err">${o.help}</div>`:'';
+  return `<div class="au-f"><label>Konfirmoni fjalëkalimin</label><div class="au-in pw ${o.st||''}">${v}${o.st==='ok'?`<span class="ok">${I('check')}</span>`:''}${I('eye')}</div>${help}</div>`;
+}
+P.pen2='<path d="M4 20h4L19 9l-4-4L4 16z"/>';
+P.del='<path d="M21 6H9l-6 6 6 6h12z"/><path d="M17 10l-4 4M13 10l4 4"/>';
+function codeScr(o={}){
+  const d=o.d||'';const cells=[0,1,2,3,4,5].map(i=>`<span class="${!o.st&&i===d.length?'f':''}">${d[i]||''}</span>`).join('');
+  const rs=`<div class="cn-rs on">Dërgo kodin përsëri</div>`;
+  return `<div class="cv bg">${statusBar()}<div class="au-top"><span class="back">${I('back')}</span><img class="lg" src="img/logo-kidocare.png"></div>
+   <h1>Konfirmoni numrin</h1>
+   <div class="cn-num"><b>+355 69 412 3087</b><span class="ed">${I('pen2')}</span></div>
+   <div class="cn-boxes ${o.st||''}">${cells}</div>
+   <div class="cn-msg ${o.mc||''}">${o.msg===undefined?'Kodi skadon pas <b class="tm">0:42</b>':o.msg}</div>
+   ${o.st==='ok'||o.st==='busy'?'':rs}</div>`;
+}
+
+const kb=()=>`<div class="kb">${[['1',''],['2','ABC'],['3','DEF'],['4','GHI'],['5','JKL'],['6','MNO'],['7','PQRS'],['8','TUV'],['9','WXYZ'],['',''],['0',''],['⌫','']].map(([n,l])=>`<span class="${n===''||n==='⌫'?'n':''}">${n}${l?`<small>${l}</small>`:''}</span>`).join('')}</div>`;
+/* login; o: phone, pass, err (line above button), busy, kb (keyboard open, no illustration) */
+function hyr(o={}){
+  const btn=o.busy?`<div class="au-btn busy"><span class="au-spin"></span>Duke hyrë</div>`:`<div class="au-btn">Hyr</div>`;
+  return `<div class="hy">`+auPage(`${top_()}<h1>Mirë se u kthyet</h1>
+   ${o.phone||auPhone()}${o.pass||auPass({help:false})}
+   <div class="au-forgot">Keni harruar fjalëkalimin?</div>
+   <div class="au-cta flow">${o.err?`<div class="au-ferr">${o.err}</div>`:''}${btn}<div class="au-link">Nuk keni llogari? <b>Krijo llogari</b></div></div>
+   ${o.kb?kb():'<div class="fld"></div>'}`)+`</div>`;
+}
+const FILLED={phone:auPhone({v:KLEA.phone}),pass:auPass({v:'kidocare26',help:false})};
+const WRONGF={phone:auPhone({v:KLEA.phone,st:'err'}),pass:auPass({v:'kidocare2',st:'err',hst:'err',htxt:WRONG})};
+/* forgotten password: phone, the sign-up code screen, new password */
+const r1=(o={})=>`<div class="hy">`+auPage(`${top_()}<h1>Rivendosni fjalëkalimin</h1><p class="lead">Do t'ju dërgojmë një kod me SMS.</p>${o.phone||auPhone({v:KLEA.phone})}<div class="au-cta flow">${o.busy?`<div class="au-btn busy"><span class="au-spin"></span>Duke dërguar</div>`:`<div class="au-btn">Dërgo kodin</div>`}</div>`)+`</div>`;
+const r3=(o={})=>`<div class="hy">`+auPage(`${top_()}<h1>Fjalëkalimi i ri</h1>${o.pass||auPass({label:'Fjalëkalimi i ri',v:'kidocare27',hst:'ok'})}${o.conf||auConf({v:10,st:'ok'})}<div class="au-cta flow">${o.busy?`<div class="au-btn busy"><span class="au-spin"></span>Duke ruajtur</div>`:`<div class="au-btn">Ruaj fjalëkalimin</div>`}</div>`)+`</div>`;
+const F={
+ 'path-1':()=>hyr(),
+ 'path-2':()=>hyr(FILLED),
+ 'screen-min':()=>hyr(),
+ 'screen-full':()=>hyr(FILLED),
+ 'screen-kb':()=>hyr({phone:auPhone({v:'69 412',caret:1,st:'focus'}),kb:1}),
+ 'screen-wrong':()=>hyr(WRONGF),
+ 'screen-err':()=>hyr({phone:auPhone({st:'err'}),pass:auPass({st:'err',help:false}),err:ERR_REQ}),
+ /* fields */
+ 'ph-empty':()=>c(auPhone()),
+ 'ph-typing':()=>c(auPhone({v:'69 412',caret:1,st:'focus'})),
+ 'ph-filled':()=>c(auPhone({v:KLEA.phone})),
+ 'ph-short':()=>c(auPhone({v:'69 412',st:'err',help:['Numri duhet të ketë 9 shifra.','err']})),
+ 'pw-empty':()=>c(auPass({help:false})),
+ 'pw-filled':()=>c(auPass({v:'kidocare26',help:false})),
+ 'pw-shown':()=>c(auPass({v:'kidocare26',shown:1,help:false})),
+ 'wrong':()=>c(auPhone({v:KLEA.phone,st:'err'})+auPass({v:'kidocare2',st:'err',hst:'err',htxt:WRONG})),
+ /* button */
+ 'cta-default':()=>c(`<div class="hy"><div class="au-cta flow" style="margin:0"><div class="au-btn">Hyr</div><div class="au-link">Nuk keni llogari? <b>Krijo llogari</b></div></div></div>`),
+ 'cta-busy':()=>c(`<div class="hy"><div class="au-cta flow" style="margin:0"><div class="au-btn busy"><span class="au-spin"></span>Duke hyrë</div><div class="au-link">Nuk keni llogari? <b>Krijo llogari</b></div></div></div>`),
+ 'cta-net':()=>c(`<div class="hy"><div class="au-cta flow" style="margin:0"><div class="au-ferr">Pa lidhje me internetin. Provoni përsëri.</div><div class="au-btn">Hyr</div><div class="au-link">Nuk keni llogari? <b>Krijo llogari</b></div></div></div>`),
+ /* forgotten password */
+ 'r-phone':()=>r1(),
+ 'r-busy':()=>r1({busy:1}),
+ 'r-short':()=>r1({phone:auPhone({v:'69 412',st:'err',help:['Numri duhet të ketë 9 shifra.','err']})}),
+ 'r-code':()=>codeScr({d:'482'}),
+ 'r-wrong':()=>codeScr({d:'',msg:'Kodi nuk është i saktë.',mc:'err'}),
+ 'r-new':()=>r3(),
+ 'r-mis':()=>r3({conf:auConf({v:9,st:'err',help:'Fjalëkalimet nuk përputhen.'})}),
+ 'r-busy2':()=>r3({busy:1}),
+};
+window.FRAME_IDS=Object.keys(F);
+function show(){
+  const id=location.hash.slice(1)||'path-1';
+  document.getElementById('f').innerHTML=(F[id]||F['path-1'])();
+  const post=()=>{try{parent.postMessage({liveFrame:id,h:document.getElementById('f').scrollHeight},'*')}catch(e){}};
+  requestAnimationFrame(post);document.querySelectorAll('#f img').forEach(i=>i.complete||i.addEventListener('load',post));
+}
+addEventListener('hashchange',show);show();
+document.fonts&&document.fonts.ready.then(show);
+</script>
+</body>
+</html>

@@ -969,7 +969,7 @@ window.FEATURES = [
 Object.assign(window.LIVE, { "mire-se-vini": "live/mire-se-vini.html", "krijo-llogarine": "live/krijo-llogarine.html" });
 window.FEATURES.push(
 {
-  id: "mire-se-vini", name: "Mirë se vini", side: "parent", date: "21.11.2026",
+  id: "mire-se-vini", name: "Mirë se vini", side: "both", date: "21.11.2026",
   purpose: "The first screen a parent sees: a slow wall of real Kidocare moments shows the strengths, then one headline and two buttons, Krijo llogari and Hyr.",
   path: { note: "Two exits only, no separate doctor link. Hyr (login) is still to be designed together.", frames: [
     { state: "min", img: "path-1.jpg", page: true, title: "Mirë se vini", spec: "The wall drifts slowly; headline and buttons stay still." },
@@ -1213,5 +1213,57 @@ window.FEATURES.push({
   rules: [
     ["Ask once", "The choice screen appears only the first time; afterwards the app opens on the last side used."],
     ["One login", "No role switch on the login screen; the account knows its roles."]
+  ]
+});
+
+// Hyr: one login for parents and pediatricians, plus the forgotten password (added 22.11.2026)
+window.LIVE["hyr"]="live/hyr.html";
+window.FEATURES.push({
+  id: "hyr", name: "Hyr", side: "both", date: "22.11.2026",
+  purpose: "One login for everyone: phone number and password. The account knows its role, so parents land on Kreu and pediatricians on Turni; accounts with both roles see Si do të vazhdoni? once. Includes the forgotten password.",
+  path: { note: "Klea Leka logs back in from Mirë se vini. Title 30px like every screen title; Hyr sits right under the fields so it stays visible while the keyboard is open.", frames: [
+    { state: "min", img: "path-1.jpg", from: "mire-se-vini", page: true, title: "Mirë se vini", spec: "Tap Hyr." },
+    { state: "min", img: "path-1.jpg", page: true, via: "Tap Hyr", title: "Mirë se u kthyet", spec: "Phone, password, grey Keni harruar fjalëkalimin?, Hyr, Nuk keni llogari? Krijo llogari. The illustration rises from the bottom." },
+    { state: "min", img: "path-2.jpg", page: true, via: "Fill in", title: "Filled", spec: "Tap Hyr: parents go to Kreu, pediatricians to Turni (locked while pending)." },
+    { state: "min", img: "path-1.jpg", from: "prind-dhe-pediater", page: true, via: "Account with both roles", title: "Si do të vazhdoni?", spec: "Only the first time." }
+  ]},
+  screen: { note: "The button stays enabled. Errors that belong to the fields sit under them; errors about the whole form are one line above the button.", frames: [
+    { state: "min", img: "screen-min.jpg", page: true, title: "Empty", spec: "On open." },
+    { state: "full", img: "screen-full.jpg", page: true, title: "Filled", spec: "Ready to log in." },
+    { state: "col", img: "screen-kb.jpg", page: true, title: "Keyboard open", spec: "The keyboard covers the illustration only; Hyr stays visible." },
+    { state: "sys", img: "screen-wrong.jpg", page: true, title: "Wrong number or password", spec: "Both fields red and one line under the password. It never says which one is wrong, so nobody can find out whether a number has an account." },
+    { state: "sys", img: "screen-err.jpg", page: true, title: "Sent empty", spec: "Empty fields red, one line above Hyr." }
+  ]},
+  components: [
+    { name: "Fields", note: "Same phone and password fields as the sign-up. The password has no length hint here.", frames: [
+      { state: "min", img: "ph-empty.jpg", title: "Phone, empty", spec: "+355 by default." },
+      { state: "col", img: "ph-typing.jpg", title: "Typing", spec: "Blue focus ring." },
+      { state: "col", img: "ph-filled.jpg", title: "Filled", spec: "No check on login." },
+      { state: "sys", img: "ph-short.jpg", title: "Too short", spec: "Numri duhet të ketë 9 shifra." },
+      { state: "min", img: "pw-empty.jpg", title: "Password, empty", spec: "Eye to show it." },
+      { state: "col", img: "pw-filled.jpg", title: "Filled", spec: "Dots." },
+      { state: "col", img: "pw-shown.jpg", title: "Shown", spec: "Tap the eye." },
+      { state: "sys", img: "wrong.jpg", title: "Wrong number or password", spec: "Both red, one line under the password." }
+    ]},
+    { name: "Button", note: "Hyr under the fields with the sign-up link right below it.", frames: [
+      { state: "min", img: "cta-default.jpg", title: "Default", spec: "Krijo llogari opens Krijo llogarinë." },
+      { state: "col", img: "cta-busy.jpg", title: "Logging in", spec: "Duke hyrë with a spinner." },
+      { state: "sys", img: "cta-net.jpg", title: "No internet", spec: "One line above the button." }
+    ]},
+    { name: "Keni harruar fjalëkalimin?", note: "Grey, still tappable. Three screens: the number, the same code screen as the sign-up, the new password. Saving logs the user straight in.", frames: [
+      { state: "det", img: "r-phone.jpg", page: true, title: "Rivendosni fjalëkalimin", spec: "The number from the login is already filled in." },
+      { state: "col", img: "r-busy.jpg", page: true, title: "Sending", spec: "Duke dërguar." },
+      { state: "sys", img: "r-short.jpg", page: true, title: "Number too short", spec: "Under the field." },
+      { state: "det", img: "r-code.jpg", page: true, via: "Tap Dërgo kodin", title: "Konfirmoni numrin", spec: "The sign-up code screen with every state (see Krijo llogarinë)." },
+      { state: "sys", img: "r-wrong.jpg", page: true, title: "Wrong code", spec: "Kodi nuk është i saktë." },
+      { state: "det", img: "r-new.jpg", page: true, via: "Code confirmed", title: "Fjalëkalimi i ri", spec: "New password and confirmation, as in the sign-up." },
+      { state: "sys", img: "r-mis.jpg", page: true, title: "Passwords differ", spec: "Fjalëkalimet nuk përputhen." },
+      { state: "col", img: "r-busy2.jpg", page: true, title: "Saving", spec: "Then straight into the app." }
+    ]}
+  ],
+  rules: [
+    ["One login", "No Prind / Pediatër switch on the login; the account knows its roles."],
+    ["Titles", "30px, the same as every screen title in the app."],
+    ["Illustration", "ChatGPT's house and phone for now; the heartbeat line is still to be fixed."]
   ]
 });
