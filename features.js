@@ -616,6 +616,11 @@ window.FEATURES = [
         { state: "col", img: "z-card-off.jpg", spec: "Out of shift (Turni off): grey dot, \"Jo aktive\"." },
         { state: "col", img: "z-card-pend.jpg", spec: "Licence still being checked: no verified badge, grey \"Në verifikim\" in place of the status." }
       ]},
+      { name: "Kalo te prindi row in Zyra", note: "Added 22.11.2026, see Prind dhe pediatër. Every pediatrician sees it above Dil: with a parent side it switches over, without one it starts the parent setup (adding a child). It carries the number of unread notifications on the parent side.", frames: [
+        { state: "min", from: "prind-dhe-pediater", img: "zr-min.jpg", spec: "Default." },
+        { state: "col", from: "prind-dhe-pediater", img: "zr-n.jpg", spec: "Unread on the parent side." },
+        { state: "sys", from: "prind-dhe-pediater", img: "zr-busy.jpg", spec: "Switching." }
+      ]},
       { name: "Dokumentet row in Zyra", note: "Was the Licenca row (22.11.2026). While the application is pending or rejected the row is Aplikimi; once approved it becomes Dokumentet: the three verified documents, with the licence expiry chip on the row.", frames: [
         { state: "col", img: "z-lic.jpg", spec: "Valid: no chip. Expires within 30 days: amber Skadon. Expired: pink Ka skaduar." },
         { state: "col", img: "z-app.jpg", spec: "Before approval: Aplikimi with Në verifikim or Refuzuar." },
