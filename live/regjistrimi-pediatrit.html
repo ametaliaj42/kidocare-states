@@ -40,6 +40,26 @@
 .pr-sico svg{width:26px;height:26px;stroke-width:2.2}
 .bs .au-btn{margin-top:4px}
 .pr-hold{position:relative;height:852px;overflow:hidden}
+/* Plotësoni profilin page (22.11.2026): one page, photo and biography both optional; Më vonë counts as a decision */
+.pp-top{display:flex;align-items:center;gap:10px;height:44px;margin-top:6px;font-size:17px;font-weight:500}
+.pp-top .back{width:44px;height:44px;border-radius:22px;background:#fff;display:grid;place-items:center;box-shadow:0 6px 16px rgba(40,80,160,.08)}
+.pv{display:flex;flex-direction:column;align-items:center;text-align:center;margin-top:26px}
+.pv b{font-size:20px;font-weight:600;margin-top:10px}
+.pv>span{font-size:14.5px;color:var(--muted);margin-top:2px}
+.avw{position:relative;width:104px;height:104px}
+.avw .bigav{width:104px;height:104px;border-radius:52px;display:grid;place-items:center;font-size:34px;font-weight:600;position:relative;overflow:hidden}
+.avw .bigav.ini{background:linear-gradient(135deg,#6AA0FF,#3F7BEF);color:#fff;box-shadow:0 12px 28px rgba(80,140,250,.35)}
+.avw .bigav.ph{background:#F3F6FB;border:1.2px solid #AFC0D8}
+.avw .bigav svg.x{position:absolute;inset:0;width:100%;height:100%;stroke:#AFC0D8;stroke-width:1}
+.avw .badge{position:absolute;right:-2px;bottom:2px;width:36px;height:36px;border-radius:18px;background:#fff;color:var(--blue-ink);display:grid;place-items:center;box-shadow:0 6px 16px rgba(40,80,160,.18)}
+.avw .badge svg{width:18px;height:18px}
+.ac2{background:#fff;border-radius:24px;padding:18px 16px;box-shadow:0 10px 30px rgba(40,80,160,.08);margin-top:26px}
+.ac2 h3{margin:0;font-size:17px;font-weight:600}
+.pta{margin-top:12px;min-height:120px;border-radius:16px;background:var(--track);padding:12px 14px 28px;font-size:15.5px;line-height:1.4;color:#8A97B3;position:relative}
+.pta.v{color:var(--ink)}
+.pta small{position:absolute;right:12px;bottom:8px;font-size:12px;color:var(--muted)}
+.pcar{display:inline-block;width:1.6px;height:18px;background:var(--blue);vertical-align:-3px;margin-left:1px}
+.duo2{position:absolute;left:20px;right:20px;bottom:34px;display:flex;gap:10px}.duo2 .au-btn{flex:1}.duo2 .au-btn.sec{flex:0 0 120px;background:#fff;color:var(--muted);box-shadow:0 8px 20px rgba(40,80,160,.06)}
 </style>
 </head>
 <body>
@@ -101,7 +121,18 @@ const sent=()=>`<div class="pr-hold">${S2FULL()}${bsheet(`<div class="pr-sico">$
   <div class="pr-vl"><div class="pr-vr"><i>${I('badge')}</i>Licencën te Urdhri i Mjekut</div><div class="pr-vr"><i>${I('idc')}</i>Kartën e identitetit</div><div class="pr-vr"><i>${I('shield')}</i>Sigurimin profesional</div></div>
   <div class="ssub">Do t'ju njoftojmë sapo llogaria të jetë aktive.</div><div class="au-btn">Në rregull</div>`,false)}</div>`;
 
+P.cam=P.cam||'<path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/>';
+P.pen=P.pen||'<path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"/>';
+const PBIO='Pediatre me 9 vjet përvojë në Spitalin Universitar “Nënë Tereza”.';
+function ppage(ph,v){
+  return auPage(`<div class="pp-top"><span class="back">${I('back')}</span>Turni</div><h1>Plotësoni profilin</h1>
+   <div class="pv"><div class="avw"><div class="bigav ${ph?'ph':'ini'}">${ph?X('x'):'BK'}</div><span class="badge">${I(ph?'pen':'cam')}</span></div><b>Dr. Blerina Kola</b><span>Pediatre, Spitali Universitar “Nënë Tereza”</span></div>
+   <div class="ac2"><h3>Biografia</h3><div class="pta ${v?'v':''}">${v?v+'<span class="pcar"></span>':'Përvoja juaj, me pak fjalë'}<small>${v?v.length:0}/300</small></div></div>
+   <div class="duo2"><div class="au-btn sec">Më vonë</div><div class="au-btn">Përfundo</div></div>`);
+}
 const F={
+ 'pp-min':()=>ppage(0,''),
+ 'pp-full':()=>ppage(1,PBIO),
  'path-1':()=>s1(), 'path-2':()=>s1(S1), 'path-3':()=>S2FULL(), 'path-4':()=>sent(),
  'screen-min':()=>s1(), 'screen-full':()=>S2FULL(),
  /* step 1 */

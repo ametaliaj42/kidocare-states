@@ -193,6 +193,8 @@
 .setup2 .spav{position:absolute;inset:7px;border-radius:50%;background:var(--blue-fill);color:var(--blue-ink);display:grid;place-items:center;overflow:hidden}
 .setup2 .spav svg{position:static;transform:none;width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.8}
 .setup2 .spav .spph{position:absolute;inset:0;background:#F3F6FB url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 42 42'><path d='M0 0L42 42M42 0L0 42' stroke='%23AFC0D8' stroke-width='1'/></svg>");border-radius:50%;box-shadow:inset 0 0 0 1px #AFC0D8}
+.setup2 .tx span{color:var(--muted)!important}
+.setup2 .spini{width:48px;height:48px;border-radius:24px;flex:none;background:linear-gradient(135deg,#6AA0FF,#3F7BEF);color:#fff;display:grid;place-items:center;font-size:17px;font-weight:600}
 .setup2 .tx{flex:1;min-width:0}
 .setup2 .tx b{display:block;font-size:17px;font-weight:600}
 .setup2 .tx span{display:block;font-size:14px;color:var(--blue-ink);margin-top:2px}
@@ -281,11 +283,8 @@ P.cam2='<path d="M4 8h3l2-2.5h6L17 8h3v11H4z"/><circle cx="12" cy="13" r="3.4"/>
 P.bio='<path d="M5 4h14v16H5z"/><path d="M8.5 9h7M8.5 12.5h7M8.5 16h4"/>';
 P.bell2='<path d="M6 16V11a6 6 0 0 1 12 0v5l1.5 2h-15z"/><path d="M10 20.5a2 2 0 0 0 4 0"/>';
 P.lock2='<rect x="5" y="10.5" width="14" height="10" rx="2.5"/><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5"/>';
-const NEXT=['Shtoni një foto profili','Shkruani biografinë'];
-const setup=d=>{const r=24,C=2*Math.PI*r,f=C*d/2;
- const av=d>0?'<span class="spph"></span>':I('cam2');
- return `<div class="setup2"><div class="spr"><svg viewBox="0 0 56 56"><circle cx="28" cy="28" r="${r}" class="sptr"/><circle cx="28" cy="28" r="${r}" class="spfl" stroke-dasharray="${f} ${C}"/></svg><span class="spav ${d>0?'has':''}">${av}</span></div>
- <div class="tx"><b>Plotësoni profilin</b><span>${NEXT[d]}</span></div><em>${I('chev')}</em></div>`};
+/* Plotësoni profilin card (22.11.2026): no steps, no ring. The doctor's initials as they will look, one line, opens the single Plotësoni profilin page */
+const setup=()=>`<div class="setup2"><span class="spini">BK</span><div class="tx"><b>Plotësoni profilin</b><span style="color:var(--muted)">Foto dhe biografia</span></div><em>${I('chev')}</em></div>`;
 const offShift=(lock,line)=>`<div class="card shift2"><div class="r"><div class="tx"><small><span class="gd off"></span>Jashtë linje</small><b>Pa orar</b></div><span class="pen2">${I('pen')}</span><span class="tog2 off ${lock?'lock':''}">${lock?I('lock2'):''}</span></div>${line?`<span class="lockline">${I('lock2')}${line}</span>`:''}</div>`;
 const segAg=()=>`<div class="seg2"><div class="t">${I('zap')}Live <b>0</b></div><div class="t on">${I('cal')}Agjenda <b>0</b></div></div>`;
 const emptyAg=()=>`<div class="empty2"><i>${I('cal')}</i><b>Nuk keni konsulta ende</b><span>Konsultat e rezervuara shfaqen këtu.</span></div>`;
@@ -298,14 +297,14 @@ const LK={
  wait:{t:'Llogaria në verifikim',p:'Statusin e aplikimit e gjeni te Zyra.'},
  rej:{k:'r',ic:'alert',t:'Aplikimi nuk u miratua',p:'Shikoni arsyen te Zyra.'},
  ok:{k:'g',ic:'check',t:'Llogaria u aktivizua',p:'Plotësoni profilin për të hyrë në linjë.'},
- prof:{t:'Plotësoni profilin',p:'Pas fotos dhe biografisë mund të hyni në linjë.'}
+ prof:{t:'Plotësoni profilin',p:'Pastaj mund të hyni në linjë.'}
 };
 const lockScr=(o,d,line)=>`<div class="tl-scr bg">${statusBar()}${head()}${setup(d)}${offShift(1,line)}<div class="seg2 tl-seg"><div class="t">${I('zap')}Live</div><div class="t on">${I('cal')}Agjenda</div></div>
  <div class="tl-lk"><div class="tl-blur">${AGPREV()}</div><div class="tl-ov"><span class="lki ${o.k||''}">${I(o.ic||'lock2')}</span><b>${o.t}</b><p>${o.p}</p></div></div>${gnavLock()}</div>`;
 const F={
  'lk-wait':()=>lockScr(LK.wait,0), 'lk-tap':()=>lockScr(LK.wait,0,'Llogaria juaj është në verifikim'), 'lk-rej':()=>lockScr(LK.rej,1),
  'lk-ok':()=>lockScr(LK.ok,1), 'lk-prof':()=>lockScr(LK.prof,1), 'lk-tap2':()=>lockScr(LK.prof,1,'Plotësoni profilin për të hyrë në linjë'),
- 'n-done':()=>newScr('',0), 'n-card0':()=>crop(setup(0)), 'n-card1':()=>crop(setup(1)),
+ 'n-done':()=>newScr('',0), 'n-card0':()=>crop(setup()),
 
  'path-1':()=>screen(noa(),1),
  'path-2':()=>screen(noa({open:1}),1),

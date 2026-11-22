@@ -1091,8 +1091,9 @@ window.FEATURES.push({
     { state: "min", from: "profili-i-mjekut", img: "zyra-pend.jpg", page: true, via: "Tap Zyra", title: "Zyra", spec: "Aplikimi row with the amber Në verifikim chip." },
     { state: "min", from: "profili-i-mjekut", img: "ap-wait.jpg", page: true, via: "Tap Aplikimi", title: "Aplikimi", spec: "The three documents and where each one stands." },
     { state: "min", from: "turni-live", img: "lk-ok.jpg", page: true, via: "All three verified, open Turni", title: "Llogaria u aktivizua", spec: "Shown once, on the first open after approval." },
-    { state: "min", from: "turni-live", img: "lk-prof.jpg", page: true, via: "Next open", title: "Plotësoni profilin", spec: "Still locked until the photo and the biography are in." },
-    { state: "min", from: "turni-live", img: "n-done.jpg", page: true, via: "Photo and biography added", title: "Ready to go online", spec: "The card and the lock disappear; the toggle works." }
+    { state: "min", from: "turni-live", img: "lk-prof.jpg", page: true, via: "Next open", title: "Plotësoni profilin", spec: "Still locked until the doctor finishes Plotësoni profilin. The card shows their initials, no steps." },
+    { state: "min", img: "pp-min.jpg", page: true, via: "Tap the card", title: "Plotësoni profilin", spec: "One page: initials by default, the camera badge on the avatar opens the photo sheet, Biografia below. Më vonë or Përfundo." },
+    { state: "min", from: "turni-live", img: "n-done.jpg", page: true, via: "Tap Përfundo or Më vonë", title: "Ready to go online", spec: "The card and the lock disappear; the toggle works. Skipped parts can be added later from Zyra." }
   ]},
   screen: { note: "The two steps share the parent sign-up's fields and error rule: the button stays enabled, one red line above it, one red signal per problem.", frames: [
     { state: "min", img: "screen-min.jpg", page: true, title: "Step 1", spec: "Empty." },
@@ -1139,13 +1140,16 @@ window.FEATURES.push({
       { state: "sys", from: "turni-live", img: "lk-tap.jpg", page: true, title: "Toggle tapped", spec: "Llogaria juaj është në verifikim." },
       { state: "sys", from: "turni-live", img: "lk-rej.jpg", page: true, title: "Not approved", spec: "Shikoni arsyen te Zyra." },
       { state: "col", from: "turni-live", img: "lk-ok.jpg", page: true, title: "Activated, once", spec: "Only on the first open after approval." },
-      { state: "col", from: "turni-live", img: "lk-prof.jpg", page: true, title: "Profile not done", spec: "Pas fotos dhe biografisë mund të hyni në linjë." },
+      { state: "col", from: "turni-live", img: "lk-prof.jpg", page: true, title: "Profile not done", spec: "Plotësoni profilin. Pastaj mund të hyni në linjë." },
       { state: "sys", from: "turni-live", img: "lk-tap2.jpg", page: true, title: "Toggle tapped", spec: "Plotësoni profilin për të hyrë në linjë." },
       { state: "det", from: "turni-live", img: "n-done.jpg", page: true, title: "Unlocked", spec: "Profile complete: no card, no lock." }
     ]},
-    { name: "Plotësoni profilin card", note: "Two steps only: photo, then biography (the specialty comes from sign-up). The ring fills by halves; the card opens the edit profile at the next step.", frames: [
-      { state: "min", from: "turni-live", img: "n-card0.jpg", title: "Step 1", spec: "Shtoni një foto profili." },
-      { state: "col", from: "turni-live", img: "n-card1.jpg", title: "Step 2", spec: "Shkruani biografinë; the photo shows in the ring." }
+    { name: "Plotësoni profilin card", note: "Reworked 22.11.2026: no ring and no steps. The doctor's initials in the blue gradient, the title and one grey line, Foto dhe biografia. Same card while pending and after approval; it opens the Plotësoni profilin page.", frames: [
+      { state: "min", from: "turni-live", img: "n-card0.jpg", title: "Card", spec: "Tap opens Plotësoni profilin." }
+    ]},
+    { name: "Plotësoni profilin page", note: "One page, no steps. The photo and the biography are both optional: what is required is the decision. By default parents see the initials, the name and the specialty with the workplace; an empty biography is simply not shown. Më vonë keeps what is missing and lets the doctor in; both can be added later from Zyra.", frames: [
+      { state: "min", img: "pp-min.jpg", page: true, title: "Opened", spec: "Initials on a blue gradient with a camera badge; Biografia empty, 0/300." },
+      { state: "full", img: "pp-full.jpg", page: true, title: "Photo and biography added", spec: "The photo replaces the initials and the badge becomes a pencil; the biography is typed in place." }
     ]},
     { name: "Aplikimi in Zyra", note: "The status lives in Zyra, not on Turni. While pending or rejected the row under Puna is Aplikimi with a chip; once approved it becomes Dokumentet (see Profili i mjekut). The page lists the three documents; only the latest rejection is shown, with its reason, a centred line and Apliko përsëri.", frames: [
       { state: "min", from: "profili-i-mjekut", img: "zyra-pend.jpg", page: true, title: "Zyra, pending", spec: "No verified badge, Në verifikim on the card and the row." },
