@@ -192,7 +192,7 @@
 .setup2 .spfl{fill:none;stroke:var(--blue);stroke-width:3;stroke-linecap:round}
 .setup2 .spav{position:absolute;inset:7px;border-radius:50%;background:var(--blue-fill);color:var(--blue-ink);display:grid;place-items:center;overflow:hidden}
 .setup2 .spav svg{position:static;transform:none;width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.8}
-.setup2 .spav .ph{position:absolute;inset:0;background:#F3F6FB url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 42 42'><path d='M0 0L42 42M42 0L0 42' stroke='%23AFC0D8' stroke-width='1'/></svg>");border-radius:50%;box-shadow:inset 0 0 0 1px #AFC0D8}
+.setup2 .spav .spph{position:absolute;inset:0;background:#F3F6FB url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 42 42'><path d='M0 0L42 42M42 0L0 42' stroke='%23AFC0D8' stroke-width='1'/></svg>");border-radius:50%;box-shadow:inset 0 0 0 1px #AFC0D8}
 .setup2 .tx{flex:1;min-width:0}
 .setup2 .tx b{display:block;font-size:17px;font-weight:600}
 .setup2 .tx span{display:block;font-size:14px;color:var(--blue-ink);margin-top:2px}
@@ -261,7 +261,7 @@ P.bell2='<path d="M6 16V11a6 6 0 0 1 12 0v5l1.5 2h-15z"/><path d="M10 20.5a2 2 0
 P.lock2='<rect x="5" y="10.5" width="14" height="10" rx="2.5"/><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5"/>';
 const NEXT=['Shtoni një foto profili','Shkruani biografinë','Zgjidhni gjuhët që flisni'];
 const setup=d=>{const r=24,C=2*Math.PI*r,f=C*d/3;
- const av=d>0?'<span class="ph"></span>':I('cam2');
+ const av=d>0?'<span class="spph"></span>':I('cam2');
  return `<div class="setup2"><div class="spr"><svg viewBox="0 0 56 56"><circle cx="28" cy="28" r="${r}" class="sptr"/><circle cx="28" cy="28" r="${r}" class="spfl" stroke-dasharray="${f} ${C}"/></svg><span class="spav ${d>0?'has':''}">${av}</span></div>
  <div class="tx"><b>Plotësoni profilin</b><span>${NEXT[d]}</span></div><em>${I('chev')}</em></div>`};
 const offShift=(lock,line)=>`<div class="card shift2"><div class="r"><div class="tx"><small><span class="gd off"></span>Jashtë linje</small><b>Pa orar</b></div><span class="pen2">${I('pen')}</span><span class="tog2 off ${lock?'lock':''}">${lock?I('lock2'):''}</span></div>${line?`<span class="lockline">${I('lock2')}Plotësoni profilin për të hyrë në linjë</span>`:''}</div>`;
